@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: mindless
+Build-Jdk: 1.6.0_12
+Extension-Name: setenv
+Implementation-Title: setenv
+Implementation-Version: 1.1
+Short-Name: setenv
+Long-Name: Hudson Setenv Plugin
+Url: http://wiki.hudson-ci.org/display/HUDSON/Setenv+Plugin
+Plugin-Version: 1.1
+Hudson-Version: 1.323
+Plugin-Developers: Andrew Bayer:abayer:andrew.bayer@gmail.com
+

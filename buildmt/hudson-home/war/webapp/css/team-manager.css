@@ -1,0 +1,262 @@
+/*  
+ * ******************************************************************************
+ *  Copyright (c) 2013 Oracle Corporation.
+ * 
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ * 
+ *  Contributors: 
+ * 
+ *     Winston Prakash
+ *    
+ * ******************************************************************************  
+ */
+
+body, form, input, p, textarea, select{
+    font-size: 12px;
+}
+
+table {
+    border-collapse:collapse;
+    font-size: 12px;
+} 
+
+table a:link {
+    color: #204A87;
+    text-decoration: underline;
+}
+
+table a:hover {
+    color: #183A77;
+    text-decoration: underline;
+}
+
+textarea {
+    resize:none;
+}
+
+p {
+    font-size: 12px;
+}
+
+#container {
+    padding-left: 0px;
+    padding-bottom: 20px;
+    width: 800px;
+}
+
+#container h3 {
+    font-size: 14px;
+    margin-top: 5px; 
+    margin-bottom: 5px;
+    color: #863566;
+}
+
+#container hr {
+    background-color: #D4BDE6; 
+    height: 3px; 
+    color: #D4BDE6;
+}
+
+#container th {
+    background: #FAF7FD;
+    color: #7B5395;
+    font-weight: normal;
+}
+
+#container td {
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    border-bottom-color: #dfcdeb;
+}
+
+#teamManagerTabs {
+    padding: 0px;
+    background: none;
+    border-width: 0px;
+}
+
+#teamManagerTabs .ui-tabs-nav {
+    padding-left: 0px;
+    background: transparent;
+    border-width: 0px 0px 1px 0px;
+    border-color:#d4bde6;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+#teamManagerTabs .ui-tabs-panel {
+    /*background: url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top #f5f3e5;*/
+    border-width: 0px 1px 1px 1px;
+    border-color:#d4bde6;
+    padding: 10px;
+}
+
+#teamManagerTabs .ui-tabs-nav li {
+    border-color:#d4bde6;
+}
+
+.teamAdminTabs {
+    padding: 0px;
+    background: none;
+    border-width: 0px;
+}
+
+.teamAdminTabs .ui-tabs-nav {
+    padding-left: 0px;
+    background: transparent;
+    border-width: 0px 0px 1px 0px;
+    border-color:#d4bde6;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.teamAdminTabs .ui-tabs-nav li {
+    border-color:#d4bde6;
+    Color: blue;
+}
+
+ul.team  label{
+    font-weight: bold;
+}
+
+ul.team {
+    margin: 0;
+    padding-left: 0px;
+}
+
+ul.team > li {
+    background-color: #FCFCFF;
+    border: 1px solid #DDD3E2;
+    border-radius: 4px 4px 4px 4px;
+    list-style-type: none;
+    margin: 0 0 10px;
+    overflow: hidden;
+    padding: 8px 10px 0;
+}
+
+ul.team h3 {
+    font-size: 14px;
+    margin: 0;
+    color: #863566;
+    white-space: nowrap;
+    margin-left: 0px;
+}
+
+ul.team .body {
+    background: #E2D7E7;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top: 1px solid #EEEEEE;
+    margin-left: -10px;
+    margin-top: 8px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+ul.team p.description {
+    color: #444444;
+    margin: 0 0 3px;
+    padding-top: 5px;
+}
+
+.teamList {
+    background: #F4EDED;
+    border-radius: 4px 4px 4px 4px;
+    border-top: 1px solid #EEEEEE;
+    margin-left: -10px;
+    margin-top: 8px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+ul.team .teamList {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.itemsContainer {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #E5E5E5 #EEEEEE #EEEEEE #E5E5E5;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    margin-left: -5px;
+    margin-right: -5px;
+    padding: 10px;
+}
+
+.memberList{
+    padding: 10px;
+}
+
+
+#dialog-add-modify-user{
+    margin-top: 10px;
+    display: none;
+}
+
+/*#dialog-add-modify-user label{
+    display:inline-block;
+    font-weight: bold;
+    margin-top: 10px;
+    width: 140px;
+}*/
+
+
+#dialog-configure-visibility label{
+    display:inline-block;
+    margin-top: 5px;
+    width: 140px;
+}
+
+#dialog-create-team  label{
+    float: left;
+    font-weight: bold;
+    margin-top: 10px;
+    width: 100px;
+}
+#dialog-create-team  input{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.teamMemberAdd{
+    margin-top: 10px;
+}
+
+.teamAdminAdd{
+    margin-top: 10px;
+}
+
+#teamList{
+    border: 1px solid #D4BDE6; 
+    /*background-color: rgb(235, 236, 228);*/ 
+    border-radius: 5px 5px 5px 5px;
+}
+
+#teamListScroll {
+    height: 130px;
+    overflow: auto;
+    border-right-width: 5px; 
+    border-bottom-width: 5px; 
+    margin-top: 5px; 
+    margin-left: 2px;
+}
+
+#teamInfo{
+    margin-top: 10px;
+    border: 1px solid #D4BDE6; 
+    /*background-color: rgb(235, 236, 228);*/ 
+    border-radius: 5px 5px 5px 5px;
+}
+
+#selectableTeamList .ui-selecting { background: #FECA40; }
+#selectableTeamList .ui-selected { background: #F39814; color: white; }
+#selectableTeamList { list-style-type: none; margin: 0; padding: 2px; }
+#selectableTeamList li { margin: 3px; padding: 0.4em; height: 12px; }

@@ -1,0 +1,30 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi, Duncan Mills
+#
+#************************************************************************** -->
+
+﻿<div>
+  有効にすると，構成を変えたりビルドを実行するには，"管理者(admin)"権限でログインしなければなりません
+  （ページの右上にログイン用のリンクがあります）。
+  ユーザアカウントは，使用しているWebコンテナに設定します（たとえば Tomcatの場合，デフォルトでは，
+  <tt>$TOMCAT_HOME/conf/tomcat-users.xml</tt>に設定します）。
+
+  <p>
+  もし Hudson をイントラネット（または信頼された環境）で使うのであれば、このチェックボックスはOFFにするのが望ましいです。
+  その結果、各プロジェクト開発者はあなたの手を煩わせずに、自分のプロジェクトを設定することができます。
+  <p>
+  もし、Hudson をインターネットに公開している場合は，これを有効にしなければなりません。
+  有効でないままHudsonのプロセスを起動すると、Hudsonはハックされてしまいます。
+  <p>
+  Hudson のセキュリティの詳細については，
+  <a href="https://wiki.eclipse.org/Hudson-ci/Using_Hudson/Securing_Hudson">このドキュメント</a>を参照してください。
+</div>

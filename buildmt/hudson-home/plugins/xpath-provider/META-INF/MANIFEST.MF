@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: bobfoster
+Build-Jdk: 1.7.0_51
+Plugin-Class: org.hudsonci.xpath.impl.XPathProviderPlugin
+Group-Id: org.hudsonci.xpath
+Short-Name: xpath-provider
+Long-Name: XPath Provider Plugin
+Url: http://hudson-ci.org/
+Plugin-Version: 1.0.3
+Hudson-Version: 3.0.0
+Plugin-Developers: Bob Foster:bobfoster:bobfoster@gmail.com
+

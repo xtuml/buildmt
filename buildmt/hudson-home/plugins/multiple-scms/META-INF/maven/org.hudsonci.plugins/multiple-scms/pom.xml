@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.eclipse.hudson.plugins</groupId>
+    <artifactId>hudson-plugin-parent</artifactId>
+    <version>3.0.0-RC4</version>
+  </parent>
+  
+  <groupId>org.hudsonci.plugins</groupId>
+  <artifactId>multiple-scms</artifactId>
+  <version>0.2-h-1</version>
+  <packaging>hpi</packaging>
+  <name>Hudson Multiple SCMs plugin</name>
+  <description>Allows multiple SCM plugins to be used in a job.</description>
+  <url>http://wiki.hudsonci.org/display/HUDSON/Multiple+SCMs+Plugin</url>
+  
+  <developers>
+    <developer>
+      <id>kbell</id>
+      <name>Kevin Bell</name>
+      <email>kbell6397@gmail.com</email>
+    </developer>
+  </developers>
+  
+  <properties>
+    <netbeans.hint.jdkPlatform>JDK_1.6</netbeans.hint.jdkPlatform>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <hudsonTags>misc</hudsonTags>
+  </properties>
+  
+  <licenses>
+    <license>
+      <name>MIT license</name>
+      <comments>All source code is under the MIT license.</comments>
+    </license>
+  </licenses>
+  
+  <scm>
+    <connection>scm:git:git://github.com/hudson3-plugins/multiple-scms.git</connection>
+    <developerConnection>scm:git:git@github.com:hudson3-plugins/multiple-scms.git</developerConnection>
+    <url>https://github.com/hudson3-plugins/multiple-scms</url>
+  </scm>
+  
+  <dependencies>
+    <dependency>
+      <groupId>findbugs</groupId>
+      <artifactId>annotations</artifactId>
+      <version>1.0.0</version>
+      <type>jar</type>
+    </dependency>
+  </dependencies>
+</project>

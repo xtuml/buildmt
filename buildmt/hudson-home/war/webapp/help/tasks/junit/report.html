@@ -1,0 +1,31 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi, Duncan Mills
+#
+#************************************************************************** -->
+
+<div>
+  Hudson understands the JUnit test report XML format (which is also used by TestNG).
+  When this option is configured, Hudson can provide useful information about test results,
+  such as historical test result trends, a web UI for viewing test reports, tracking failures,
+  and so on.
+
+  <p>
+  To use this feature, first set up your build to run tests, then
+  specify the path to JUnit XML files in the
+  <a href="http://ant.apache.org/manual/Types/fileset.html">Ant glob syntax</a>,
+  such as <tt>**/build/test-reports/*.xml</tt>. Be sure not to include any non-report
+  files into this pattern.
+
+  <p>
+  Once there are a few builds running with test results, you should start seeing
+  something like <a href="https://www.eclipse.org/hudson/images/HudsonTestResultsChart.png">this</a>.
+</div>

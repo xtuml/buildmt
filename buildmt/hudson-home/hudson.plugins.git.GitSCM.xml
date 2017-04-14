@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.git.GitSCM_-DescriptorImpl>
+  <helpRedirect/>
+  <generation>1</generation>
+  <globalConfigName></globalConfigName>
+  <globalConfigEmail></globalConfigEmail>
+  <createAccountBaseOnCommitterEmail>false</createAccountBaseOnCommitterEmail>
+  <pollSlaves>true</pollSlaves>
+</hudson.plugins.git.GitSCM_-DescriptorImpl>

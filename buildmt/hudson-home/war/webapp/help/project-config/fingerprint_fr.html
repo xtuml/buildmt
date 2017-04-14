@@ -1,0 +1,52 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+﻿<div>
+  Hudson est capable d'enregistrer une empreinte numérique unique, ou
+  'fingerprint', des fichiers (généralement des fichiers jar) pour
+  conserver la trace de quand et où ces fichiers
+  sont produits et utilisés. Quand vous avez des projets
+  inter-dépendants avec Hudson, cela vous permet de répondre facilement
+  à des questions telles que&nbsp;:
+
+  <ul>
+    <li>
+      J'ai <tt>toto.jar</tt> sur mon disque dur, mais de quel numéro de
+      build provient-il?
+    </li>
+    <li>
+      Mon projet TITI dépend de <tt>toto.jar</tt> du projet TOTO.
+    </li>
+    <li><ul>
+      <li>
+        Quel build de <tt>toto.jar</tt> est utilisé dans TUTU #51?
+      </li>
+      <li>
+        Quel build de TATA contient ma correction de bug reporté sur
+        <tt>toto.jar</tt> #32?
+      </li>
+    </ul></li>
+  </ul>
+
+  <p>
+  Pour utiliser cette fonctionnalité, tous les projets concernés (pas
+  seulement le projet d'où provient un fichier, mais aussi tous les
+  projets qui l'utilisent) doivent activer cette option et
+  enregistrer les empreintes numériques.
+
+  <p>
+  Voir
+  <a href="http://wiki.eclipse.org/Hudson-ci/fingerprint">ce document</a>
+  pour plus de details.
+</div>

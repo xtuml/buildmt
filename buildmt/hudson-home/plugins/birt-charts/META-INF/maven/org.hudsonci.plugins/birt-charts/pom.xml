@@ -1,0 +1,95 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>org.eclipse.hudson.plugins</groupId>
+        <artifactId>hudson-plugin-parent</artifactId>
+        <version>3.0.0-M4</version>
+    </parent>
+
+    <groupId>org.hudsonci.plugins</groupId>
+    <artifactId>birt-charts</artifactId>
+    <version>3.0.3</version>
+    <packaging>hpi</packaging>
+
+    <name>Hudson BIRT Charts Plugin</name>
+    
+    <url>http://wiki.hudson-ci.org/display/HUDSON/BIRT+Chart+plugin</url>
+    <description>This Plugin provides graphing support to Hudson using BIRT Chart Engine.</description>
+    <licenses>
+        <license>
+            <name>The MIT license</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <scm>
+        <connection>scm:git:git://github.com/hudson3-plugins/birt-charts-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:hudson3-plugins/birt-charts-plugin.git</developerConnection>
+        <url>https://github.com/hudson3-plugins/birt-charts-plugin</url>
+    </scm>
+    
+    <properties>
+        <hudsonTags>misc</hudsonTags>
+    </properties>
+    
+    <developers>
+        <developer>
+            <id>wjprakash</id>
+            <name>Winston Prakash</name>
+            <roles>
+                <role>
+                    Maintainer
+                </role>
+            </roles>
+            <email>
+                winston.prakash@gmail.com
+            </email>
+        </developer>
+    </developers>
+
+    <dependencies>
+       
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.ow2.orchestra.eclipse.birt</groupId>
+            <artifactId>org.ow2.orchestra.eclipse.birt.chart.engine</artifactId>
+            <version>3.7.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>org.ow2.orchestra.eclipse.equinox.registry</artifactId>
+                    <groupId>org.ow2.orchestra.eclipse.equinox</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org.ow2.orchestra.eclipse.equinox.preferences</artifactId>
+                    <groupId>org.ow2.orchestra.eclipse.equinox</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.orchestra.eclipse.birt</groupId>
+            <artifactId>org.ow2.orchestra.eclipse.birt.chart.engine.extension</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j</artifactId>
+            <version>4.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.orchestra.eclipse.birt</groupId>
+            <artifactId>org.ow2.orchestra.eclipse.birt.chart.device.extension</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+        
+    </dependencies>
+
+</project>

@@ -1,0 +1,333 @@
+/*  
+ * ******************************************************************************
+ *  Copyright (c) 2012 Oracle Corporation.
+ * 
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ * 
+ *  Contributors: 
+ * 
+ *     Winston Prakash
+ *    
+ * ******************************************************************************  
+ */
+
+body, form, input, p, textarea, select{
+    font-size: 12px;
+}
+
+table {
+    border-collapse:collapse;
+    font-size: 12px;
+} 
+
+table a:link {
+    color: #204A87;
+    text-decoration: underline;
+}
+
+table a:hover {
+    color: #183A77;
+    text-decoration: underline;
+}
+
+textarea {
+    resize:none;
+}
+
+p {
+    font-size: 14px;
+}
+
+#container {
+    margin: auto;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    width: 950px;
+}
+
+#container h3 {
+    font-size: 18px;
+    margin-left: 50px;
+    margin-top: 10px; 
+    margin-bottom: 10px;
+    color: #863566;
+}
+
+#container td {
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    border-bottom-color: #dfcdeb;
+}
+
+#headerLeft {
+    width: 450px;
+    float:left;
+}
+
+#headerRight{
+    margin-left: 480px;
+    width: 450px;
+}
+
+.excerpt{
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    color: #888A85;
+}
+
+.buttonBar input {
+    float: right;
+    margin-top: 10px;
+}
+
+#installProgress{
+    float: right;
+    display: none;
+}
+
+#updateProgress{
+    float: right;
+    display: none;
+}
+
+#outerTabs {
+    padding: 0px;
+    background: none;
+    border-width: 0px;
+}
+
+#outerTabs .ui-tabs-nav {
+    padding-left: 0px;
+    background: transparent;
+    border-width: 0px 0px 1px 0px;
+    border-color:#d4bde6;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+#outerTabs .ui-tabs-nav li {
+    border-color:#d4bde6;
+}
+
+#outerTabs .ui-tabs-panel {
+    /*background: url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top #f5f3e5;*/
+    border-width: 0px 1px 1px 1px;
+    border-color:#d4bde6;
+}
+
+#innerTabs .ui-tabs-panel {
+    border-width: 2px 0px 0px 0px;
+    border-top-color:#d4bde6;
+}
+
+#innerTabs {
+    background: transparent;
+    border: none;
+}
+
+#innerTabs .ui-widget-header {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #c0c0c0;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+#innerTabs .ui-state-default {
+    background: transparent;
+    border: none;
+}
+
+#pluginSearchButton {
+    background: url("images/ui-bg_glass_75_e6e6e6_1x400.png") repeat-x scroll 50% 50% #E6E6E6!important;
+    border: 1px solid #D3D3D3!important;
+    color: #555555;
+    font-weight: normal;
+    margin-left: 0px; 
+    margin-top: 10px;
+}
+
+#innerTabs .ui-state-active {
+    background: transparent url(img/uiTabsArrow.png) no-repeat bottom center;
+    border: none;
+}
+
+#innerTabs .ui-state-default a {
+    color: #c0c0c0;
+}
+
+#innerTabs .ui-state-active a {
+    color: #863566;
+}
+
+#innerTabs td {
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    border-bottom-color: #dfcdeb;
+}
+
+.tabBody {
+    background: #F4EDED;
+    border-radius: 4px 4px 4px 4px;
+    border-top: 1px solid #EEEEEE;
+    margin-left: -10px;
+    margin-top: 8px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+.items-container {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #E5E5E5 #EEEEEE #EEEEEE #E5E5E5;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    margin-left: -5px;
+    margin-top: 0px;
+    padding: 5px 4px;
+    width: 100%;
+}
+
+#updatesTab .column1, #installedTab .column1{
+    width:3%
+}
+
+#updatesTab .column2, #installedTab .column2{
+    width:67%
+}
+
+#updatesTab .column3, #installedTab .column3{
+    width:12%
+}
+
+#updatesTab .column4, #installedTab .column4{
+    width:18%
+}
+
+
+#availableTab .column1 {
+    width:3%
+}
+
+#availableTab .column2 {
+    width:87%
+}
+
+#availableTab .column3 {
+    width:10%
+}
+
+#dialog-confirm{
+    display: none;
+}
+
+#restart-message{
+    float: right; 
+    margin-top: 10px; 
+    margin-right: 10px; 
+    font-weight: bold; 
+    color: rgb(204, 102, 102);
+    display: none;
+}
+
+#proxyForm  label{
+    float: left;
+    width: 150px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#proxyForm  input{
+    width: 500px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+#pluginUploadMsg{
+    font-size: 12px;
+}
+
+#progressbar{
+    display: none;
+}
+
+ul.setup  label{
+    font-weight: bold;
+}
+
+ul.setup {
+    margin: 0;
+    padding-left: 0px;
+}
+
+ul.setup > li {
+    background-color: #FCFCFF;
+    border: 1px solid #DDD3E2;
+    border-radius: 4px 4px 4px 4px;
+    list-style-type: none;
+    margin: 0 0 10px;
+    overflow: hidden;
+    padding: 8px 10px 0;
+}
+
+ul.setup h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #863566;
+    white-space: nowrap;
+    margin-left: 0px;
+}
+
+ul.setup .body {
+    background: #E2D7E7;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top: 1px solid #EEEEEE;
+    margin-left: -10px;
+    margin-top: 8px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+ul.setup p.description {
+    color: #444444;
+    margin: 0 0 3px;
+    padding-top: 5px;
+}
+
+ul.setup .tabBody {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.category-head{
+    background-color: #f9f9f9;
+    border: 1px solid #eadef2;
+    border-radius: 3px;
+    color: #863566;
+    cursor: pointer;
+    margin-bottom: 1px;
+    padding: 4px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.ui-icon-collapsed{
+    background-image: url("images/toggle-expand.png");
+    height: 16px;
+    width: 16px;
+    float: left;
+}
+
+.ui-icon-expanded{
+    background-image: url("images/toggle-collapse.png");
+    height: 16px;
+    width: 16px;
+    float: left;
+}
+

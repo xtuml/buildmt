@@ -1,0 +1,288 @@
+/*  
+ * ******************************************************************************
+ *  Copyright (c) 2012 Oracle Corporation.
+ * 
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ * 
+ *  Contributors: 
+ * 
+ *     Winston Prakash
+ *    
+ * ******************************************************************************  
+ */
+
+body {
+    margin-top: 10px;   
+}
+
+body, form, input, p, textarea, select{
+    font-size: 12px;
+}
+
+
+table a:link {
+    color: #204A87;
+    text-decoration: underline;
+}
+
+table a:hover {
+    color: #183A77;
+    text-decoration: underline;
+}
+
+textarea {
+    resize:none;
+}
+
+p {
+    font-size: 14px;
+}
+
+#wrapper {
+    margin: auto;
+    padding-left: 0px;
+    padding-bottom: 20px;
+    width: 950px;
+}
+
+#wrapper h3 {
+    font-size: 18px;
+    margin-top: 10px; 
+    margin-bottom: 10px;
+    color: #863566;
+}
+
+#wrapper table {
+    border-collapse:collapse;
+    font-size: 12px;
+} 
+
+#wrapper td {
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    border-bottom-color: #dfcdeb;
+}
+
+.excerpt{
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    color: #888A85;
+}
+
+.clearfix {
+    display: block;
+}
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.site {
+    padding: 20px 0 0;
+    position: relative;
+    width: 100%;
+    z-index: 9;
+}
+
+.container {
+    margin: 0 auto;
+    width: 920px;
+}
+
+.tabBody {
+    background: #F4EDED;
+    border-radius: 4px 4px 4px 4px;
+    border-top: 1px solid #EEEEEE;
+    margin-left: -10px;
+    margin-top: 8px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+.items-container {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #E5E5E5 #EEEEEE #EEEEEE #E5E5E5;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    margin-left: -5px;
+    margin-top: 0px;
+    padding: 5px 4px;
+    width: 100%;
+}
+
+ul.setup  label{
+    font-weight: bold;
+}
+
+ul.setup {
+    margin: 0;
+    padding-left: 0px;
+}
+
+ul.setup > li {
+    background-color: #FCFCFF;
+    border: 1px solid #DDD3E2;
+    border-radius: 4px 4px 4px 4px;
+    list-style-type: none;
+    margin: 0 0 10px;
+    overflow: hidden;
+    padding: 8px 10px 0;
+}
+
+ul.setup h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #863566;
+    white-space: nowrap;
+    margin-left: 0px;
+}
+
+ul.setup .body {
+    background: #F4EDED;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top: 1px solid #EEEEEE;
+    margin-left: -10px;
+    margin-top: 8px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+ul.setup p.description {
+    color: #444444;
+    margin: 0 0 3px;
+    padding-top: 5px;
+}
+
+.column1{
+    width:3%
+}
+.column2{
+    width:67%
+}
+.column3{
+    width:15%;
+    padding-left: 5px
+}
+
+.column4{
+    width:15%;
+    padding-left: 5px
+}
+
+#buttonBar li {
+    display: inline;
+    list-style-type: none;
+    float: right;
+    padding-left: 5px
+}
+
+#installProgress{
+    float: right;
+    display: none;
+}
+
+#mandatoryMsg{
+    width:100%;
+    display: none;
+}
+
+#recommendedMsg{
+    width:100%;
+    display: none;
+}
+
+/* === Login Dialog ==== */
+
+#loginError, #loginMsg {
+    text-align:center;
+    font-weight:bold;
+}
+#loginMsg {
+    color: black;
+    display: none;
+}
+
+#loginError {
+    color: red;
+    display: none;
+}
+
+#loginForm  label{
+    float: left;
+    width: 150px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#loginForm  input{
+    width: 100px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+/* == Proxy form == */
+
+#loginForm input {
+    width: 150px;
+}
+
+#proxyForm  label{
+    float: left;
+    width: 150px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#proxyForm  input{
+    width: 500px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+#proxyError {
+    padding-top: 10px;
+    padding-left: 10px;
+    color: red;
+}
+
+#proxySuccess {
+    padding-left: 10px;
+    color: green;
+    display: none;
+}
+
+#instalMandatoryMsg{
+    padding-top: 10px;
+    padding-left: 10px;
+    color: red;
+    display: none;
+}
+
+#fpMandatoryMsg{
+    width:100%;
+    font-size: 16px;
+}
+
+#fpRecommendedMsg{
+    width:100%;
+    font-size: 16px;
+}
+
+#loginNeededMsg{
+    display: none;
+    width:100%;
+    font-size: 16px;
+}
+
+#fpFinishButton {
+    display: none;
+}

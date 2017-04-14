@@ -1,0 +1,36 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2011 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi, Anton Kozak, Duncan Mills
+#
+#************************************************************************** -->
+<div>
+  This controls the disk consumption of Hudson by managing how long you'd like to keep
+  records of the builds (such as console output, build artifacts, and so on.)
+  Hudson offers two criteria:
+
+  <ol>
+    <li>
+      Driven by age. You can have Hudson delete a record if it reaches a certain age
+      (for example, 7 days old.)
+    <li>
+      Driven by number. You can have Hudson make sure that it only maintains up to
+      N build records. If a new build is started, the oldest record will
+      be simply removed.
+  </ol>
+
+  Hudson also allows you to mark an individual build as 'Keep this log forever', to
+  exclude certain important builds from being discarded automatically.
+  The last stable and last successful build are always kept as well.
+  <p>
+  It's possible to use Project cascading feature for this property. Please review <a href="https://www.eclipse.org/hudson/the-hudson-book/book-hudson.chunked/ch06.html#section-common-job-configurations">
+  this document</a>.
+
+</div>

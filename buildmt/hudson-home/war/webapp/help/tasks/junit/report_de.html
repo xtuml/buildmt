@@ -1,0 +1,34 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi, Duncan Mills
+#
+#************************************************************************** -->
+
+<div>
+  Hudson unterstützt das JUnit-XML-Format für Testergebnisse (das auch von
+  TestNG verwendet wird). Wenn diese Option konfiguriert ist, kann Hudson
+  nützliche Auswertungen der Testergebnisse bereitstellen, z.B. deren
+  zeitlichen Verlauf darstellen, Testergebnisse in einer webbasierten Oberfläche
+  anzeigen, Fehlschläge verfolgen usw.
+
+  <p>
+  
+  Um diese Funktion zu verwenden, richten Sie Ihren Build-Prozess zunächst so
+  ein, daß Tests ausgeführt werden. Dann geben Sie den Pfad zu den JUnit-XML-Dateien
+  in der <a href="http://ant.apache.org/manual/Types/fileset.html">Ant glob-Syntax</a>,
+  an, z.B. <tt>**/build/test-reports/*.xml</tt>. Stellen Sie sicher, daß der Pfad
+  ausschließlich auf Testergebnisdateien im JUnit-XML-Format zutrifft. 
+  
+  <p>
+  
+  Sobald ein paar Builds mit Tests gelaufen sind, sollten Sie Auswertungen wie
+  <a href="https://www.eclipse.org/hudson/images/HudsonTestResultsChart.png"> diese</a> sehen.
+</div>

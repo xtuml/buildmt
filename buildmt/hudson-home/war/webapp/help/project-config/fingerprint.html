@@ -1,0 +1,45 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+<div>
+  Hudson can record the 'fingerprint' of files (most often jar files) to keep track
+  of where/when those files are produced and used. When you have inter-dependent
+  projects on Hudson, this allows you to quickly find out answers to questions like:
+
+  <ul>
+    <li>
+      I have <tt>foo.jar</tt> on my HDD but which build number of FOO did it come from?
+    </li>
+    <li>
+      My BAR project depends on <tt>foo.jar</tt> from the FOO project.
+    </li>
+    <li><ul>
+      <li>
+        Which build of <tt>foo.jar</tt> is used in BAR #51?
+      </li>
+      <li>
+        Which build of BAR contains my bug fix to <tt>foo.jar</tt> #32?
+      </li>
+    </ul></li>
+  </ul>
+
+  <p>
+  To use this feature, all of the involved projects (not just the project
+  in which a file is produced, but also the projects in which the file
+  is used) need to use this and record fingerprints.
+
+  <p>
+  See <a href="http://wiki.eclipse.org/Hudson-ci/fingerprint">this document</a>
+  for more details.
+</div>

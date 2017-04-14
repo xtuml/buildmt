@@ -1,0 +1,34 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+<div>
+  Wenn diese Option aktiviert ist, werden <a href="lastSuccessfulBuild/fingerprint">
+  alle Builds, die von diesem Projekt referenziert werden (Ermittlung über Fingerabdrücke)</a>,
+  von der Log-Rotation ausgeschlossen.
+
+  <p>
+  Wenn Ihr Job von einem anderen Job innerhalb Hudsons abhängt und Sie 
+  gelegentlich Ihren Arbeitsbereich markieren ("taggen"), ist es meist sehr
+  praktisch oder sogar notwendig, daß Sie auch Ihre Abhängigkeiten innerhalb
+  Hudsons markieren. Das Problem dabei ist aber, daß durch die Log-Rotation eventuell
+  ein Build, von dem Ihr Projekt abhängt, bereits verworfen wurde (etwa wenn
+  in Ihren Abhängigkeiten in letzter Zeit sehr viele neue Builds stattfanden).
+  Wenn dies geschieht, sind Sie nicht mehr in der Lage, zuverlässig Ihre
+  Abhängigkeiten zu markieren.
+
+  <p>
+  Diese Funktion löst das Problem durch "Sperrung" der Builds, von denen Ihr
+  Projekt abhängt. Dadurch wird garantiert, daß Sie immer Ihre kompletten
+  Abhängigkeiten markieren können.
+</div>

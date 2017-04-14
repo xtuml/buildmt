@@ -1,0 +1,37 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2011 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi, Anton Kozak, Duncan Mills
+#
+#************************************************************************** -->
+<div>
+  If set, a newly scheduled build waits for this many seconds before actually being built.
+  This is useful for:
+  <ul>
+    <li>
+      Collapsing multiple CVS change notification e-mails into one (some CVS changelog
+      e-mail generation scripts generate multiple e-mails in quick succession when
+      a commit spans across directories).
+    </li>
+    <li>
+      If your coding style is such that you commit one logical change in a few cvs/svn
+      operations, then setting a longer quiet period would prevent Hudson from building
+      it prematurely and reporting a failure.
+    </li>
+    <li>
+      Throttling builds. If your Hudson installation is too busy with too many builds,
+      setting a longer quiet period can reduce the number of builds.
+    </li>
+  </ul>
+  If not explicitly set at project-level, the system-wide default value is used.
+  <p>
+  It's possible to use Project cascading feature for this property. Please review <a href="https://www.eclipse.org/hudson/the-hudson-book/book-hudson.chunked/ch06.html#section-common-job-configurations">
+  this document</a>.
+</div>

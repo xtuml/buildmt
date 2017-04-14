@@ -1,0 +1,9 @@
+git/*
+lost+found
+releases/*
+staging/*
+work/*
+xtuml/*
+buildmt/hudson-home/jobs
+buildmt/roundtrip
+buildmt/BridgePoint

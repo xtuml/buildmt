@@ -1,0 +1,34 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi, Duncan Mills
+#
+#************************************************************************** -->
+
+<div>
+  If enabled, you have to login with a username and a password that has the "admin" role
+  before changing the configuration or running a new build (look for the "login" link
+  at the top right portion of the page).
+  Configuration of user accounts is specific to the web container you are using.
+  (For example, in Tomcat, by default, it looks for <tt>$TOMCAT_HOME/conf/tomcat-users.xml</tt>)
+
+  <p>
+  If you are using Hudson in an intranet (or other "trusted" environment), it's usually
+  desirable to leave this checkbox off, so that each project developer can configure their own
+  project without bothering you.
+
+  <p>
+  If you are exposing Hudson to the internet, you must turn this on. Hudson launches
+  processes, so insecure Hudson is a sure way of being hacked.
+
+  <p>
+  For more information about security and Hudson, see
+  <a href="https://wiki.eclipse.org/Hudson-ci/Using_Hudson/Securing_Hudson">this document</a>.
+</div>

@@ -1,0 +1,31 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#         Duncan Mills
+#
+#************************************************************************** -->
+
+﻿<div>
+  Для проектов, использующих сборочную систему Maven. Эта настройка укажет Hudson
+  вызывать Maven с данными целями и опциями. Если Maven завершит работу с
+  ненулевым кодом, сборка будет считаться провалившейся. Некоторые версии Maven
+  содержат ошибку, возвращая неверный код по завершении.
+
+  <p>
+  Hudson передает <a href="../../env-vars.html" target="_blank">
+  различные переменные окружения</a> в Maven, которые можно использовать с помощью
+  синтаксической конструкции Maven "${env.VARIABLENAME}".
+
+  <p>
+  Эти же переменные можно использовать и в командной строке (еcли вы вызываете 
+  Maven из сценария shell). Например, вы можете указать
+  <tt>-DresultsFile=${WORKSPACE}/${BUILD_TAG}.results.txt</tt>.
+</div>

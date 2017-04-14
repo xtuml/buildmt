@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: wjprakash
+Build-Jdk: 1.7.0_21
+Group-Id: org.hudsonci.plugins
+Short-Name: jna-native-support-plugin
+Long-Name: JNA Native Support Plugin
+Url: http://wiki.hudson-ci.org/display/HUDSON/JNA+Native+Support+plugin
+Plugin-Version: 3.0.4
+Hudson-Version: 3.0.0
+Plugin-Developers: Winston Prakash:wjprakash:winston.prakash@gmail.com
+

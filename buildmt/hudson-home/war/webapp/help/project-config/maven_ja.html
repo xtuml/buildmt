@@ -1,0 +1,29 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#         Duncan Mills
+#
+#************************************************************************** -->
+
+﻿<div>
+  ビルドシステムとしてMavenを使用するプロジェクト向けです。
+  Hudsonは、与えられたゴールとオプションとともにMavenを起動します。
+  Mavenが0でない終了コードを返すと、Hudsonはビルドが失敗したと判断します。
+  Mavenのあるバージョンは、終了コードを適切に返さないバグがあります。
+
+  <p>
+  Hudsonは、<a href="../../env-vars.html" target="_blank">
+  利用可能な環境変数</a> をMavenに渡します。Mavenでは"${env.VARIABLENAME}"として参照できます。
+
+  <p>
+  同じ変数を、コマンドラインの引数で使用することができます(シェルから起動しているかのように)。
+  例えば、<tt>-DresultsFile=${WORKSPACE}/${BUILD_TAG}.results.txt</tt>のように指定できます。
+</div>

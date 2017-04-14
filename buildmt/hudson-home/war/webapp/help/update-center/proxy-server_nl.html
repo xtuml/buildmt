@@ -1,0 +1,30 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+<div>
+  Indien Uw Hudson server zich achter een firewall bevindt en geen directe toegang tot het internet heeft,
+  dan kunt U hier een HTTP-proxyservernaam opgeven via dewelke Hudson dan voor U plugins kan installeren.
+  Merk op dat uw JVM hiertoe ook correct geconfigureerd dient te zijn (<a  href="http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html">
+  Zie "JDK networking properties" voor meer details</a>). 
+  Hudson zal het opwaarderingscentrum via HTTPS contacteren voor het verkrijgen van de benodigde opwaarderingspakketten.
+  
+  <p>
+  De waarde die U hier opgeeft zal als systeemparameter <tt>http.proxyHost</tt> gezet worden. Indien U dit
+  veld leeg laat, zal de systeemparameter niet gezet worden, waardoor Hudson de server rechtstreeks zal proberen
+  te contacteren.
+  
+  <p>
+  Indien U niet zeker ben welke waarde U hier dient in te vullen, kunt U best de proxy configuratie van uw
+  browser bekijken.
+</div>

@@ -1,0 +1,560 @@
+<!-- **************************************************************************
+#
+# Copyright (c) 2004-2012 Oracle Corporation.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors: 
+#
+#    Kohsuke Kawaguchi, Stephen Connolly, Tom Huybrechts, Winston Prakash
+#        
+#************************************************************************** --> 
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.eclipse.hudson</groupId>
+        <artifactId>hudson-parent</artifactId>
+        <version> 3.3.3</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+  
+    <artifactId>hudson-war</artifactId>
+  <version>3.3.3</version>
+    <packaging>war</packaging>
+    <name>Hudson :: War</name>
+
+    <description>
+        Creates a war file. Also includes additional static web resources, such as images, CSS, JavaScript, and
+        some HTML files.
+    </description>
+
+    <properties>
+        <HUDSON_HOME>${basedir}/work</HUDSON_HOME>
+        <contextPath>/hudson</contextPath><!-- context path during test -->
+        <port>8080</port><!-- HTTP listener port -->
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    
+                    <webResources>
+                        <resource>
+                            <directory>${project.build.directory}/classes</directory>
+                        </resource>
+                        <resource>
+                            <directory>${project.build.directory}/generated-resources</directory>
+                        </resource>
+                    </webResources>
+                    <!-- Main bootstrap Class to make war executable -->
+                    <archive>
+                        <manifest>
+                            <mainClass>org.eclipse.hudson.war.Executable</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Hudson-Version>${project.version}</Hudson-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+    
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                   
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>list</goal>
+                        </goals>
+                            <!-- used by org.jvnet.hudson:executable-war to find JNA and Akuma versions -->
+                        <configuration>
+                            <outputFile>${basedir}/target/classes/dependencies.txt</outputFile>
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>unpackExecWar</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                         
+                        <configuration>
+                            <!-- Copy only the bootstrap class -->
+                            <includes>
+                                **/Executable*
+                            </includes>
+                            <artifactItems>                   
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>hudson-jetty-war-executable</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources</outputDirectory>
+                                </artifactItem>
+                                
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>copyResources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                
+                                <!-- Jetty war executable libraries -->
+                                 
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>hudson-jetty-war-executable</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>hudson-jetty-war-executable.jar</destFileName>
+                                </artifactItem>
+                                
+                                <artifactItem>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-server</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-server.jar</destFileName>
+                                </artifactItem>
+                                <dependency>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-webapp</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-web-app.jar</destFileName>
+                                </dependency>
+                                <artifactItem>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-continuation</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-continuation.jar</destFileName>
+                                </artifactItem>
+                                <dependency>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-util</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-util.jar</destFileName>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-http</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-http.jar</destFileName>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-io</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-io.jar</destFileName>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-security</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-security.jar</destFileName>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-xml</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-xml.jar</destFileName>
+                                </dependency>
+                                <artifactItem>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-servlet</artifactId>
+                                    <version>${jetty.server.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>jetty-servlet.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>javax.servlet</groupId>
+                                    <artifactId>javax.servlet-api</artifactId>
+                                    <version>${jetty.javax.serverlet.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/libs</outputDirectory>
+                                    <destFileName>javax-servlet-api.jar</destFileName>
+                                </artifactItem>
+                                
+                                <!-- dependencies that goes to WEB-INF for unusual usage -->
+                                
+                                <artifactItem>
+                                    <groupId>org.eclipse.hudson</groupId>
+                                    <artifactId>hudson-remoting</artifactId>
+                                    <version>${hudson-remoting.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/WEB-INF</outputDirectory>
+                                    <destFileName>slave.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.eclipse.hudson</groupId>
+                                    <artifactId>hudson-remoting</artifactId>
+                                    <version>${hudson-remoting.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/WEB-INF</outputDirectory>
+                                    <destFileName>remoting.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>hudson-cli</artifactId>
+                                    <version>${project.version}</version>
+                                    <classifier>jar-with-dependencies</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/generated-resources/WEB-INF</outputDirectory>
+                                    <destFileName>hudson-cli.jar</destFileName>
+                                </artifactItem>
+                                
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>wagon-maven-plugin</artifactId>
+                <version>1.0-beta-4</version>
+                <executions>
+                    <execution>
+                        <id>download-update-center</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>download-single</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://hudson-ci.org</url>
+                            <fromFile>update-center3.3/update-center.json</fromFile>
+                            <toDir>target/generated-resources/WEB-INF</toDir>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>fixDependenciesTxt</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <!-- fix Akuma groupId so it can still be found by pre-split org.jvnet.hudson:executable-war:1.17 -->
+                                <replace file="${basedir}/target/classes/dependencies.txt" token="org.kohsuke:akuma" value="com.sun.akuma:akuma" />
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <!--
+                          Some plugins uses old gif images. Copy them from the compatibility folder
+                        -->
+                        <id>copyCompatibilityResources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/generated-resources/</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>${basedir}/compat/</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/${project.artifactId}-${project.version}.war</file>
+                                    <type>jar</type>
+                                    <classifier>war-for-test</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.server.version}</version>
+                <configuration>
+                    <webAppConfig>
+                          <contextPath>${contextPath}</contextPath>
+                    </webAppConfig>
+                    
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>${port}</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                    
+                    <stopPort>9966</stopPort> 
+                    <stopKey>jetty-stop</stopKey>
+                        <!--
+                        <scanIntervalSeconds>10</scanIntervalSeconds>
+                        -->
+                    
+                    <!--
+                      read directly from core module's output directory,
+                      so that changes are picked up right away without running mvn.
+                    -->
+                    <classesDirectory>../hudson-core/target/classes</classesDirectory>
+                    <!-- use the test classpath for loading resources, since this takes priority -->
+                    <testClassesDirectory>../hudson-core/src/main/resources</testClassesDirectory>
+                    <useTestClasspath>true</useTestClasspath>
+                    <!--
+                      Reload webapp when you hit ENTER. (See JETTY-282 for more)
+                    -->
+                    <consoleForceReload>true</consoleForceReload>
+                    
+                    <loginServices>
+                        <loginService implementation="org.eclipse.jetty.security.HashLoginService">
+                            <name>default</name>
+                            <config>${basedir}/src/realm.properties</config>
+                        </loginService>
+                    </loginServices>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>HUDSON_HOME</name>
+                            <value>${HUDSON_HOME}</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <!-- always reload views during debugging -->
+                            <name>stapler.jelly.noCache</name>
+                            <value>true</value>
+                        </systemProperty>
+                        
+                        <systemProperty>
+                            <name>executable-war</name>
+                            <value>${project.build.directory}/${project.artifactId}-${project.version}.war</value>
+                        </systemProperty>
+                        
+                        <systemProperty>
+                            <!-- show the stapler evaluation during execution -->
+                            <name>stapler.trace</name>
+                            <value>true</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <!-- always reload scripts during debugging -->
+                            <name>hudson.script.noCache</name>
+                            <value>true</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <!-- load view resources from the source directly, again for real time change -->
+                            <name>stapler.resourcePath</name>
+                            <value>
+                                ../hudson-core/src/main/resources
+                            </value>
+                        </systemProperty>
+                        <systemProperty>
+                            <!-- stat collection pointless -->
+                            <name>hudson.model.UsageStatistics.disabled</name>
+                            <value>true</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>hudson.Main.development</name>
+                            <value>true</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <!-- this adds 3 sec to the shutdown, and most likely pointless, too -->
+                            <name>hudson.DNSMultiCast.disabled</name>
+                            <value>true</value>
+                        </systemProperty>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>hudson-core</artifactId>
+            <exclusions>
+                <!--
+                  jars that are not needed in war. most of the exclusions should happen in the core, to make IDEs happy, not here.
+                -->
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>jsp-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>hudson-inject</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>hudson-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.hudson</groupId>
+            <artifactId>hudson-remoting</artifactId>
+            <version>${hudson-remoting.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <!-- profile for creating Hudson IPS package -->
+            <id>ips</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jvnet.updatecenter2</groupId>
+                        <artifactId>maven-makepkgs-plugin</artifactId>
+                        <version>0.3</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <python>python2.5</python>
+                            <proto>../ips/proto.py</proto>
+                            <attach>false</attach>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- sign war -->
+            <id>sign</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <!-- sign the war -->
+                            <execution>
+                                <id>signWar</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <!--
+                                          during the development, debug profile defined in ../pom.xml will cause
+                                          the jars to be signed by a self-certified dummy public key.
+
+                                          For release, you should define the real values in ~/.m2/settings.xml
+                                        -->
+                                        <signjar jar="target/hudson.war" alias="${hudson.sign.alias}" keystore="${hudson.sign.keystore}" storepass="${hudson.sign.storepass}" />
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

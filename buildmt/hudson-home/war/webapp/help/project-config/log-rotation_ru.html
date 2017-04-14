@@ -1,0 +1,36 @@
+﻿<!-- **************************************************************************
+#
+# Copyright (C) 2004-2011 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi, Anton Kozak, Duncan Mills
+#
+#************************************************************************** -->
+
+﻿<div>
+  Эта настройка управляет объемом занятого Hudson места на диске, контролируя 
+  срок хранения информации о сборках (такой как логи консоли, артефакты и т.д.).
+  Hudson предлагает два варианта:
+
+  <ol>
+    <li>
+      По возрасту. Вы можете указать Hudson удалять сборки, достигшие определенного возраста
+      (например, 7 дней).
+    <li>
+      По количеству. Вы можете указать Hudson хранить только указанное количество сборок.
+      Если хранится N сборок, и запускается новая, N + 1, старейшая из сборок будет
+      удалена.
+  </ol>
+
+  Hudson также позволяет вам отметить какую-либо сборку на "вечное хранение", чтобы 
+  обезопасить некоторые особо нужные вам сборки от автоматического удаления.
+
+  <p>
+  Для этого свойства возможно использовать Проектное каскадирование. Детали доступны в <a href="https://www.eclipse.org/hudson/the-hudson-book/book-hudson.chunked/ch06.html#section-common-job-configurations">
+  этом документе</a>.
+</div>

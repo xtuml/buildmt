@@ -1,0 +1,1490 @@
+/*******************************************************************************
+ *
+ * Copyright (c) 2004-2013 Oracle Corporation.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *
+ *    Kohsuke Kawaguchi, Winston Prakash, Daniel Dyer, Stephen Connolly, 
+ *    Nikita Levyankov, Anton Kozak, Duncan Mills
+ *
+ *******************************************************************************/
+
+body {
+    margin: 0;
+    padding: 0;
+    background: white;
+}
+
+h1, h2{
+    color: #7b5495;
+}
+
+body, table, form, input, td, th, p, textarea, select
+{
+    font-family: Verdana, Helvetica, sans serif;
+    font-size: 11px;
+}
+
+
+FORM {
+    margin: 0;
+}
+
+td {
+    vertical-align: top;
+}
+
+dt {
+    font-weight: bold;
+}
+
+.fixed-width {
+    font-family: Courier, monospace;
+}
+
+.center {
+    text-align: center;
+}
+
+.middle-align td, td.middle-align {
+    vertical-align: middle;
+}
+
+.center-align td, td.center-align {
+    text-align: center;
+}
+
+.no-wrap td, td.no-wrap {
+    white-space: nowrap;
+}
+
+#main-table {
+    height: 90%;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+#top-panel {
+    margin-bottom: 3pt;
+    height: 34px;
+    background: url(../images/topbar.png) repeat-x;
+}
+#top-panel a {
+    text-decoration: none;
+}
+
+#left-top-nav {
+    text-align: left;
+    padding-left: 25px;
+    padding-bottom: 4px;
+    color: white;
+}
+
+#left-top-nav a, #right-top-nav a {
+    color: white;
+}
+
+#right-top-nav {
+    text-align: right;
+    padding-right: 15px;
+}
+
+#top-nav .a {
+    color: white;
+}
+
+.instanceTagHeader{
+	vertical-align: middle; 
+	text-align: left;
+	font-size:18pt;
+	color:white;
+	padding-left:20px;
+}
+
+#main-panel-rounded-corner{
+  width:25px; 
+  height:25px; 
+  background-image:url(images/spacer.png); 
+  float:left;
+}
+#main-panel-rounded-corner-spacer{
+  margin-left:25px; 
+  height:25px; 
+  background-image:url(images/spacer.png); 
+  background-repeat:repeat-x
+}
+
+#main-panel {
+    padding-right: 10px;
+}
+
+#side-panel {
+    padding: 4px;
+    width: 220px;
+}
+
+
+.poweredByBand{
+    background: #b69cc5; /* Old browsers */
+	background: -moz-linear-gradient(top,  #b69cc5 0%, #b094c1 50%, #7d769a 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b69cc5), color-stop(50%,#b094c1), color-stop(100%,#7d769a)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #b69cc5 0%,#b094c1 50%,#7d769a 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #b69cc5 0%,#b094c1 50%,#7d769a 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #b69cc5 0%,#b094c1 50%,#7d769a 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #b69cc5 0%,#b094c1 50%,#7d769a 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b69cc5', endColorstr='#7d769a',GradientType=0 ); /* IE6-9 */
+}
+
+.poweredByText{
+    font-size: 10pt;
+    color:white;
+    text-align:center;
+    padding:6px 0px 8px 0px;
+}
+
+.footerArea {
+    font-size: 8pt;
+    margin-top: 8em;
+    padding: 0px 10px 0px 10px;
+    color: #a58fb5;
+}
+
+.footerArea a {
+    color: #a58fb5;
+}
+
+
+#footer-left-panel {
+   text-align: left;
+   width:20%;
+}
+
+#footer-right-panel {
+   text-align: right;
+   width:20%;
+}
+
+#footer-center-panel{
+   text-align: center;
+   width:60%;
+}
+
+#footer-husonversion-panel{
+   text-align: right;
+}
+
+#tasks {
+    padding: 4px;
+}
+
+.skiplink {
+    position: absolute;
+    left: -20000px;
+}
+
+#shutdown-msg {
+    font-weight: bold;
+    color: white;
+    background-color: #ef2929;
+    text-align: center;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+a:link {
+    text-decoration: underline;
+    color: #204A87;
+}
+
+a:visited {
+    text-decoration: underline;
+    color: #5c3566;
+}
+
+a.lowkey:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.lowkey:hover {
+    text-decoration: underline;
+    color: inherit;
+}
+
+a.lowkey:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* tip - anchors of class info */
+a.tip {
+    position:relative;
+    z-index:24;
+    text-decoration: underline;
+}
+
+a.tip:hover {
+    z-index:25;
+}
+
+a.tip span {
+    display: none
+}
+
+a.tip:hover span {
+    display:block;
+    position:absolute;
+    top:2em;
+    left:2em;
+    width:400px;
+    border:1px solid #D4BDE6;
+    background-color:#fffff0;
+    color:#000;
+    text-align: left
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+}
+
+table.tab {
+    border-collapse: collapse;
+}
+
+td.selected_tab {
+    vertical-align: middle;
+    border: 1px #090 solid;
+    background: #ffffff;
+}
+
+td.tab_filler {
+    background: #ffffff;
+    border-bottom: 1px #090 solid;
+}
+
+td.tab {
+    vertical-align: middle;
+    border: 1px solid #d4bde6;
+    background: #f0f0f0;
+}
+
+.dashboard td {
+    padding: 4px 4px 4px 4px;
+}
+
+pre {/* see http://users.tkk.fi/tkarvine/pre-wrap-css3-mozilla-opera-ie.html */
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    margin: 0;
+}
+
+pre.console {
+    overflow: auto;
+}
+
+.setting-leftspace {
+    width: 2em;
+}
+
+.setting-name {
+    white-space: nowrap;
+}
+
+.setting-main {
+    width: 100%; /* try to make this column as big as possible. */
+}
+.setting-help {
+    width: 16px;
+}
+
+.setting-input {
+    width: 100%;
+}
+
+.setting-description {
+    font-size: 0.8em;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* div that looks like a hyperlink */
+.pseudoLink {
+    cursor: pointer;
+}
+
+.advancedLink {
+    text-align: right;
+}
+
+.advancedBody {
+    display: none;
+}
+
+.scm_info {
+    width: 480px;
+}
+
+.build-row {
+    padding: 3px 4px 3px 4px;
+}
+
+.build-keep {
+    font-weight: bold;
+}
+
+.task-header {
+    display: block;
+    border-bottom: 1px #090 solid;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.task {
+    white-space: nowrap;
+}
+
+.subtasks {
+    padding-left: 1em;
+}
+
+.main-table {
+}
+
+div.dashboard {
+    width: 100%;
+    clear:both;
+}
+
+.pane  {
+    color: #5c3566;
+    margin-top: 4px;
+    white-space: nowrap;
+}
+.pane td {
+    padding: 4px 4px 3px 4px;
+}
+
+table.pane {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #d4bde6;
+}
+
+td.pane {
+    border: 1px solid #d4bde6;
+    padding: 3px 4px 3px 4px;
+    vertical-align: middle;
+}
+
+td.pane-header {
+    border: 1px solid #d4bde6;
+    background-color: #E2D7E7;
+    font-weight: bold;
+}
+
+th.pane {
+    border: 1px solid #d4bde6;
+    font-weight: bold;
+}
+
+.bigtable{
+    color: #5c3566;
+}
+
+.bigtable tr {
+    border: 1px solid #d4bde6;
+    padding: 3px 4px 3px 4px;
+}
+
+.bigtable tr:hover {
+    background-color: #fbf7fc;
+}
+
+.bigtable th {
+    font-weight: bold;
+    border: none;
+    background-color: #E2D7E7;
+    padding: 3px 4px 3px 4px;
+}
+
+.bigtable td {
+    vertical-align: middle;
+    padding: 3px 4px 3px 4px;
+}
+
+.smallfont {
+    font-size: 9px;
+}
+
+#foldertab {
+    padding: 4px 0;
+    margin-left: 0;
+    border-bottom: 1px solid #090;
+    font: bold 12px Verdana, sans-serif;
+}
+
+#foldertab li {
+    list-style: none;
+    margin: 0;
+    display: inline;
+}
+
+#foldertab li a {
+    padding: 4px 0.5em;
+    margin-left: 3px;
+    border: 1px solid #d4bde6;
+    border-bottom: none;
+    background: #090;
+    text-decoration: none;
+}
+
+#foldertab li a:link { color: white; }
+#foldertab li a:visited { color: white; }
+
+#foldertab li a:hover {
+    color: white;
+    background: #6c0;
+    border-color: #6c0;
+}
+
+#foldertab li a#current {
+    background: white;
+    border-bottom: 1px solid white;
+    color: black;
+}
+
+.changeset-message {
+    border: 1px solid #d4bde6;
+    background: #eed;
+    padding: 4px;
+    white-space: normal;
+}
+
+.disabledJob {
+    color: gray;
+}
+
+.spinner {
+    padding-left: 32px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-image: url("../images/spinner.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.spinner-right {
+    padding-right: 32px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-image: url("../images/spinner.gif");
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+#login-field {
+    vertical-align: middle;
+    padding-right: 1em;
+    width:1px;
+}
+
+#login-field SPAN {
+    white-space:nowrap;
+    color: white;
+}
+
+#login-field A {
+    /*
+      link inside login field should be always white.
+      If I set this to inherit, it won't work in IE7
+    */
+    color: white;
+}
+
+div.behavior-loading {
+    position: absolute; width: 80%; height:100%;
+    background-color: #e4e4e4; text-align: center; font-size: 300%;
+    opacity: 0.5;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: "alpha(opacity=50)";
+}
+
+/* ======================== error/warning message (mainly in the form.) Use them on block elements ======================== */
+.error {
+    color: #CC0000;
+    font-weight: bold;
+    padding-left: 20px;
+    min-height: 16px;
+    background-image: url("../images/16x16/error.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+
+.error-inline {
+    color: #CC0000;
+    font-weight: bold;
+}
+
+.warning {
+    color: #C4A000;
+    font-weight: bold;
+    padding-left: 20px;
+    min-height: 16px;
+    background-image: url( "../images/16x16/warning.png" );
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+
+.warning-inline {
+    color: #C4A000;
+    font-weight: bold;
+}
+
+.info {
+    color: black;
+    font-weight: bold;
+    padding-left: 20px;
+    min-height: 16px;
+    background-image: url( "../images/16x16/go-next.png" ); /* TODO: get a better icon */
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+
+.icon16x16 {
+    width: 16px;
+    height: 16px;
+}
+
+.icon24x24 {
+    width: 24px;
+    height: 24px;
+}
+
+.icon32x32 {
+    width: 32px;
+    height: 32px;
+}
+
+/* ====================== help ===================================== */
+
+.help {
+    display: none;  /* hidden until loaded */
+    border: 1px solid #d4bde6;
+    background-color: #f5f0f9;
+    padding: 1em;
+    margin-left: 15px;
+    margin-bottom: 1em;
+    border-radius: 4px;
+}
+
+.help-area {
+    /* this marker class is used by JavaScript to locate the area to display help text. */
+}
+
+#jdkInstallInfo{
+    border: 1px solid #d4bde6;
+    background-color: #f5f0f9;
+    padding: 1em;
+    margin-left: 15px;
+    margin-bottom: 1em;
+    border-radius: 4px;
+}
+
+/* ====================== project view tab bar ===================================== */
+#viewList {
+    color: #5c3566;
+    border: none;
+    margin-bottom: 0px;
+    width: 100%;
+    white-space: nowrap;
+}
+#viewList td {
+    padding: 0px;
+}
+#viewList td.inactive {
+    border: solid 1px #d4bde6;
+    border-bottom-color: #D4BDE6;
+}
+#viewList td.inactive:hover {
+    background-color: #d4bde6;
+}
+#viewList td.inactive a {
+    text-decoration: none;
+}
+#viewList td.noleft {
+    border-left: none;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+#viewList td.noright {
+    border-right: none;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+#viewList td.active {
+    border: solid 1px #d4bde6;
+    padding: 0.5em;
+    border-bottom: none;
+    vertical-align:middle;
+    background-color: #E2D7E7;
+    font-weight: bold;
+    white-space: nowrap;
+    border-top-left-radius:  4px;
+    border-top-right-radius: 4px;
+}
+#viewList td.filler {
+    border: none;
+    border-bottom: solid 1px #d4bde6;
+    width: 100%;
+    text-align: right;
+}
+#viewList a {
+    display: block;
+    padding: 0.5em;
+    white-space: nowrap;
+}
+
+/* ============================ Projct Status Table ========================== */
+
+#projectStatusDiv{
+    background-color: #fffdfb;
+    border-right-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    border-right-color: #d4bde6;
+    border-left-color: #d4bde6;
+    border-bottom-color: #d4bde6;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#projectstatus .bigtable{
+    color: #5c3566;
+}
+
+#projectstatus tr {
+    border: none;
+    border-bottom: 1px dotted #d4bde6;
+    padding: 3px 4px 3px 4px;
+}
+
+#projectstatus th {
+    text-align: left;
+    background-color: #f7f1fb;
+}
+
+
+/* ============================ Projct Status Table ========================== */
+
+#nodeStatusDiv{
+    background-color: #fffdfb;
+    border: 1px solid #d4bde6;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+#nodeStatus{
+    color: #5c3566;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#nodeStatus th {
+    text-align: left;
+    background-color: #f7f1fb;
+}
+
+#nodeStatus tr {
+    border: none;
+    border-bottom: 1px dotted #d4bde6;
+    padding: 3px 4px 3px 4px;
+}
+
+#nodeStatus td{
+    padding: 3px 4px;
+    vertical-align: middle;
+}
+
+/* ============================ Builds Status Table ========================== */
+
+#buildStatusDiv{
+    background-color: #fffdfb;
+    border: 1px solid #d4bde6;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+#buildStatus{
+    color: #5c3566;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#buildStatus th {
+    text-align: left;
+    background-color: #f7f1fb;
+}
+
+#buildStatus tr {
+    border: none;
+    border-bottom: 1px dotted #d4bde6;
+    padding: 3px 4px 3px 4px;
+}
+
+#buildStatus td{
+    padding: 3px 4px;
+    vertical-align: middle;
+}
+
+/* ============================ System Information Table ========================== */
+
+.propertyTable td{
+    white-space: normal;
+}
+
+#systemInfo td{
+    white-space: normal;
+}
+
+/* ============================ parameters form ========================== */
+
+table.parameters {
+    border-collapse: collapse;
+}
+
+table.parameters > tbody > tr:first-child > td {
+    padding-top: 4px;
+}
+
+table.parameters .setting-description {
+    padding-bottom: 4px;
+}
+
+table.parameters > tbody:hover {
+    background-color: #f0f0f0;
+}
+
+/* ============================ health report ========================== */
+
+.healthReport a {
+    text-decoration: none;
+}
+
+.healthReport div.healthReportDetails {
+    display: none;
+}
+
+.healthReport:hover, .healthReport.hover { /* fix IE6 bug with :hover */
+    background: transparent;
+}
+
+.healthReport:hover div.healthReportDetails, .healthReport.hover div.healthReportDetails {
+    display: block;
+    position: absolute;
+    background-color: #ffe;
+    border: 1px solid #d4bde6;
+    margin-left: 32px; /* move it across a bit */
+    z-index: 26;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-radius: 4px;
+}
+
+.healthReport div.healthReportDetails table {
+    border-collapse: collapse;
+    width: 450px; /* fix IE bug with width */
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    border-top-style: none;
+}
+
+.healthReport div.healthReportDetails tr {
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    border-top-style: none;
+}
+
+.healthReport div.healthReportDetails th {
+    font-weight: bold;
+    border: none;
+    background-color: #f8f4fa;
+    padding: 3px 4px 3px 4px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: #d4bde6;
+}
+
+/* ========================= Job Queue pane ========================= */
+
+#buildQueue{
+    border: 1px solid #d4bde6;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+#buildQueueTbl{
+    margin: 0px;
+    border: none;
+}
+
+#buildQueue td.pane-header {
+    border: none;
+}
+
+#buildQueue td.pane {
+    border: none;
+}
+
+#buildQueueTbl a.cancelAll:link {
+    color: #962c3c;
+    text-decoration: underline;
+}
+
+#buildQueueTbl a.cancelAll:visited{
+    color: #962c3c;
+    text-decoration: underline;
+}
+
+/* ========================= Executor Status pane ========================= */
+
+#executors{
+    margin-top: 10px;
+    border: 1px solid #d4bde6;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+#executorsTbl{
+    margin: 0px;
+    border: none;
+}
+
+#executors div.header {
+    border: none;
+    background-color: #E2D7E7;
+    font-weight: bold;
+    padding: 5px;
+}
+
+#executors td.pane {
+    border: none;
+}
+
+#executors th.pane {
+    margin-top: 3px;
+    border: none;
+    background-color: #f3edf6;
+}
+
+/* ========================= build history ========================= */
+
+#buildHistoryDiv{
+    border: 1px solid #d4bde6;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+#buildHistory{
+    margin: 0px;
+    border: none;
+}
+
+#buildHistory td.pane-header {
+    border: none;
+}
+
+#buildHistory td.pane {
+    border: none;
+}
+
+#buildHistory .build-rss {
+    padding: 3px 4px 3px 4px;
+    background-color: #e6deee;
+}
+
+#buildHistory .healthReport {
+    display: inline;
+    margin-right: 1em;
+}
+
+#buildHistory tr.no-wrap td.middle-align {
+    padding: 0;
+}
+
+#buildHistory td.desc {
+    padding: 0;
+    white-space: normal;
+}
+
+/* ========================= editable combobox style ========================= */
+.comboBoxList {
+    border: 1px solid #d4bde6;
+    overflow: visible;
+    color: MenuText;
+    background-color: Menu;
+}
+.comboBoxSelectedItem {
+    background-color: #736f93;
+    color: HighlightText;
+}
+.combobox-values {
+    display: none;
+}
+
+
+/* ========================= directory tree ========================= */
+.parentPath {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.dirTree li {
+    list-style: none;
+}
+
+.dirTree .rootIcon {
+    margin-right: 1em;
+}
+
+TABLE.fileList {
+    margin-left: 2em;
+    padding: 0;
+}
+
+TABLE.fileList TD {
+    padding: 0;
+}
+
+TABLE.fileList TD.fileSize {
+    padding-left: 2em;
+    text-align: right;
+    color: #888;
+}
+
+
+
+/* ========================= test result ========================= */
+.result-passed {
+    color: #3465a4;
+}
+
+.result-skipped {
+    color: #ddbb00;
+}
+
+.result-fixed {
+    color: #3465a4;
+    font-weight: bold;
+}
+
+.result-failed {
+    color: #ef2929;
+}
+
+.result-regression {
+    color: #ef2929;
+    font-weight: bold;
+}
+
+.test-trend-caption {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #7b5495;
+}
+
+
+
+/* ========================= sortable table ========================= */
+table.sortable a.sortheader {
+    text-decoration: none;
+    color: #5c3566;
+    display: block;
+}
+table.sortable span.sortarrow {
+    color: black;
+    text-decoration: none;
+}
+
+
+
+
+/* ========================= fingerprint ========================= */
+.md5sum {
+    text-align: right;
+}
+
+.fingerprint-summary-header {
+    font-size: 1.2em;
+    vertical-align: middle;
+}
+
+TABLE.fingerprint-in-build TD {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+
+
+
+/* ========================= plugin manager ========================= */
+#plugins {
+    margin-top: 0;
+    border-top: none;
+}
+
+#pluginsAdv tr:hover {
+    background-color: inherit;
+}
+
+#plugins tr.already-upgraded {
+    background-color: #e8eeee;
+}
+
+
+/* ========================= repeatable elements ========================= */
+
+.repeated-chunk .show-if-last      { visibility: hidden; }
+.repeated-chunk.last .show-if-last { visibility: visible; }
+
+.repeated-chunk .show-if-not-last      { visibility: visible; }
+.repeated-chunk.last .show-if-not-last { visibility: hidden; }
+
+.repeated-chunk .show-if-not-only      { visibility: visible; }
+.repeated-chunk.only .show-if-not-only { visibility: hidden; }
+
+/* == nested erpeatable elements / 2 deep == */
+.repeated-chunk .repeated-chunk .show-if-last      { visibility: hidden; }
+.repeated-chunk .repeated-chunk.last .show-if-last { visibility: visible; }
+
+.repeated-chunk .repeated-chunk .show-if-not-last      { visibility: visible; }
+.repeated-chunk .repeated-chunk.last .show-if-not-last { visibility: hidden; }
+
+.repeated-chunk .repeated-chunk .show-if-not-only      { visibility: visible; }
+.repeated-chunk .repeated-chunk.only .show-if-not-only { visibility: hidden; }
+
+/* == nested erpeatable elements / 3 deep == */
+.repeated-chunk .repeated-chunk .repeated-chunk .show-if-last      { visibility: hidden; }
+.repeated-chunk .repeated-chunk .repeated-chunk.last .show-if-last { visibility: visible; }
+
+.repeated-chunk .repeated-chunk .repeated-chunk .show-if-not-last      { visibility: visible; }
+.repeated-chunk .repeated-chunk .repeated-chunk.last .show-if-not-last { visibility: hidden; }
+
+.repeated-chunk .repeated-chunk .repeated-chunk .show-if-not-only      { visibility: visible; }
+.repeated-chunk .repeated-chunk .repeated-chunk.only .show-if-not-only { visibility: hidden; }
+
+/*
+    <DIV>s marked with to-be-removed is used in conjunction with repetable.jelly and hetero-list.jelly
+    and represents a master copy that gets pulled out from HTML, then inserted later upon demand multiple times
+    when the user does "Add".
+*/
+DIV.to-be-removed { display: none; }
+
+/* ========================= Other form related CSS ========================= */
+
+.row-set-end { display: none; }
+
+/* ========================= Yahoo UI style adjustments ========================= */
+.ygtvlabel, .ygtvlabel:link, .ygtvlabel:visited, .ygtvlabel:hover {
+    color: inherit;
+}
+
+DIV.yahooTree td {
+    vertical-align: middle;
+}
+
+.yui-tt {
+    border: 1px solid #d4bde6 !important;
+    background-color: #FFFFFF !important;
+    padding: 2px !important;
+    font-family: inherit !important;
+    color: inherit !important;
+}
+
+.yui-skin-sam .yui-tt .bd {
+    border: none !important;
+    background-color: #FFF !important;
+}
+/* ========================= search box at the top-right of the page ========================= */
+#search-box {
+    background: white url(../images/16x16/search.png) no-repeat 2px center;
+    padding-left: 20px;
+    padding-top: 5px;
+    width: 15em;
+    position: static; 
+}
+
+#search-box.defaulted {
+    color: gray;
+}
+
+#search-box-completion {
+    text-align: left;
+    width:25em;
+    position: absolute;
+    z-index: 999;
+}
+
+#search-box-completion .yui-ac-content {
+    border: 1px solid #d4bde6;
+    width:25em;
+    background-color: white;
+    overflow: hidden;
+}
+
+#search-box-completion UL {
+    padding: 0 0;
+    width: 100%;
+    margin: 0 0;
+    list-style: none;
+}
+#search-box-completion LI {
+    padding-left:20px;
+    white-space:nowrap;
+}
+#search-box-completion LI.yui-ac-highlight {
+    background: #729FCF;
+}
+#search-box-minWidth {
+    position:absolute;
+    visibility: hidden;
+    width:15em;
+}
+
+#search-box-sizer {
+    position:absolute;
+    visibility: hidden;
+}
+
+
+/* ========================= resizable text area ========================= */
+
+TEXTAREA {
+    margin-bottom: 0;
+}
+DIV.textarea-handle {
+    height: 5px;
+    font-size: 0;
+    background: #EEE url(../images/textarea-handle.gif) no-repeat 50% 1px;
+    border: 1px solid #d4bde6;
+    border-top: none;
+    cursor: s-resize;
+}
+TEXTAREA.rich-editor {
+    visibility: hidden;
+}
+
+/* ========================= hover notification ========================= */
+
+#hoverNotification {
+    visibility:hidden;
+    background-color: white;
+    border: 1px solid #d4bde6;
+    padding: 0.5em;
+}
+
+/* ========================= D&D support in heterogenous/repeatable lists = */
+
+.hetero-list-container .dd-handle, .repeated-container .dd-handle {
+    cursor: move;
+    background-image: url(../images/grip.png);
+    background-repeat: repeat-y;
+    padding-left: 20px;
+}
+
+/* ========================= plugin update center ========================= */
+
+#plugins .excerpt {
+    white-space: normal;
+    margin-top: 0.5em;
+    padding-left: 2em;
+    color: #888a85;
+}
+
+#plugins .compatWarning {
+    white-space: normal;
+    margin-top: 0.5em;
+    padding-left: 2em;
+    color: #FF0000;
+}
+
+/* ========================= progress bar ========================= */
+
+table.progress-bar {
+    border-collapse: collapse;
+    border: 1px solid #d4bde6;
+    height: 6px;
+    width: 100px;
+    clear: none;
+}
+
+table.progress-bar tr.unknown {
+    background-image:url(../images/progress-unknown.gif);
+}
+
+td.progress-bar-done {
+    background-color: #3465a4;
+}
+
+td.progress-bar-left {
+    background-color: #ffffff;
+}
+
+table.progress-bar.red {
+    border: 1px solid #cc0000;
+}
+
+table.progress-bar.red tr.unknown {
+    background-image:url(../images/progress-unknown-red.gif);
+}
+table.progress-bar.red td.progress-bar-done {
+    background-color: #cc0000;
+}
+
+/* ========================= YUI dialog ========================= */
+
+.dialog .hd {
+    font-size: 12px !important;
+}
+/* discovered this margin fix by a trial and error. This can very well be a totally wrong fix, or perhaps updating
+ to the latest YUI will fix this? */
+.dialog .hd {
+    margin: 0 !important;
+}
+
+.dialog .bd {
+    margin: 0 !important;
+}
+
+.dialog .ft {
+    margin: 0 !important;
+}
+
+/* ========================= tags/labels ================== */
+/* tag0 is the least important tag in a tag cloud */
+.tag0 { font-size: 1.00em; }
+.tag1 { font-size: 1.10em; }
+.tag2 { font-size: 1.20em; }
+.tag3 { font-size: 1.30em; }
+.tag4 { font-size: 1.40em; }
+.tag5 { font-size: 1.50em; }
+.tag6 { font-size: 1.60em; }
+.tag7 { font-size: 1.70em; }
+.tag8 { font-size: 1.80em; }
+.tag9 { font-size: 1.90em; }
+
+/* ========================= "Delete job, build and slave" dialog ================== */
+div.deleteSlaveDialog ul, div.deleteJobDialog ul {
+    text-align:left;
+    padding-left:80px;
+}
+
+div.deleteSlaveDialog div.radioButtons, div.deleteJobDialog div.radioButtons {
+    padding-bottom:10px;
+}
+
+div.deleteSlaveDialog h4, div.deleteJobDialog h4, div.deleteBuildConfirmationDialog h4, div.cannotDeleteBuildDialog h4 {
+    color: #F89938;
+}
+/* ======================== "Cascading project" ==========================*/
+/* --- Optional Block, Entry Block --- */
+td.modified,
+div.modified,
+tr.optional-block-start > td.modified,
+tr.modified > td.setting-name,
+tr.modified > td.setting-description,
+tr.modified > td.setting-main,
+tr.modified > td.setting-leftspace {
+    background-color: #FFE8C9;
+}
+
+.optional-reset {
+    float: left;
+    margin-left: -20px;
+    position: absolute;
+}
+/* --- Reset button container for hetero-list --- */
+.hetero-list-reset{
+    float: left;
+    margin-left: -20px;
+    position: absolute;
+}
+
+.section-reset{
+    float: left;
+    margin-left: -20px;
+    position: absolute;
+}
+.descriptor-separator {
+    height: 2px;
+}
+
+/* ======================= Job Configuration table ========================== */
+table.configure {
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+table.configure > td {
+    padding: 0px;
+}
+
+/* ======================= Job Description Hover ============================ */
+.jobDescription a {
+    text-decoration: none;
+}
+.jobDescription div.jobDescriptionDetails {
+    display: none;
+}
+.jobDescription:hover, .jobDescription.hover {
+    background: transparent;
+}
+.jobDescription:hover div.jobDescriptionDetails, .jobDescription.hover div.jobDescriptionDetails {
+    display: block;
+    position: absolute;
+    border: 1px solid #d4bde6;
+    background-color: white;
+    margin-left: 32px;
+    z-index: 26;
+}
+.jobDescription div.jobDescriptionDetails table {
+    border-collapse: collapse;
+    width: 450px;
+}
+
+#description{
+    margin: 5px;
+    padding: 5px;
+}
+
+
+.floatingBox{
+    border: 1px solid #d4bde6;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 5px;
+}
+/* -------------------- graph ------------------- */
+
+div.graph{
+    padding: 5px; 
+    border: 1px solid #d4bde6; 
+    border-radius: 4px;
+}
+
+/* --- Slaves Nodes/labels ---*/
+.axis-label {
+    padding-left: 5px;
+}
+.axis-child {
+    padding-left: 15px;
+}
+
+/* ========== Timeline ================== */
+
+.timeline {
+    border: 1px solid #d4bde6;
+    border-radius: 4px;
+    height: 250px;
+}
+
+.timeline-band-1 .timeline-ether-bg {
+    background-color: #e8d7f5!important;
+}
+
+.timeline-band-0 .timeline-ether-bg {
+    background-color: #f5edf6!important;
+}
+
+/* === Login Dialog ==== */
+
+#loginError, #loginMsg {
+    text-align:center;
+    font-weight:bold;
+}
+#loginError {
+    color: red;
+    display: none;
+}
+#loginMsg {
+    color: black;
+    display: none;
+}
+
+.config-section{
+    font-weight:bold; 
+    border-bottom: 1px solid #d4bde6;; 
+    margin-bottom:0.2em; 
+    margin-top:0.8em;
+    margin-bottom:0.8em;
+    color: #824f9f;
+    background-color: #f8f7f9;
+    padding: 2px
+}
+
+/* ============== Block of Regions shown or hidden dynamically ============== */
+
+.optionalBlockDiv{
+    display: none;
+    padding:10px;
+}
+
+.sectionBlockDiv{
+    padding:10px;
+}
+
+.radioBlockDiv{
+    display: none;
+    padding:10px;
+}
+
+.advancedBodyDiv{
+    display: none;
+}
+
+/* ================== jQuery UI button adjustments ========================== */
+
+.ui-button.ui-widget{
+     height: 20px;
+}
+
+.ui-button.ui-widget .ui-button-text{
+    font-size: 11px;
+}
+
+.ui-button-text-only .ui-button-text {
+    padding: 1px 5px 5px 5px;
+}
+
+input.ui-button {
+    padding: 1px 5px 5px 5px;
+}
+
+button.ui-button {
+    padding: 1px 5px 5px 5px;
+}
+

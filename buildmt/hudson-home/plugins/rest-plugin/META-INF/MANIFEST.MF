@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: wjprakash
+Build-Jdk: 1.7.0_60
+Plugin-Class: org.hudsonci.rest.plugin.RestPlugin
+Group-Id: org.hudsonci.plugins
+Short-Name: rest-plugin
+Long-Name: Hudson Rest Plugin
+Url: http://wiki.hudson-ci.org/display/HUDSON/REST+Plugin
+Plugin-Version: 2.2.2
+Hudson-Version: 3.3.0-M0
+Plugin-Developers: 
+

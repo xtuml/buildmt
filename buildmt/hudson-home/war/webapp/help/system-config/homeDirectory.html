@@ -1,0 +1,31 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+<div>
+  Hudson stores all the data files inside this directory in the file system.
+  You can change this by either:
+  <ol>
+    <li>
+      Using your web container's admin tool to set the <tt>HUDSON_HOME</tt>
+      environment entry.
+    <li>
+      Setting the environment variable <tt>HUDSON_HOME</tt> before launching
+      your web container.
+    <li>
+      (Not recommended) modifying web.xml in <tt>hudson.war</tt> (or its expanded image
+      in your web container).
+  </ol>
+  This value cannot be changed while Hudson is running.
+  This entry is mostly for you to make sure that your configuration is taking effect.
+</div>

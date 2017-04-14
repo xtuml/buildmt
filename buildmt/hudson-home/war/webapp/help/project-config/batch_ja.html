@@ -1,0 +1,25 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+﻿<div>
+  プロジェクトのビルドにWindowsのバッチスクリプトを起動します。
+  スクリプトは、ワークスペースをカレントディレクトリとして起動します。
+
+  テキストボックスに入力したテキストはバッチファイルとして起動し、
+  最後に起動したコマンドの%ERRORLEVEL%が0でない場合、ビルドが失敗したと判断します。
+
+  <p>
+  SCMにバッチファイルを既に登録済みの場合、バッチファイルのパスだけ記述して(ワークスペースからの相対パスで）、
+  それを実行するだけです。
+</div>
