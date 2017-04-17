@@ -1,0 +1,2 @@
+#Fri May 29 15:40:23 PDT 2015
+getPaths=\ Gets the files that are changed in this commit.\n\n @return can be empty but never null.\n

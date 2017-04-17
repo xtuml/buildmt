@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<maven-installation-descriptor>
+  <helpRedirect/>
+  <installations>
+    <maven-installation>
+      <name>Maven3</name>
+      <home></home>
+      <properties>
+        <hudson.tools.InstallSourceProperty>
+          <installers/>
+        </hudson.tools.InstallSourceProperty>
+      </properties>
+    </maven-installation>
+  </installations>
+</maven-installation-descriptor>

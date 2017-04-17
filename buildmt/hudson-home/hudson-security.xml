@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudsonSecurityManager>
+  <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
+    <disableSignup>true</disableSignup>
+    <enableCaptcha>false</enableCaptcha>
+    <notifyUser>false</notifyUser>
+  </securityRealm>
+  <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy"/>
+  <useSecurity>true</useSecurity>
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter"/>
+  <slaveAgentPort>0</slaveAgentPort>
+</hudsonSecurityManager>

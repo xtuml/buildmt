@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: winstonp
+Build-Jdk: 1.6.0_33
+Group-Id: org.hudsonci.plugins
+Short-Name: birt-charts
+Long-Name: Hudson BIRT Charts Plugin
+Url: http://wiki.hudson-ci.org/display/HUDSON/BIRT+Chart+plugin
+Plugin-Version: 3.0.3
+Hudson-Version: null
+Plugin-Developers: Winston Prakash:wjprakash:winston.prakash@gmail.com
+
