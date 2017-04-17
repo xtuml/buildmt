@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Publish the BridgePoint build artifacts to distribution servers</description>
+  <project-properties class="concurrent-hash-map">
+    <entry>
+      <string>builders</string>
+      <describable-list-property>
+        <originalValue class="hudson.util.DescribableList">
+          <hudson.tasks.Shell>
+            <disabled>false</disabled>
+            <description>Upload to S3</description>
+            <command>export ARCHIVEDIR=/build/buildmt/hudson-home/jobs/BridgePoint/lastSuccessful/archive
+export DATADIR=$ARCHIVEDIR/bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products
+export BPLOG=${DATADIR}/buildfiles.html
+
+ver=$(grep -o &quot;[0-9]\.[0-9]\.[0-9]&quot; /tmp/buildinfo/about.mappings)
+curdate=$(grep -o &quot;[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]&quot; /tmp/buildinfo/about.mappings)
+#curdate=$(TZ=&apos;America/New_York&apos; date +&quot;%F %R&quot;)
+
+echo &quot;&quot; &gt; ${BPLOG}
+
+cd ${DATADIR}
+echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;BridgePoint build&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;&quot;  &gt;&gt; ${BPLOG}
+echo &quot;Last Build:&quot; &gt;&gt; ${BPLOG}
+echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+echo &quot;Version: $ver&quot; &gt;&gt; ${BPLOG}
+echo &quot;Build ID: $curdate EDT&quot; &gt;&gt; ${BPLOG}
+#echo &quot; &quot; &gt;&gt; ${BPLOG}
+#echo &quot;Files:&quot; &gt;&gt; ${BPLOG}
+#echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+#ls -l &gt;&gt; ${BPLOG}
+echo &quot; &quot; &gt;&gt; ${BPLOG}
+echo &quot;MD5 Sums:&quot; &gt;&gt; ${BPLOG}
+echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+md5sum *.zip &gt;&gt; ${BPLOG}
+echo &quot; &quot; &gt;&gt; ${BPLOG}
+echo &quot;Links:&quot; &gt;&gt; ${BPLOG}
+echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+echo &quot;&lt;a href=&quot;org.xtuml.bp.product-linux.gtk.x86_64.zip&quot;&gt;Linux 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-macosx.cocoa.x86_64.zip&quot;&gt;Mac 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86.zip&quot;&gt;Windows 32-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86_64.zip&quot;&gt;Windows 64-bit&lt;/a&gt;&lt;br&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot; &gt;&gt; ${BPLOG}
+export TEST_REPORT=$ARCHIVEDIR/org.xtuml.bp.releng.parent/target/site/surefire-report.html
+if [ ! -f $TEST_REPORT ]; then
+  export TEST_REPORT=/build/buildmt/hudson-home/jobs/BridgePoint/workspace/bridgepoint/releng/org.xtuml.bp.releng.parent/target/site/surefire-report.html
+fi
+if [ -f $TEST_REPORT ]; then
+  cp  $TEST_REPORT $DATADIR
+  echo &quot; &quot; &gt;&gt; ${BPLOG}
+  echo &quot;Testing:&quot; &gt;&gt; ${BPLOG}
+  echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+  echo &quot;&lt;a href=&quot;surefire-report.html&quot;&gt;Unit Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
+fi
+
+export AWS_CONFIG_FILE=/build/buildmt/awsconfig
+aws s3 sync ${DATADIR}/ s3://xtuml-releases/nightly-build/  --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers</command>
+          </hudson.tasks.Shell>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </describable-list-property>
+    </entry>
+    <entry>
+      <string>cleanWorkspaceRequired</string>
+      <boolean-property>
+        <originalValue class="boolean">true</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
+    </entry>
+    <entry>
+      <string>scm</string>
+      <scm-property>
+        <originalValue class="hudson.scm.NullSCM"/>
+        <propertyOverridden>false</propertyOverridden>
+      </scm-property>
+    </entry>
+    <entry>
+      <string>logRotator</string>
+      <log-rotator-property>
+        <originalValue class="hudson.tasks.LogRotator">
+          <daysToKeep>-1</daysToKeep>
+          <numToKeep>-1</numToKeep>
+          <artifactDaysToKeep>-1</artifactDaysToKeep>
+          <artifactNumToKeep>-1</artifactNumToKeep>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </log-rotator-property>
+    </entry>
+  </project-properties>
+  <keepDependencies>false</keepDependencies>
+  <createdBy>testuser</createdBy>
+  <creationTime>1482248768840</creationTime>
+  <properties/>
+  <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
+  <cascading-job-properties class="java.util.concurrent.CopyOnWriteArraySet"/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <concurrentBuild>false</concurrentBuild>
+  <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
+</project>
