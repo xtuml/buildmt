@@ -1,2 +1,6 @@
 war/
 secret.key
+.owner
+.cache
+.java
+.oracle_jre_usage

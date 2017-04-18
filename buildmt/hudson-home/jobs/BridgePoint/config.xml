@@ -110,11 +110,7 @@ git clone https://github.com/xtuml/models.git --branch master --depth 1
           <hudson.tasks.Shell>
             <disabled>true</disabled>
             <description>MASL Roundtrip Testing</description>
-            <command>rm -rf /build/buildmt/roundtrip/results
-/build/buildmt/roundtrip/install-bp.sh
-cd /build/buildmt/roundtrip/models/masl/test
-git pull origin master
-xvfb-run ./regression_test -o ../../../results &lt; ./all_tests
+            <command>/build/buildmt/roundtrip/roundtrip.sh
 </command>
           </hudson.tasks.Shell>
         </originalValue>
