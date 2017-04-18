@@ -61,9 +61,9 @@ git clone https://github.com/xtuml/models.git --branch master --depth 1
               <pomFile>bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pomFile>
               <properties>
                 <entries>
-                  <entry name="maven.test.failure.ignore" value="${INCLUDE_TESTS}"/>
-                  <entry name="skipTests" value="!${INCLUDE_TESTS}"/>
                   <entry name="tycho.disableP2Mirrors" value="true"/>
+                  <entry name="skipTests" value="!${INCLUDE_TESTS}"/>
+                  <entry name="maven.test.failure.ignore" value="${INCLUDE_TESTS}"/>
                   <entry name="eclipse.home" value="/build/buildmt/BridgePoint"/>
                 </entries>
               </properties>
@@ -211,6 +211,7 @@ INCLUDE_TESTS=false
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <authToken>remoteStartBPBuild</authToken>
   <concurrentBuild>false</concurrentBuild>
   <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
 </project>
