@@ -4,7 +4,7 @@
 
 echo "Starting round trip."
 cd /build/buildmt/roundtrip
-if [[ -d BridgePoint ]]; then
+if [ -d BridgePoint ]; then
   echo "...removing stale BridgePoint."
   rm -rf BridgePoint
 fi
@@ -12,11 +12,11 @@ fi
 #./install-bp.sh
 echo "...unzipping last Successful BridgePoint."
 unzip -q ../hudson-home/jobs/BridgePoint/lastSuccessful/archive/bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products/org.xtuml.bp.product-linux.gtk.x86_64.zip
-if [[ -d results ]]; then
+if [ -d results ]; then
   echo "Removing stale results"
   rm -rf results
 fi
-if [[ -d models ]]; then
+if [ -d models ]; then
   echo "...refreshing the models repository."
   cd models/masl/test
   git pull origin master
