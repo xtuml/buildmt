@@ -4,5 +4,4 @@ releases/*
 staging/*
 work/*
 xtuml/*
-buildmt/roundtrip
 buildmt/BridgePoint
