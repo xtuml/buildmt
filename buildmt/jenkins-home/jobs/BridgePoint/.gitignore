@@ -3,5 +3,4 @@
 
 # Except
 !/config.xml
-!/jobs
-!/users
+!/.gitignore
