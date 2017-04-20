@@ -6,6 +6,7 @@ apt-get install -y git jenkins
 git clone https://github.com/leviathan747/buildmt.git --branch jenkins .
 chown -R jenkins .
 TMPFILE=`mktemp`
-sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TEMPFILE
+sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
 cp $TMPFILE /etc/default/jenkins
 /etc/init.d/jenkins start
+/etc/init.d/jenkins restart
