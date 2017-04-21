@@ -1,1 +1,1 @@
-workflow-aggregator
+jenkins-multijob-plugin
