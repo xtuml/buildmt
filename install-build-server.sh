@@ -10,6 +10,6 @@ sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/defaul
 cp $TMPFILE /etc/default/jenkins
 cd buildmt/jenkins-home
 while read p; do
-  bash install_jenkins_plugins.sh $p
+  bash install_jenkins_plugin.sh $p
 done < plugins.txt
 /etc/init.d/jenkins restart
