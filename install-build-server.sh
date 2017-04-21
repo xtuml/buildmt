@@ -8,5 +8,8 @@ chown -R jenkins .
 TMPFILE=`mktemp`
 sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
 cp $TMPFILE /etc/default/jenkins
+cd buildmt/jenkins-home
+sudo -u jenkins mkdir -p plugins
+sudo -u jenkins bash batch-install-jenkins-plugins.sh --plugins plugins.txt --plugindir plugins
 /etc/init.d/jenkins start
 /etc/init.d/jenkins restart
