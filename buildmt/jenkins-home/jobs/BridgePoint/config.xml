@@ -1,8 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
+  <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>10</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+  </properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
@@ -10,7 +24,83 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
-  <publishers/>
-  <buildWrappers/>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>git clone https://github.com/leviathan747/bridgepoint.git --branch 9438_build_mc --depth 1
+git clone https://github.com/xtuml/mc.git --branch master --depth 1
+git clone https://github.com/xtuml/packaging.git --branch master --depth 1
+git clone https://github.com/xtuml/pt_antlr.git --branch master --depth 1</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command># Update the build ID
+curdate=$(TZ=&apos;America/New_York&apos; date +&quot;%F %R&quot;)
+sed -i &quot;s/InternalBuild/$curdate/&quot; bridgepoint/src/org.xtuml.bp.pkg/about.mappings
+mkdir -p /tmp/buildinfo
+cp bridgepoint/src/org.xtuml.bp.pkg/about.mappings /tmp/buildinfo
+
+# copy preferences
+mkdir -p wse/.metadata/.plugins/org.eclipse.core.runtime/.settings
+cp -f bridgepoint/utilities/build/preferences/* wse/.metadata/.plugins/org.eclipse.core.runtime/.settings
+
+#AntLr
+cp -f pt_antlr/pt_antlr/antlr.jar bridgepoint/src/org.xtuml.bp.als/lib/antlr.jar
+
+# generation
+# import to workspace
+$JENKINS_HOME/../BridgePoint/bridgepoint -nosplash -data wse -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll bridgepoint/src
+
+# generate
+# 
+$JENKINS_HOME/../BridgePoint/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.core -prebuildOnly
+$JENKINS_HOME/../BridgePoint/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.als -prebuildOnly
+$JENKINS_HOME/../BridgePoint/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.ui.canvas -prebuildOnly</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Maven>
+      <targets>verify</targets>
+      <pom>bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pom>
+      <properties>maven.test.failure.ignore=${INCLUDE_TESTS}
+skipTests=!${INCLUDE_TESTS}
+tycho.disableP2Mirrors=true
+eclipse.home=/build/buildmt/BridgePoint</properties>
+      <usePrivateRepository>true</usePrivateRepository>
+      <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+      <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+      <injectBuildVariables>false</injectBuildVariables>
+    </hudson.tasks.Maven>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products/*.zip, bridgepoint/releng/org.xtuml.bp.releng.parent/target/site/*.html</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.32">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <EnvInjectBuildWrapper plugin="envinject@2.0">
+      <info>
+        <propertiesContent>XTUML_TEST_MODEL_REPOSITORY=${WORKSPACE}/models/test
+WORKSPACE2=${WORKSPACE}/wse
+SWT_GTK3=0
+INCLUDE_TESTS=false
+</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.27">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+    <hudson.plugins.xvnc.Xvnc plugin="xvnc@1.24">
+      <takeScreenshot>false</takeScreenshot>
+      <useXauthority>true</useXauthority>
+    </hudson.plugins.xvnc.Xvnc>
+  </buildWrappers>
 </project>

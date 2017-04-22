@@ -1,4 +1,7 @@
 #!/bin/bash
+useradd -p `perl -e 'print crypt("password", "salt"),"\n"'` jenkins
+groupadd build
+usermod -G build -a jenkins
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
 sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 apt-get update
@@ -8,8 +11,6 @@ chown -R jenkins .
 TMPFILE=`mktemp`
 sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
 cp $TMPFILE /etc/default/jenkins
-cd buildmt/jenkins-home
-while read p; do
-  bash install_jenkins_plugin.sh $p
-done < plugins.txt
+bash buildmt setup.sh
+chown -R jenkins:build .
 /etc/init.d/jenkins restart
