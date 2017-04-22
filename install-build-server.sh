@@ -11,6 +11,6 @@ chown -R jenkins .
 TMPFILE=`mktemp`
 sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
 cp $TMPFILE /etc/default/jenkins
-bash buildmt setup.sh
+bash buildmt/setup.sh
 chown -R jenkins:build .
 /etc/init.d/jenkins restart
