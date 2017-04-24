@@ -12,10 +12,6 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
-      <autoRebuild>false</autoRebuild>
-      <rebuildDisabled>false</rebuildDisabled>
-    </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
@@ -47,13 +43,13 @@ cp -f pt_antlr/pt_antlr/antlr.jar bridgepoint/src/org.xtuml.bp.als/lib/antlr.jar
 
 # generation
 # import to workspace
-$JENKINS_HOME/../BridgePoint/bridgepoint -nosplash -data wse -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll bridgepoint/src
+$BPHOME/bridgepoint -nosplash -data wse -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll bridgepoint/src
 
 # generate
 # 
-$JENKINS_HOME/../BridgePoint/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.core -prebuildOnly
-$JENKINS_HOME/../BridgePoint/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.als -prebuildOnly
-$JENKINS_HOME/../BridgePoint/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.ui.canvas -prebuildOnly</command>
+$BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.core -prebuildOnly
+$BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.als -prebuildOnly
+$BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.ui.canvas -prebuildOnly</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Maven>
       <targets>verify</targets>
@@ -79,7 +75,7 @@ eclipse.home=/build/buildmt/BridgePoint</properties>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.32">
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.33">
       <deleteDirs>false</deleteDirs>
       <cleanupParameter></cleanupParameter>
       <externalDelete></externalDelete>
@@ -90,6 +86,7 @@ eclipse.home=/build/buildmt/BridgePoint</properties>
 WORKSPACE2=${WORKSPACE}/wse
 SWT_GTK3=0
 INCLUDE_TESTS=false
+BPHOME=$JENKINS_HOME/../BridgePoint
 </propertiesContent>
         <secureGroovyScript plugin="script-security@1.27">
           <script></script>
