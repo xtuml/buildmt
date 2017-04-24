@@ -19,6 +19,7 @@ unzip BridgePoint_v6.2.4-linux.gtk.x86_64.zip
 TMPFILE=`mktemp`
 sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
 mv $TMPFILE BridgePoint/tools/mc/bin/CLI.sh
+chmod +x BridgePoint/tools/mc/bin/CLI.sh
 
 # install plugins
 cd $DIR/jenkins-home
