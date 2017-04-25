@@ -12,7 +12,7 @@ apt-get install -y git jenkins
 
 # clone buildmt repo
 BRANCH_NAME=jenkins
-git init --shared group
+git init --shared=group
 git remote add origin https://github.com/leviathan747/buildmt.git
 git checkout -b $BRANCH_NAME
 git branch -u origin/$BRANCH_NAME
