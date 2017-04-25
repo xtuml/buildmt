@@ -15,8 +15,8 @@ BRANCH_NAME=jenkins
 git init --shared=group
 git remote add origin https://github.com/leviathan747/buildmt.git
 git checkout -b $BRANCH_NAME
+git pull origin $BRANCH_NAME --depth 1
 git branch -u origin/$BRANCH_NAME
-git pull --depth 1
 
 # modify jenkins home and umask of jenkins process
 TMPFILE=`mktemp`
