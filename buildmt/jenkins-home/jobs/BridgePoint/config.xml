@@ -22,7 +22,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>git clone https://github.com/leviathan747/bridgepoint.git --branch 9438_build_mc --depth 1
+      <command>git clone https://github.com/xtuml/bridgepoint.git --branch master --depth 1
 git clone https://github.com/xtuml/mc.git --branch master --depth 1
 git clone https://github.com/xtuml/packaging.git --branch master --depth 1
 git clone https://github.com/xtuml/pt_antlr.git --branch master --depth 1</command>
