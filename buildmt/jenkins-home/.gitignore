@@ -8,4 +8,5 @@
 !/*.sh
 !/plugins.txt
 !/secrets
+!/.profile
 !/.gitignore

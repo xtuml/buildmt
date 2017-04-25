@@ -9,27 +9,28 @@ wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key 
 sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 apt-get update
 apt-get install -y git jenkins
+/etc/init.d/jenkins stop
 
 # clone buildmt repo
-chown jenkins:build .
-BRANCH_NAME=jenkins
-sudo -u jenkins git init --shared=group
-sudo -u jenkins git remote add origin https://github.com/leviathan747/buildmt.git
-sudo -u jenkins git checkout -b $BRANCH_NAME
-sudo -u jenkins git pull origin $BRANCH_NAME --depth 1
-sudo -u jenkins git branch -u origin/$BRANCH_NAME
+mkdir temp-git
+git clone https://github.com/leviathan747/buildmt.git --branch jenkins --depth 1 temp-git
+mv temp-git/* .
+mv temp-git/.[!.]* .
+rm -rf temp-git
 
-# modify jenkins home and umask of jenkins process
+# set jenkins user home dir
+usermod -d $PWD/buildmt/jenkins-home jenkins
+
+# modify jenkins home
 TMPFILE=`mktemp`
 sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
 cp $TMPFILE /etc/default/jenkins
-sed -r 's@^DAEMON_ARGS="(.*)"@DAEMON_ARGS="\1 --umask=002"@g' /etc/init.d/jenkins > $TMPFILE
-cp $TMPFILE /etc/init.d/jenkins
 
 # run setup
 bash buildmt/setup.sh
 
 # fixup permissions
+chmod -R g+rw .
 chown -R jenkins:build .
 
 # restart jenkins

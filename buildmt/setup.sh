@@ -8,8 +8,6 @@ cd $DIR
 bash get-package-dependencies.sh
 
 # configure vncserver
-/etc/init.d/jenkins stop
-usermod -d $DIR/jenkins-home jenkins
 chown -R jenkins $DIR/jenkins-home
 su jenkins -c 'printf "newpass\nnewpass\n\n" | vncpasswd'
 
