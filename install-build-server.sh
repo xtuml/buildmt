@@ -9,6 +9,7 @@ apt-get install -y git jenkins
 mkdir temp-git
 git clone https://github.com/leviathan747/buildmt.git --branch jenkins --depth 1 temp-git
 mv temp-git/* .
+mv temp-git/.[!.]* .
 rm -rf temp-git
 TMPFILE=`mktemp`
 sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
