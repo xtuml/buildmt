@@ -11,12 +11,12 @@ apt-get update
 apt-get install -y git jenkins
 
 # clone buildmt repo
-mkdir temp-git
-git clone https://github.com/leviathan747/buildmt.git --branch jenkins --depth 1 temp-git
-mv temp-git/* .
-mv temp-git/.[!.]* .
-rm -rf temp-git
-git config core.sharedRepository group
+BRANCH_NAME=jenkins
+git init --shared group
+git remote add origin https://github.com/leviathan747/buildmt.git
+git checkout -b $BRANCH_NAME
+git branch -u origin/$BRANCH_NAME
+git pull --depth 1
 
 # modify jenkins home and umask of jenkins process
 TMPFILE=`mktemp`
