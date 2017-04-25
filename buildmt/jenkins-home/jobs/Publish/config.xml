@@ -50,11 +50,11 @@ export DATADIR=data
 export BPLOG=${DATADIR}/buildfiles.html
 
 ver=$(grep -o &quot;[0-9]\.[0-9]\.[0-9]&quot; ${DATADIR}/about.mappings)
-curdate=$(grep -o &quot;[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]&quot; /tmp/buildinfo/about.mappings)
+curdate=$(grep -o &quot;[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]&quot; ${DATADIR}/about.mappings)
+rm ${DATADIR}/about.mappings
 
 echo &quot;&quot; &gt; ${BPLOG}
 
-cd ${DATADIR}
 echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;BridgePoint build&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;&quot;  &gt;&gt; ${BPLOG}
 echo &quot;Last Build:&quot; &gt;&gt; ${BPLOG}
 echo &quot;===============&quot; &gt;&gt; ${BPLOG}
@@ -67,7 +67,7 @@ echo &quot;Build ID: $curdate EDT&quot; &gt;&gt; ${BPLOG}
 echo &quot; &quot; &gt;&gt; ${BPLOG}
 echo &quot;MD5 Sums:&quot; &gt;&gt; ${BPLOG}
 echo &quot;===============&quot; &gt;&gt; ${BPLOG}
-md5sum *.zip &gt;&gt; ${BPLOG}
+md5sum $DATADIR/*.zip &gt;&gt; ${BPLOG}
 echo &quot; &quot; &gt;&gt; ${BPLOG}
 echo &quot;Links:&quot; &gt;&gt; ${BPLOG}
 echo &quot;===============&quot; &gt;&gt; ${BPLOG}
