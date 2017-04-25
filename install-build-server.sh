@@ -16,6 +16,7 @@ git clone https://github.com/leviathan747/buildmt.git --branch jenkins --depth 1
 mv temp-git/* .
 mv temp-git/.[!.]* .
 rm -rf temp-git
+git config core.sharedRepository group
 
 # modify jenkins home and umask of jenkins process
 TMPFILE=`mktemp`
