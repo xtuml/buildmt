@@ -46,13 +46,11 @@
     <hudson.tasks.Shell>
       <command>#!/bin/bash
 
-export ARCHIVEDIR=/build/buildmt/hudson-home/jobs/BridgePoint/lastSuccessful/archive
 export DATADIR=data
 export BPLOG=${DATADIR}/buildfiles.html
 
-ver=$(grep -o &quot;[0-9]\.[0-9]\.[0-9]&quot; /tmp/buildinfo/about.mappings)
+ver=$(grep -o &quot;[0-9]\.[0-9]\.[0-9]&quot; ${DATADIR}/about.mappings)
 curdate=$(grep -o &quot;[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]&quot; /tmp/buildinfo/about.mappings)
-#curdate=$(TZ=&apos;America/New_York&apos; date +&quot;%F %R&quot;)
 
 echo &quot;&quot; &gt; ${BPLOG}
 
@@ -74,12 +72,8 @@ echo &quot; &quot; &gt;&gt; ${BPLOG}
 echo &quot;Links:&quot; &gt;&gt; ${BPLOG}
 echo &quot;===============&quot; &gt;&gt; ${BPLOG}
 echo &quot;&lt;a href=&quot;org.xtuml.bp.product-linux.gtk.x86_64.zip&quot;&gt;Linux 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-macosx.cocoa.x86_64.zip&quot;&gt;Mac 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86.zip&quot;&gt;Windows 32-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86_64.zip&quot;&gt;Windows 64-bit&lt;/a&gt;&lt;br&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot; &gt;&gt; ${BPLOG}
-export TEST_REPORT=$ARCHIVEDIR/org.xtuml.bp.releng.parent/target/site/surefire-report.html
-if [ ! -f $TEST_REPORT ]; then
-  export TEST_REPORT=/build/buildmt/hudson-home/jobs/BridgePoint/workspace/bridgepoint/releng/org.xtuml.bp.releng.parent/target/site/surefire-report.html
-fi
+export TEST_REPORT=$DATADIR/surefire-report.html
 if [ -f $TEST_REPORT ]; then
-  cp  $TEST_REPORT $DATADIR
   echo &quot; &quot; &gt;&gt; ${BPLOG}
   echo &quot;Testing:&quot; &gt;&gt; ${BPLOG}
   echo &quot;&lt;br&gt;===============&quot; &gt;&gt; ${BPLOG}
@@ -91,7 +85,7 @@ if [ &quot;$BRANCH_BUILD&quot; == &quot;xtuml-master&quot; ]; then
   BRANCH_BUILD=&quot;nightly-build&quot;
 fi
 
-export AWS_CONFIG_FILE=/build/buildmt/awsconfig
+export AWS_CONFIG_FILE=$JENKINS_HOME/../awsconfig
 aws s3 sync ${DATADIR}/ s3://xtuml-releases/${BRANCH_BUILD}/  --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers</command>
     </hudson.tasks.Shell>
   </builders>

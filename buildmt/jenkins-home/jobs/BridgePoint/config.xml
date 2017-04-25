@@ -31,8 +31,6 @@ git clone https://github.com/xtuml/pt_antlr.git --branch master --depth 1</comma
       <command># Update the build ID
 curdate=$(TZ=&apos;America/New_York&apos; date +&quot;%F %R&quot;)
 sed -i &quot;s/InternalBuild/$curdate/&quot; bridgepoint/src/org.xtuml.bp.pkg/about.mappings
-mkdir -p /tmp/buildinfo
-cp bridgepoint/src/org.xtuml.bp.pkg/about.mappings /tmp/buildinfo
 
 # copy preferences
 mkdir -p wse/.metadata/.plugins/org.eclipse.core.runtime/.settings
@@ -66,7 +64,7 @@ eclipse.home=/build/buildmt/BridgePoint</properties>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products/*.zip, bridgepoint/releng/org.xtuml.bp.releng.parent/target/site/*.html</artifacts>
+      <artifacts>bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products/*.zip, bridgepoint/releng/org.xtuml.bp.releng.parent/target/site/*.html, bridgepoint/src/org.xtuml.bp.pkg/about.mappings</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
