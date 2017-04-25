@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
+  <actions/>
   <description>Publish BridgePoint to the AWS S3</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -34,11 +35,19 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
+    <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.38.1">
+      <project>BridgePoint</project>
+      <filter></filter>
+      <target>data</target>
+      <excludes></excludes>
+      <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+      <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
+    </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
       <command>#!/bin/bash
 
 export ARCHIVEDIR=/build/buildmt/hudson-home/jobs/BridgePoint/lastSuccessful/archive
-export DATADIR=$ARCHIVEDIR/bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products
+export DATADIR=data
 export BPLOG=${DATADIR}/buildfiles.html
 
 ver=$(grep -o &quot;[0-9]\.[0-9]\.[0-9]&quot; /tmp/buildinfo/about.mappings)
