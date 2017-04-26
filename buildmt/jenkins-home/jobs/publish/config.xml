@@ -36,7 +36,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.38.1">
-      <project>BridgePoint</project>
+      <project>bridgepoint</project>
       <filter></filter>
       <target>data</target>
       <excludes></excludes>
