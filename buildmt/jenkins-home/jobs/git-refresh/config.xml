@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Set up the git repositories on the proper fork and branch</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO</name>
+          <description>The github repository</description>
+          <defaultValue>bridgepoint</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>FORK</name>
+          <description>The github fork for this repository</description>
+          <defaultValue>xtuml</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>BRANCH</name>
+          <description>The branch for this repository</description>
+          <defaultValue>master</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>mkdir -p $GIT_WS
+if [[ -e $GIT_WS/$REPO ]]; then
+  # repo is pre-existing
+  echo &quot;Refreshing repository $REPO...&quot;
+  export GIT_DIR=$GIT_WS/$REPO/.git
+  export GIT_WORK_TREE=$GIT_WS/$REPO
+  REMOTES=`git remote`
+  if [[ $REMOTES != *&quot;$FORK&quot;* ]]; then
+    git remote add $FORK https://github.com/$FORK/$REPO.git
+  fi
+  git fetch $FORK $BRANCH --depth=1
+  git reset --hard
+  git clean -dxf .
+  git checkout $FORK/$BRANCH
+  git reset --hard
+  git clean -dxf .
+else
+  # clone repo into the git dir
+  echo &quot;Cloning repository $REPO...&quot;
+  git clone https://github.com/$FORK/$REPO.git --branch=$BRANCH --depth=1 $GIT_WS/$REPO
+  export GIT_DIR=$GIT_WS/$REPO/.git
+  export GIT_WORK_TREE=$GIT_WS/$REPO
+  git remote rename origin $FORK
+fi</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.33">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <EnvInjectBuildWrapper plugin="envinject@2.0">
+      <info>
+        <propertiesContent>GIT_WS=$JENKINS_HOME/../git</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.27">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+  </buildWrappers>
+</project>

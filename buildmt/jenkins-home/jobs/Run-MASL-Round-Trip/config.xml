@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <com.tikal.jenkins.plugins.multijob.MultiJobProject plugin="jenkins-multijob-plugin@1.24">
-  <description>Build BridgePoint and publish to S3</description>
+  <actions/>
+  <description>Run MASL round trip on the most recent nightly build</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.model.BuildDiscarderProperty>
@@ -21,10 +22,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
-      <phaseName>Build BridgePoint</phaseName>
+      <phaseName>Install BridgePoint</phaseName>
       <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
-          <jobName>bridgepoint</jobName>
+          <jobName>install-bp</jobName>
           <currParams>true</currParams>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
@@ -44,10 +45,39 @@
       <executionType>SEQUENTIALLY</executionType>
     </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
     <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
-      <phaseName>Publish BridgePoint</phaseName>
+      <phaseName>Refresh &apos;models&apos; repository</phaseName>
       <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
-          <jobName>publish</jobName>
+          <jobName>git-refresh</jobName>
+          <currParams>true</currParams>
+          <exposedSCM>false</exposedSCM>
+          <disableJob>false</disableJob>
+          <parsingRulesPath></parsingRulesPath>
+          <maxRetries>0</maxRetries>
+          <enableRetryStrategy>false</enableRetryStrategy>
+          <enableCondition>false</enableCondition>
+          <abortAllJob>true</abortAllJob>
+          <condition></condition>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+              <properties>REPO=models
+FORK=xtuml
+BRANCH=master</properties>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
+          <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+          <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+        </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+      </phaseJobs>
+      <continuationCondition>SUCCESSFUL</continuationCondition>
+      <executionType>SEQUENTIALLY</executionType>
+    </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+    <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+      <phaseName>Run MASL roundtrip</phaseName>
+      <phaseJobs>
+        <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <jobName>roundtrip</jobName>
           <currParams>true</currParams>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>

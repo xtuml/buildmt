@@ -8,5 +8,6 @@
 !/*.sh
 !/plugins.txt
 !/secrets
+!/hudson.tasks.Shell.xml
 !/.profile
 !/.gitignore
