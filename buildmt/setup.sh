@@ -5,11 +5,10 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # install package dependencies
 cd $DIR
-bash get-package-dependencies.sh
+sudo ./get-package-dependencies.sh
 
 # configure vncserver
-chown -R jenkins $DIR/jenkins-home
-su jenkins -c 'printf "newpass\nnewpass\n\n" | vncpasswd'
+printf "newpass\nnewpass\n\n" | vncpasswd
 
 # install bridgepoint
 cd $DIR
@@ -24,5 +23,5 @@ chmod +x BridgePoint/tools/mc/bin/CLI.sh
 # install plugins
 cd $DIR/jenkins-home
 while read p; do
-  bash install-jenkins-plugin.sh $p
+  ./install-jenkins-plugin.sh $p
 done < plugins.txt

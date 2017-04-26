@@ -3,6 +3,8 @@
 # add build group and jenkins user
 groupadd build
 useradd -p `perl -e 'print crypt("password", "salt"),"\n"'` -g build jenkins
+usermod -G sudo -a jenkins
+echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # install jenkins and git
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
@@ -27,13 +29,13 @@ TMPFILE=`mktemp`
 sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
 cp $TMPFILE /etc/default/jenkins
 
-# run setup
-bash buildmt/setup.sh
-
 # fixup permissions
 chmod -R g+rw .
 chown -R jenkins:build .
 echo "umask 002" >> /etc/profile
+
+# run setup
+su jenkins -c 'bash buildmt/setup.sh'
 
 # restart jenkins
 /etc/init.d/jenkins restart
