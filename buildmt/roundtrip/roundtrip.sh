@@ -28,4 +28,6 @@ fi
 echo "...running the regression_test."
 xvfb-run ./regression_test -o ../../../results < all_tests
 cd ../../..
+echo "...removing BridgePoint installation."
+rm -rf BridgePoint
 echo "Round trip complete."
