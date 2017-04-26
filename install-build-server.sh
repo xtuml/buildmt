@@ -28,6 +28,8 @@ usermod -d $PWD/buildmt/jenkins-home jenkins
 TMPFILE=`mktemp`
 sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
 cp $TMPFILE /etc/default/jenkins
+sed -r 's@^DAEMON_ARGS="(.*)"@DAEMON_ARGS="\1 --umask=002"@g' /etc/init.d/jenkins > $TMPFILE
+cp $TMPFILE /etc/init.d/jenkins
 
 # fixup permissions
 chmod -R g+rw .
