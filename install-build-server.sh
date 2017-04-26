@@ -17,6 +17,7 @@ git clone https://github.com/leviathan747/buildmt.git --branch jenkins --depth 1
 mv temp-git/* .
 mv temp-git/.[!.]* .
 rm -rf temp-git
+git config core.sharedRepository group
 
 # set jenkins user home dir
 usermod -d $PWD/buildmt/jenkins-home jenkins
@@ -32,6 +33,7 @@ bash buildmt/setup.sh
 # fixup permissions
 chmod -R g+rw .
 chown -R jenkins:build .
+echo "umask 002" >> /etc/profile
 
 # restart jenkins
 /etc/init.d/jenkins restart
