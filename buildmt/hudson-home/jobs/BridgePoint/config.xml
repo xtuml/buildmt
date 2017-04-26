@@ -10,10 +10,10 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description>Clone git repositories </description>
-            <command>git clone https://github.com/xtuml/bridgepoint.git --branch master --depth 1
-git clone https://github.com/xtuml/mc.git --branch master --depth 1
-git clone https://github.com/xtuml/packaging.git --branch master --depth 1
-git clone https://github.com/xtuml/pt_antlr.git --branch master --depth 1</command>
+            <command>git clone https://github.com/${FORK}/bridgepoint.git --branch ${BRANCH} --depth 1
+git clone https://github.com/${FORK}/mc.git --branch ${BRANCH} --depth 1
+git clone https://github.com/${FORK}/packaging.git --branch ${BRANCH} --depth 1
+git clone https://github.com/${FORK}/pt_antlr.git --branch ${BRANCH} --depth 1</command>
           </hudson.tasks.Shell>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
@@ -42,12 +42,15 @@ cp -f pt_antlr/pt_antlr/antlr.jar bridgepoint/src/org.xtuml.bp.als/lib/antlr.jar
 /build/buildmt/BridgePoint/CLI.sh Build -project org.xtuml.bp.ui.canvas -prebuildOnly</command>
           </hudson.tasks.Shell>
           <hudson.tasks.Shell>
-            <disabled>true</disabled>
+            <disabled>false</disabled>
             <description>Unit Test - Prepare the environment for unit testing</description>
-            <command>git clone https://github.com/xtuml/bptest --branch master --depth 1
-git clone https://github.com/xtuml/models.git --branch master --depth 1
-/build/buildmt/BridgePoint/Launcher.sh -nosplash -data wse -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll bptest/src
-/build/buildmt/BridgePoint/CLI.sh Build -project org.xtuml.bp.core.test -prebuildOnly
+            <command>#!/bin/bash
+if [ &quot;$INCLUDE_TESTS&quot; = &quot;true&quot; ]; then
+  git clone https://github.com/${FORK}/bptest --branch ${BRANCH} --depth 1
+  git clone https://github.com/${FORK}/models.git --branch ${BRANCH} --depth 1
+  /build/buildmt/BridgePoint/Launcher.sh -nosplash -data wse -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll bptest/src
+  /build/buildmt/BridgePoint/CLI.sh Build -project org.xtuml.bp.core.test -prebuildOnly
+fi
 </command>
           </hudson.tasks.Shell>
           <maven-builder>
@@ -55,7 +58,7 @@ git clone https://github.com/xtuml/models.git --branch master --depth 1
             <description>Build product (also builds tests if the INCLUDE_TESTS is true)</description>
             <config>
               <installationId>(Bundled)</installationId>
-              <goals>verify</goals>
+              <goals>install</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>true</privateTmpdir>
               <pomFile>bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pomFile>
@@ -80,37 +83,25 @@ git clone https://github.com/xtuml/models.git --branch master --depth 1
               <toolChainsId>NONE</toolChainsId>
             </config>
           </maven-builder>
-          <maven-builder>
-            <disabled>true</disabled>
-            <description>Unit Test - Collect Results</description>
-            <config>
-              <installationId>(Bundled)</installationId>
-              <goals>surefire-report:report-only</goals>
-              <privateRepository>false</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="aggregate" value="true"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NEVER</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
           <hudson.tasks.Shell>
-            <disabled>true</disabled>
+            <disabled>false</disabled>
+            <description>Unit Test - Collect Results</description>
+            <command>#!/bin/bash
+if [ &quot;$INCLUDE_TESTS&quot; == &quot;true&quot; ]; then
+  export MAVEN_OPTS=&quot;-Xmx2g&quot;
+  orig_dir=$(pwd)
+  cd bridgepoint/releng/org.xtuml.bp.releng.parent
+  mvn -Daggregate=true surefire-report:report-only
+  cd $orig_dir
+fi</command>
+          </hudson.tasks.Shell>
+          <hudson.tasks.Shell>
+            <disabled>false</disabled>
             <description>MASL Roundtrip Testing</description>
-            <command>/build/buildmt/roundtrip/roundtrip.sh
+            <command>#!/bin/bash
+if [ &quot;$INCLUDE_TESTS&quot; == &quot;true&quot; ]; then
+  /build/buildmt/roundtrip/roundtrip.sh
+fi
 </command>
           </hudson.tasks.Shell>
         </originalValue>
@@ -142,6 +133,33 @@ git clone https://github.com/xtuml/models.git --branch master --depth 1
       </scm-property>
     </entry>
     <entry>
+      <string>parametersDefinitionProperties</string>
+      <copy-write-list-property>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.StringParameterDefinition>
+                <name>FORK</name>
+                <description>Describes the git fork to use for retrieving source</description>
+                <defaultValue>xtuml</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>BRANCH</name>
+                <description>Describes the git branch to use for retrieving source</description>
+                <defaultValue>master</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>INCLUDE_TESTS</name>
+                <description>Determines whether or not to including building and running the unit tests.</description>
+                <defaultValue>true</defaultValue>
+              </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </copy-write-list-property>
+    </entry>
+    <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
@@ -160,9 +178,26 @@ git clone https://github.com/xtuml/models.git --branch master --depth 1
         <originalValue class="hudson.plugins.setenv.SetEnvBuildWrapper">
           <localVarText>XTUML_TEST_MODEL_REPOSITORY=${WORKSPACE}/models/test
 WORKSPACE2=${WORKSPACE}/wse
-SWT_GTK3=0
-INCLUDE_TESTS=false
-</localVarText>
+SWT_GTK3=0</localVarText>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
+      <external-property>
+        <originalValue class="hudson.plugins.parameterizedtrigger.BuildTrigger">
+          <configs>
+            <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+              <configs>
+                <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+              </configs>
+              <projects>BridgePoint Publish</projects>
+              <condition>SUCCESS</condition>
+              <triggerWithNoParameters>false</triggerWithNoParameters>
+            </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          </configs>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
@@ -179,21 +214,6 @@ INCLUDE_TESTS=false
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </log-rotator-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-BuildTrigger</string>
-      <external-property>
-        <originalValue class="hudson.tasks.BuildTrigger">
-          <childProjects>BridgePoint Publish</childProjects>
-          <threshold>
-            <name>SUCCESS</name>
-            <ordinal>0</ordinal>
-            <color>GREEN</color>
-          </threshold>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>

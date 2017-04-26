@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: schristou88
+Build-Jdk: 1.6.0_33
+Group-Id: org.hudsonci.plugins
+Short-Name: groovy-support-plugin
+Long-Name: Groovy Support Plugin
+Url: http://hudson-ci.org/hudson-plugin-parent/groovy-support-plugin/
+Plugin-Version: 3.0.3
+Hudson-Version: null
+Plugin-Developers: 
+

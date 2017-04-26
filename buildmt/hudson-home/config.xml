@@ -5,11 +5,13 @@
   <mode>NORMAL</mode>
   <privacyMessage></privacyMessage>
   <instanceTag></instanceTag>
+  <configuredWorkspaceRoot></configuredWorkspaceRoot>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
+  <scriptSupport class="org.hudsonci.plugins.groovy.GroovyScriptSupport"/>
   <allowUnsecuredAction>false</allowUnsecuredAction>
-  <allowCli>false</allowCli>
+  <allowCli>true</allowCli>
   <clouds/>
   <slaves/>
   <quietPeriod>5</quietPeriod>

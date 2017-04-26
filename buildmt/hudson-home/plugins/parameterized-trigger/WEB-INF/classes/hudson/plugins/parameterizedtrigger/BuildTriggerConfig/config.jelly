@@ -1,0 +1,24 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <f:entry title="${%Projects to build}">
+	  <f:textbox name="buildTrigger.projects" value="${instance.projectsValue}"
+               checkUrl="'descriptorByName/hudson.tasks.BuildTrigger/check?value='+encodeURIComponent(this.value)"
+               autoCompleteDelimChar=","
+               field="projects"/>
+  </f:entry>
+  <f:entry title="${%Trigger when build is}" field="condition">
+    <f:enum>${it.displayName}</f:enum>
+  </f:entry>
+  <f:entry title="${%Trigger build without parameters}" field="triggerWithNoParameters" >
+	<f:checkbox checked="${instance.triggerWithNoParameters}"/>
+  </f:entry>
+
+  <f:block>
+    <f:hetero-list name="configs" hasHeader="true"
+                   descriptors="${descriptor.getBuilderConfigDescriptors()}"
+                   oneEach="true"
+                   items="${instance.configs}"
+                   addCaption="${%Add Parameters}"
+    />
+
+  </f:block>
+</j:jelly>

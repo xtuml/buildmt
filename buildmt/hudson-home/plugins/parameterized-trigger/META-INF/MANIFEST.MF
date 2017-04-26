@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: schristou88
+Build-Jdk: 1.6.0_33
+Plugin-Class: hudson.plugins.parameterizedtrigger.Plugin
+Group-Id: org.hudsonci.plugins
+Short-Name: parameterized-trigger
+Long-Name: Hudson Parameterized Trigger plugin
+Url: http://wiki.hudson-ci.org/display/HUDSON/Parameterized+Trigger+Pl
+ ugin
+Plugin-Version: 2.17-h-1
+Hudson-Version: 3.0.0-RC4
+Plugin-Dependencies: groovy-support-plugin:3.0.3,subversion:2.3.4-h-1;
+ resolution:=optional
+Plugin-Developers: Tom Huybrechts:huybrechts:,Kohsuke Kawaguchi:kohsuke:
+
