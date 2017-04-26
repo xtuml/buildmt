@@ -41,12 +41,11 @@
       <target>data</target>
       <excludes></excludes>
       <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+      <flatten>true</flatten>
       <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
     </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
-      <command>#!/bin/bash
-
-export DATADIR=data
+      <command>export DATADIR=data
 export BPLOG=${DATADIR}/buildfiles.html
 
 ver=$(grep -o &quot;[0-9]\.[0-9]\.[0-9]&quot; ${DATADIR}/about.mappings)
