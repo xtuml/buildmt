@@ -30,41 +30,34 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.5">
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.5">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.0">
+        <token>$USE_S3</token>
+      </condition>
+      <buildStep class="hudson.tasks.Shell">
+        <command>wget https://s3.amazonaws.com/xtuml-releases/nightly-build/org.xtuml.bp.product-linux.gtk.x86_64.zip</command>
+      </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-      <runCondition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.0">
-        <token>USE_S3</token>
-      </runCondition>
-      <conditionalbuilders>
-        <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.38.1">
-          <project>bridgepoint</project>
-          <filter></filter>
-          <target>bp-artifacts</target>
-          <excludes></excludes>
-          <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
-          <optional>true</optional>
-          <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
-        </hudson.plugins.copyartifact.CopyArtifact>
-      </conditionalbuilders>
-    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.5">
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-      <runCondition class="org.jenkins_ci.plugins.run_condition.logic.Not" plugin="run-condition@1.0">
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.5">
+      <condition class="org.jenkins_ci.plugins.run_condition.logic.Not" plugin="run-condition@1.0">
         <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition">
-          <token>USE_S3</token>
+          <token>$USE_S3</token>
         </condition>
-      </runCondition>
-      <conditionalbuilders>
-        <hudson.tasks.Shell>
-          <command>mkdir bp-artifacts
-cd bp-artifacts
-wget https://s3.amazonaws.com/xtuml-releases/nightly-build/org.xtuml.bp.product-linux.gtk.x86_64.zip</command>
-        </hudson.tasks.Shell>
-      </conditionalbuilders>
-    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+      </condition>
+      <buildStep class="hudson.plugins.copyartifact.CopyArtifact" plugin="copyartifact@1.38.1">
+        <project>bridgepoint</project>
+        <filter>org.xtuml.bp.product-linux.gtk.x86_64.zip</filter>
+        <target></target>
+        <excludes></excludes>
+        <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+        <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
+      </buildStep>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command>rm -rf $INSTALL_DIR
-unzip -d $INSTALL_DIR bp-artifacts/org.xtuml.bp.product-linux.gtk.x86_64.zip</command>
+unzip -d $INSTALL_DIR org.xtuml.bp.product-linux.gtk.x86_64.zip</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

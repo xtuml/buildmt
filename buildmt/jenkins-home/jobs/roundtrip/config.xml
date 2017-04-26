@@ -23,9 +23,17 @@
   <builders>
     <hudson.tasks.Shell>
       <command>echo &quot;...running the regression_test.&quot;
-sed &apos;s@BPINSTALL=&quot;.*&quot;@BPINSTALL=&quot;&apos;$BP_CANDIDATE&apos;&quot;@g&apos; $GIT_WS/models/masl/test/regression_test &gt; regression_test
-bash regression_test -o results &lt; $GIT_WS/models/masl/test/all_tests
-zip -r results.zip results/
+
+# set up path to installation
+sed &apos;s@^BPINSTALL=&quot;.*&quot;@BPINSTALL=&quot;&apos;$BP_CANDIDATE&apos;&quot;@g&apos; $GIT_WS/models/masl/test/regression_test &gt; regression_test
+cp regression_test $GIT_WS/models/masl/test/regression_test
+
+# run regression test
+bash $GIT_WS/models/masl/test/regression_test -o results &lt; $GIT_WS/models/masl/test/all_tests
+
+# zip up results
+zip -rq results.zip results/
+
 echo &quot;Round trip complete.&quot;</command>
     </hudson.tasks.Shell>
   </builders>
@@ -40,6 +48,11 @@ echo &quot;Round trip complete.&quot;</command>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.33">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <EnvInjectBuildWrapper plugin="envinject@2.0">
       <info>
         <propertiesContent>GIT_WS=$JENKINS_HOME/../git
