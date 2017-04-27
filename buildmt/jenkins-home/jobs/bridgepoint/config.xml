@@ -86,10 +86,16 @@ mvn -f $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent -Daggregate=true su
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <hudson.tasks.Shell>
+      <command>mkdir artifacts
+cp $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products/*.zip artifacts || :
+cp $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent/target/site/*.html artifacts || :
+cp $GIT_WS/bridgepoint/src/org.xtuml.bp.pkg/about.mappings artifacts || :</command>
+    </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>$GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products/*.zip, $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent/target/site/*.html, $GIT_WS/bridgepoint/src/org.xtuml.bp.pkg/about.mappings</artifacts>
+      <artifacts>artifacts/*</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
