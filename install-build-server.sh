@@ -30,6 +30,10 @@ sed 's@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/defaul
 cp $TMPFILE /etc/default/jenkins
 sed -r 's@^DAEMON_ARGS="(.*)"@DAEMON_ARGS="\1 --umask=002"@g' /etc/init.d/jenkins > $TMPFILE
 cp $TMPFILE /etc/init.d/jenkins
+
+# put in place git update script
+sed -r 's@(^.*)(\$SU -l \$JENKINS_USER.*i)@\1$SU -l $JENKINS_USER --shell=/bin/bash -c "'$PWD'/update-git.sh" || return 2\n\1\2@g' /etc/init.d/jenkins > $TMPFILE
+cp $TMPFILE /etc/init.d/jenkins
 systemctl daemon-reload
 
 # fixup permissions
