@@ -47,10 +47,11 @@
       </condition>
       <buildStep class="hudson.plugins.copyartifact.CopyArtifact" plugin="copyartifact@1.38.1">
         <project>bridgepoint</project>
-        <filter>org.xtuml.bp.product-linux.gtk.x86_64.zip</filter>
+        <filter>**/org.xtuml.bp.product-linux.gtk.x86_64.zip</filter>
         <target></target>
         <excludes></excludes>
         <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+        <flatten>true</flatten>
         <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
