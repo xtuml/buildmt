@@ -12,6 +12,15 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.BooleanParameterDefinition>
+          <name>INCLUDE_TESTS</name>
+          <description>Determines whether or not to including building and running the unit tests.</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
@@ -43,12 +52,23 @@ $BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.core -prebuildOnly
 $BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.als -prebuildOnly
 $BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.ui.canvas -prebuildOnly</command>
     </hudson.tasks.Shell>
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.5">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.0">
+        <token>$INCLUDE_TESTS</token>
+      </condition>
+      <buildStep class="hudson.tasks.Shell">
+        <command>$BPHOME/bridgepoint -nosplash -data wse -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll $GIT_WS/bptest/src
+$BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.core.test -prebuildOnly
+</command>
+      </buildStep>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Maven>
       <targets>verify</targets>
       <pom>$GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pom>
-      <properties>maven.test.failure.ignore=${INCLUDE_TESTS}
+      <properties>tycho.disableP2Mirrors=true
 skipTests=!${INCLUDE_TESTS}
-tycho.disableP2Mirrors=true
+maven.test.failure.ignore=${INCLUDE_TESTS}
 eclipse.home=$BPHOME</properties>
       <usePrivateRepository>true</usePrivateRepository>
       <settings class="jenkins.mvn.DefaultSettingsProvider"/>
