@@ -35,7 +35,7 @@ cp -f $GIT_WS/pt_antlr/pt_antlr/antlr.jar $GIT_WS/bridgepoint/src/org.xtuml.bp.a
 
 # generation
 # import to workspace
-$BPHOME/bridgepoint -nosplash -data wse -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll bridgepoint/src
+$BPHOME/bridgepoint -nosplash -data wse -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll $GIT_WS/bridgepoint/src
 
 # generate
 # 
