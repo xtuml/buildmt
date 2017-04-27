@@ -15,14 +15,9 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>FORK</name>
-          <description>Describes the fork that was used for the build to publish</description>
-          <defaultValue>nightly</defaultValue>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>BRANCH</name>
-          <description>Describes the branch that was used for the build to publish</description>
-          <defaultValue>build</defaultValue>
+          <name>FOLDER</name>
+          <description>S3 folder to publish BridgePoint to</description>
+          <defaultValue>nightly-build</defaultValue>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -79,13 +74,8 @@ if [ -f $TEST_REPORT ]; then
   echo &quot;&lt;br&gt;&lt;a href=&quot;surefire-report.html&quot;&gt;Unit Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
 fi
 
-BRANCH_BUILD=$FORK-$BRANCH
-if [ &quot;$BRANCH_BUILD&quot; == &quot;xtuml-master&quot; ]; then
-  BRANCH_BUILD=&quot;nightly-build&quot;
-fi
-
 export AWS_CONFIG_FILE=$JENKINS_HOME/../awsconfig
-aws s3 sync ${DATADIR}/ s3://xtuml-releases/${BRANCH_BUILD}/  --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers</command>
+aws s3 sync ${DATADIR}/ s3://xtuml-releases/${FOLDER}/  --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

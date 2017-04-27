@@ -22,22 +22,16 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>git clone https://github.com/xtuml/bridgepoint.git --branch master --depth 1
-git clone https://github.com/xtuml/mc.git --branch master --depth 1
-git clone https://github.com/xtuml/packaging.git --branch master --depth 1
-git clone https://github.com/xtuml/pt_antlr.git --branch master --depth 1</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
       <command># Update the build ID
 curdate=$(TZ=&apos;America/New_York&apos; date +&quot;%F %R&quot;)
-sed -i &quot;s/InternalBuild/$curdate/&quot; bridgepoint/src/org.xtuml.bp.pkg/about.mappings
+sed -i &quot;s/InternalBuild/$curdate/&quot; $GIT_WS/bridgepoint/src/org.xtuml.bp.pkg/about.mappings
 
 # copy preferences
 mkdir -p wse/.metadata/.plugins/org.eclipse.core.runtime/.settings
-cp -f bridgepoint/utilities/build/preferences/* wse/.metadata/.plugins/org.eclipse.core.runtime/.settings
+cp -f $GIT_WS/bridgepoint/utilities/build/preferences/* wse/.metadata/.plugins/org.eclipse.core.runtime/.settings
 
 #AntLr
-cp -f pt_antlr/pt_antlr/antlr.jar bridgepoint/src/org.xtuml.bp.als/lib/antlr.jar
+cp -f $GIT_WS/pt_antlr/pt_antlr/antlr.jar $GIT_WS/bridgepoint/src/org.xtuml.bp.als/lib/antlr.jar
 
 # generation
 # import to workspace
@@ -51,11 +45,11 @@ $BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.ui.canvas -prebuildOnly<
     </hudson.tasks.Shell>
     <hudson.tasks.Maven>
       <targets>verify</targets>
-      <pom>bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pom>
+      <pom>$GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pom>
       <properties>maven.test.failure.ignore=${INCLUDE_TESTS}
 skipTests=!${INCLUDE_TESTS}
 tycho.disableP2Mirrors=true
-eclipse.home=/build/buildmt/BridgePoint</properties>
+eclipse.home=$BPHOME</properties>
       <usePrivateRepository>true</usePrivateRepository>
       <settings class="jenkins.mvn.DefaultSettingsProvider"/>
       <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
@@ -85,6 +79,7 @@ WORKSPACE2=${WORKSPACE}/wse
 SWT_GTK3=0
 INCLUDE_TESTS=false
 BPHOME=$JENKINS_HOME/../BridgePoint
+GIT_WS=$JENKINS_HOME/../git
 </propertiesContent>
         <secureGroovyScript plugin="script-security@1.27">
           <script></script>
