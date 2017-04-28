@@ -27,6 +27,11 @@ if [ ! -e BridgePoint/bridgepoint ]; then
     chmod +x BridgePoint/tools/mc/bin/CLI.sh
 fi
 
+# download the cli
+if [ ! -e jenkins-cli.jar ]; then
+    wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+fi
+
 # install plugins
 cd $DIR/jenkins-home
 while read p; do
