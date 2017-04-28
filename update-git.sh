@@ -4,3 +4,4 @@ cd $DIR
 git reset --hard
 git clean -df .
 git pull
+buildmt/setup.sh

@@ -7,18 +7,25 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd $DIR
 sudo ./get-package-dependencies.sh
 
+# setup /etc/default/jenkins for email
+TMPFILE=`mktemp`
+sudo sed -r '/^JAVA_ARGS=.*-Dmail.*/b; s/^JAVA_ARGS="(.*)"/JAVA_ARGS="\1 -Xmx1024m -Dmail.smtp.starttls.enable=true"\nJENKINS_JAVA_OPTIONS="-Dmail.smtp.starttls.enable=true"/g' /etc/default/jenkins > $TMPFILE
+sudo cp $TMPFILE /etc/default/jenkins
+
 # configure vncserver
 printf "newpass\nnewpass\n\n" | vncpasswd
 
 # install bridgepoint
 cd $DIR
-wget http://s3.amazonaws.com/xtuml-releases/nightly-build/org.xtuml.bp.product-linux.gtk.x86_64.zip
-unzip org.xtuml.bp.product-linux.gtk.x86_64.zip
-mv org.xtuml.bp.product-linux.gtk.x86_64.zip BridgePoint
-TMPFILE=`mktemp`
-sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
-mv $TMPFILE BridgePoint/tools/mc/bin/CLI.sh
-chmod +x BridgePoint/tools/mc/bin/CLI.sh
+if [ ! -e BridgePoint/bridgepoint ]; then
+    wget http://s3.amazonaws.com/xtuml-releases/nightly-build/org.xtuml.bp.product-linux.gtk.x86_64.zip
+    unzip org.xtuml.bp.product-linux.gtk.x86_64.zip
+    mv org.xtuml.bp.product-linux.gtk.x86_64.zip BridgePoint
+    TMPFILE=`mktemp`
+    sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
+    mv $TMPFILE BridgePoint/tools/mc/bin/CLI.sh
+    chmod +x BridgePoint/tools/mc/bin/CLI.sh
+fi
 
 # install plugins
 cd $DIR/jenkins-home
