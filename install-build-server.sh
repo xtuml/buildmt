@@ -15,7 +15,7 @@ apt-get install -y git jenkins
 
 # clone buildmt repo
 mkdir temp-git
-git clone https://github.com/leviathan747/buildmt.git --branch jenkins --depth 1 temp-git
+git clone https://github.com/xtuml/buildmt.git --branch master --depth 1 temp-git
 mv temp-git/* .
 mv temp-git/.[!.]* .
 rm -rf temp-git
