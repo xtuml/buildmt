@@ -68,7 +68,7 @@ $BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.core.test -prebuildOnly
       <pom>$GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pom>
       <properties>tycho.disableP2Mirrors=true
 skipTests=!${INCLUDE_TESTS}
-maven.test.failure.ignore=${INCLUDE_TESTS}
+maven.test.failure.ignore=true
 eclipse.home=$BPHOME</properties>
       <usePrivateRepository>true</usePrivateRepository>
       <settings class="jenkins.mvn.DefaultSettingsProvider"/>
@@ -111,12 +111,11 @@ cp $GIT_WS/bridgepoint/src/org.xtuml.bp.pkg/about.mappings artifacts || :</comma
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <EnvInjectBuildWrapper plugin="envinject@2.0">
       <info>
-        <propertiesContent>XTUML_TEST_MODEL_REPOSITORY=${WORKSPACE}/models/test
+        <propertiesContent>GIT_WS=$JENKINS_HOME/../git
+XTUML_TEST_MODEL_REPOSITORY=$GIT_WS/models/test
 WORKSPACE2=${WORKSPACE}/wse
 SWT_GTK3=0
-INCLUDE_TESTS=false
 BPHOME=$JENKINS_HOME/../BridgePoint
-GIT_WS=$JENKINS_HOME/../git
 </propertiesContent>
         <secureGroovyScript plugin="script-security@1.27">
           <script></script>
