@@ -67,7 +67,7 @@ and installed automatically.
     * Note: if you are on a new AWS instance, you may want to mount the large
       block storage device to this directory  
 4. Start the build server install script  
-    * `curl https://raw.githubusercontent.com/leviathan747/buildmt/jenkins/install-build-server.sh | sudo bash`  
+    * `curl https://raw.githubusercontent.com/xtuml/buildmt/master/install-build-server.sh | sudo bash`  
 5. When the script completes, copy the file `awsconfig` into the
    `/build/buildmt` directory  
 
