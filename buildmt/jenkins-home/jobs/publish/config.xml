@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Publish BridgePoint to the AWS S3</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>FOLDER</name>
+          <description>S3 folder to publish BridgePoint to</description>
+          <defaultValue>nightly-build</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.38.1">
+      <project>bridgepoint</project>
+      <filter></filter>
+      <target>data</target>
+      <excludes></excludes>
+      <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+      <flatten>true</flatten>
+      <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
+    </hudson.plugins.copyartifact.CopyArtifact>
+    <hudson.tasks.Shell>
+      <command>export DATADIR=data
+export BPLOG=${DATADIR}/buildfiles.html
+
+ver=$(grep -o &quot;[0-9]\.[0-9]\.[0-9]&quot; ${DATADIR}/about.mappings)
+curdate=$(grep -o &quot;[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]&quot; ${DATADIR}/about.mappings)
+rm ${DATADIR}/about.mappings
+
+echo &quot;&quot; &gt; ${BPLOG}
+
+echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;BridgePoint build&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;&quot;  &gt;&gt; ${BPLOG}
+echo &quot;Last Build:&quot; &gt;&gt; ${BPLOG}
+echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+echo &quot;Version: $ver&quot; &gt;&gt; ${BPLOG}
+echo &quot;Build ID: $curdate EDT&quot; &gt;&gt; ${BPLOG}
+#echo &quot; &quot; &gt;&gt; ${BPLOG}
+#echo &quot;Files:&quot; &gt;&gt; ${BPLOG}
+#echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+#ls -l &gt;&gt; ${BPLOG}
+echo &quot; &quot; &gt;&gt; ${BPLOG}
+echo &quot;MD5 Sums:&quot; &gt;&gt; ${BPLOG}
+echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+md5sum $DATADIR/*.zip &gt;&gt; ${BPLOG}
+echo &quot; &quot; &gt;&gt; ${BPLOG}
+echo &quot;Links:&quot; &gt;&gt; ${BPLOG}
+echo &quot;===============&quot; &gt;&gt; ${BPLOG}
+echo &quot;&lt;a href=&quot;org.xtuml.bp.product-linux.gtk.x86_64.zip&quot;&gt;Linux 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-macosx.cocoa.x86_64.zip&quot;&gt;Mac 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86.zip&quot;&gt;Windows 32-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86_64.zip&quot;&gt;Windows 64-bit&lt;/a&gt;&lt;br&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot; &gt;&gt; ${BPLOG}
+export TEST_REPORT=$DATADIR/surefire-report.html
+if [ -f $TEST_REPORT ]; then
+  echo &quot; &quot; &gt;&gt; ${BPLOG}
+  echo &quot;Testing:&quot; &gt;&gt; ${BPLOG}
+  echo &quot;&lt;br&gt;===============&quot; &gt;&gt; ${BPLOG}
+  echo &quot;&lt;br&gt;&lt;a href=&quot;surefire-report.html&quot;&gt;Unit Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
+fi
+
+export AWS_CONFIG_FILE=$JENKINS_HOME/../awsconfig
+aws s3 sync ${DATADIR}/ s3://xtuml-releases/${FOLDER}/  --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>issues@onefact.net</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.57.2">
+      <recipientList>keith.brown@onefact.net,robert.mulvey@onefact.net,cortland.starrett@onefact.net,travis.london@onefact.net,levi.starrett@onefact.net</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+        <hudson.plugins.emailext.plugins.trigger.UnstableTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.UnstableTrigger>
+      </configuredTriggers>
+      <contentType>text/html</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT #9467</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>true</attachBuildLog>
+      <compressBuildLog>true</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.33">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
+</project>

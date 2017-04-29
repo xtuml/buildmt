@@ -1,0 +1,15 @@
+# Ignore everything
+/*
+
+# Except
+!/config.xml
+!/jobs
+!/users
+!/*.sh
+!/plugins.txt
+!/secrets
+!/hudson.tasks.Shell.xml
+!/hudson.plugins.emailext.ExtendedEmailPublisher.xml
+!/hudson.tasks.Mailer.xml
+!/.profile
+!/.gitignore

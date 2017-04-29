@@ -1,3 +1,0 @@
-<j:jelly xmlns:j="jelly:core">
-  ${it.displayName}
-</j:jelly>
