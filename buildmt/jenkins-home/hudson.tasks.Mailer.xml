@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson.tasks.Mailer_-DescriptorImpl plugin="mailer@1.20">
-  <hudsonUrl>http://localhost:8080/</hudsonUrl>
   <smtpAuthUsername>issues@onefact.net</smtpAuthUsername>
   <smtpAuthPassword>{AQAAABAAAAAgl5QLN7+qnO2U2yZYKCrHA45QYdrAx6wH7rQi7vwYIT4xclWN9gUAhdgr0GHLlV88}</smtpAuthPassword>
   <smtpHost>smtp.gmail.com</smtpHost>
