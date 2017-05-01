@@ -23,11 +23,28 @@ if [ ! -e BridgePoint/bridgepoint ]; then
     mv org.xtuml.bp.product-linux.gtk.x86_64.zip BridgePoint
     TMPFILE=`mktemp`
     sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
-    mv $TMPFILE BridgePoint/tools/mc/bin/CLI.sh
+    cp $TMPFILE BridgePoint/tools/mc/bin/CLI.sh
     chmod +x BridgePoint/tools/mc/bin/CLI.sh
+    sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/launch-cli.py > $TMPFILE
+    cp $TMPFILE BridgePoint/tools/mc/bin/launch-cli.py
+fi
+
+# install osxcross
+cd $DIR
+MACOS_SDK=MacOSX10.11.sdk.tar.xz
+if [[ ! -e osxcross && -e $MACOS_SDK ]]; then
+    git clone https://github.com/tpoechtrager/osxcross.git --depth 1
+    mv $MACOS_SDK osxcross/tarballs
+    cd osxcross
+    TMPFILE=`mktemp`
+    sed 's/OSX_VERSION_MIN=10.5/OSX_VERSION_MIN=10.11/g' build.sh > $TMPFILE
+    cp $TMPFILE build.sh
+    export UNATTENDED=1
+    ./build.sh
 fi
 
 # download the cli
+cd $DIR
 if [ ! -e jenkins-cli.jar ]; then
     wget http://localhost:8080/jnlpJars/jenkins-cli.jar
 fi
