@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson.tasks.Mailer_-DescriptorImpl plugin="mailer@1.20">
   <smtpAuthUsername>issues@onefact.net</smtpAuthUsername>
-  <smtpAuthPassword>{AQAAABAAAAAgl5QLN7+qnO2U2yZYKCrHA45QYdrAx6wH7rQi7vwYIT4xclWN9gUAhdgr0GHLlV88}</smtpAuthPassword>
+  <smtpAuthPassword>{AQAAABAAAAAgHu1+D/7z/sckaRhDVz52wAJ51P/AsMs7o8JICk7AaZqQx1lzkOPty4n2cD7w8s7E}</smtpAuthPassword>
   <smtpHost>smtp.gmail.com</smtpHost>
   <useSsl>false</useSsl>
   <smtpPort>587</smtpPort>
