@@ -129,7 +129,7 @@ echo &quot;Done.&quot;
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>$OUT_DIR/*</artifacts>
+      <artifacts>bin/*</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
