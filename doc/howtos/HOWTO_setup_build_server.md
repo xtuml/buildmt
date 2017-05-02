@@ -79,7 +79,11 @@ and installed automatically.
     chown jenkins:build /build/buildmt/awsconfig
     ```
     * Copy the text from the gray box [here](https://docs.google.com/document/d/16iUguxC3uT20UgSO9YvkeP_wm-7pdiRNzZ6cdTt5iO8/edit) into this file  
-6. Add any other users to the machine (optional)  
+6. Copy the file `MacOSX10.11.sdk.tar.xz` into the `/build/buildmt` directory  
+    * Assure that the file permissions are 660 and that the ownership is
+      "jenkins:build"  
+    * This file can be found [here](https://drive.google.com/a/roxsoftware.com/file/d/0B698ZDpSSasPNHdMRnBzWGJFYWc/view?usp=sharing)  
+7. Add any other users to the machine (optional)  
     * Note: assure that the primary group of any new user is `build`  
     * `sudo useradd -g build levi`  
     * Add public keys to each users home directory for future logins  
