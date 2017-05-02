@@ -111,6 +111,7 @@ cp $GIT_WS/bridgepoint/src/org.xtuml.bp.pkg/about.mappings artifacts || :</comma
     <EnvInjectBuildWrapper plugin="envinject@2.0">
       <info>
         <propertiesContent>GIT_WS=$JENKINS_HOME/../git
+XTUML_DEVELOPMENT_REPOSITORY=$GIT_WS/bridgepoint
 XTUML_TEST_MODEL_REPOSITORY=$GIT_WS/models/test
 WORKSPACE2=${WORKSPACE}/wse
 SWT_GTK3=0
