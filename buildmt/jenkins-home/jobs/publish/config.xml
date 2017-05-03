@@ -49,6 +49,16 @@
       <optional>true</optional>
       <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
     </hudson.plugins.copyartifact.CopyArtifact>
+    <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.38.1">
+      <project>roundtrip</project>
+      <filter>masl-roundtrip.html</filter>
+      <target>data</target>
+      <excludes></excludes>
+      <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+      <flatten>true</flatten>
+      <optional>true</optional>
+      <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
+    </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
       <command>export DATADIR=data
 export BPLOG=${DATADIR}/buildfiles.html
@@ -78,7 +88,8 @@ echo &quot;===============&quot; &gt;&gt; ${BPLOG}
 echo &quot;&lt;a href=&quot;org.xtuml.bp.product-linux.gtk.x86_64.zip&quot;&gt;Linux 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-macosx.cocoa.x86_64.zip&quot;&gt;Mac 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86.zip&quot;&gt;Windows 32-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86_64.zip&quot;&gt;Windows 64-bit&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
 export TEST_REPORT=$DATADIR/surefire-report.html
 export MASL_CHECK_REPORT=$DATADIR/masl-check.html
-if [[ -f $TEST_REPORT || -f $MASL_CHECK_REPORT ]]; then
+export MASL_ROUNDTRIP_REPORT=$DATADIR/masl-roundtrip.html
+if [[ -f $TEST_REPORT || -f $MASL_CHECK_REPORT || -f $MASL_ROUNDTRIP_REPORT ]]; then
   echo &quot; &quot; &gt;&gt; ${BPLOG}
   echo &quot;Testing:&quot; &gt;&gt; ${BPLOG}
   echo &quot;===============&quot; &gt;&gt; ${BPLOG}
@@ -88,6 +99,9 @@ if [ -f $TEST_REPORT ]; then
 fi
 if [ -f $MASL_CHECK_REPORT ]; then
   echo &quot;&lt;a href=&quot;masl-check.html&quot;&gt;MASL Parser Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
+fi
+if [ -f $MASL_ROUNDTRIP_REPORT ]; then
+  echo &quot;&lt;a href=&quot;masl-roundtrip.html&quot;&gt;MASL Roundtrip Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
 fi
 echo &quot;&lt;br&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot; &gt;&gt; ${BPLOG}
 

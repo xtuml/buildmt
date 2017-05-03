@@ -34,12 +34,29 @@ bash $GIT_WS/models/masl/test/regression_test -o results &lt; $GIT_WS/models/mas
 # zip up results
 zip -rq results.zip results/
 
+# create report
+export MASLLOG=&quot;$WORKSPACE/masl-roundtrip.html&quot;
+
+echo &quot;&quot; &gt; ${MASLLOG}
+
+echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;MASL Roundtrip Tests&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;&quot;  &gt;&gt; ${MASLLOG}
+echo &quot;MASL Roundtrip:&quot; &gt;&gt; ${MASLLOG}
+echo &quot;===============&quot; &gt;&gt; ${MASLLOG}
+echo &quot;&quot; &gt;&gt; ${MASLLOG}
+echo &quot;&quot; &gt;&gt; ${MASLLOG}
+
+cd results
+find . -name &quot;diff_*&quot; -exec ls -l {} \; | sort &gt;&gt; ${MASLLOG}
+find . -name &quot;diff_*&quot; -exec ls -l {} \; | wc -l &gt;&gt; ${MASLLOG}
+
+echo &quot;&lt;br&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot; &gt;&gt; ${MASLLOG}
+
 echo &quot;Round trip complete.&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>results.zip</artifacts>
+      <artifacts>results.zip, masl-roundtrip.html</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
