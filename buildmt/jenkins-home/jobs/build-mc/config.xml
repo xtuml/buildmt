@@ -124,6 +124,7 @@ cp $WORKSPACE2/maslin/src/m2x.* $OUT_DIR
 cp $WORKSPACE2/maslout/src/x2m.* $OUT_DIR
 
 # copy the executables into the mc repo
+cp $OUT_DIR/MASLParser.jar $GIT_WS/mc/bin
 cp $OUT_DIR/docgen.linux $GIT_WS/mc/bin/docgen
 cp $OUT_DIR/masl.linux $GIT_WS/mc/bin/masl
 cp $OUT_DIR/m2x.linux $GIT_WS/mc/bin/m2x
