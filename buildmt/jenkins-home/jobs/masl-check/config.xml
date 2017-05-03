@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Run the MASL round trip</description>
+  <description>Run the MASL Xtext checker</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.model.BuildDiscarderProperty>
@@ -22,41 +22,38 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;...running the regression_test.&quot;
+      <command>$BP_CANDIDATE/tools/mc/bin/masl_check -s WARNING -I $GIT_WS/models/masl/test -o test_results | tee console.txt
 
-# set up path to installation
-sed &apos;s@^BPINSTALL=&quot;.*&quot;@BPINSTALL=&quot;&apos;$BP_CANDIDATE&apos;&quot;@g&apos; $GIT_WS/models/masl/test/regression_test &gt; regression_test
-cp regression_test $GIT_WS/models/masl/test/regression_test
-
-# run regression test
-bash $GIT_WS/models/masl/test/regression_test -o results &lt; $GIT_WS/models/masl/test/all_tests
-
-# zip up results
-zip -rq results.zip results/
-
-# create report
-export MASLLOG=&quot;$WORKSPACE/masl-roundtrip.html&quot;
+export MASLLOG=&quot;$WORKSPACE/masl-check.html&quot;
 
 echo &quot;&quot; &gt; ${MASLLOG}
 
-echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;MASL Roundtrip Tests&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;&quot;  &gt;&gt; ${MASLLOG}
-echo &quot;MASL Roundtrip:&quot; &gt;&gt; ${MASLLOG}
-echo &quot;===============&quot; &gt;&gt; ${MASLLOG}
+echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;MASL Parser Tests&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;&quot;  &gt;&gt; ${MASLLOG}
+echo &quot;MASL Parser errors:&quot; &gt;&gt; ${MASLLOG}
+echo &quot;===================&quot; &gt;&gt; ${MASLLOG}
+tail -n 1 console.txt &gt;&gt; ${MASLLOG}
 echo &quot;&quot; &gt;&gt; ${MASLLOG}
 echo &quot;&quot; &gt;&gt; ${MASLLOG}
 
-cd results
-find . -name &quot;diff_*&quot; -exec ls -l {} \; | sort &gt;&gt; ${MASLLOG}
-find . -name &quot;diff_*&quot; -exec ls -l {} \; | wc -l &gt;&gt; ${MASLLOG}
+cd test_results
+for f in *; do
+  echo &quot;$f:&quot; &gt;&gt; ${MASLLOG}
+  echo &quot;-------------------&quot; &gt;&gt; ${MASLLOG}
+  cat $f &gt;&gt; ${MASLLOG}
+  echo &quot;&quot; &gt;&gt; ${MASLLOG}
+done
+cd ..
 
 echo &quot;&lt;br&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot; &gt;&gt; ${MASLLOG}
 
-echo &quot;Round trip complete.&quot;</command>
+# zip up results
+zip -rq test_results.zip test_results/
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>results.zip, masl-roundtrip.html</artifacts>
+      <artifacts>masl-check.html, console.txt, test_results.zip</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
@@ -81,9 +78,5 @@ BP_CANDIDATE=$JENKINS_HOME/../candidate-bp/BridgePoint</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <hudson.plugins.xvnc.Xvnc plugin="xvnc@1.24">
-      <takeScreenshot>false</takeScreenshot>
-      <useXauthority>true</useXauthority>
-    </hudson.plugins.xvnc.Xvnc>
   </buildWrappers>
 </project>

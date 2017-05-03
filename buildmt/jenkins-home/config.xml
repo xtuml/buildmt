@@ -44,6 +44,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>Build-BridgePoint</string>
+        <string>Run-MASL-Check</string>
         <string>Run-MASL-Round-Trip</string>
       </jobNames>
       <jobFilters/>
