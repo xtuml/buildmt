@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# Except
+!config.xml
+!.gitignore
+
+# In all subdirs
+!*/
