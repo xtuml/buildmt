@@ -110,11 +110,6 @@ aws s3 sync ${DATADIR}/ s3://xtuml-releases/${FOLDER}/  --grants read=uri=http:/
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>issues@onefact.net</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.57.2">
       <recipientList>keith.brown@onefact.net,robert.mulvey@onefact.net,cortland.starrett@onefact.net,travis.london@onefact.net,levi.starrett@onefact.net</recipientList>
       <configuredTriggers>
@@ -185,7 +180,7 @@ aws s3 sync ${DATADIR}/ s3://xtuml-releases/${FOLDER}/  --grants read=uri=http:/
       <compressBuildLog>true</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
