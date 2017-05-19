@@ -14,6 +14,15 @@
     </jenkins.model.BuildDiscarderProperty>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>bp_install_dir</name>
+          <description>Location of the BridgePoint installation directory, variable is used on the server and in the IDE.</description>
+          <defaultValue>../../../BridgePoint</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
         <hudson.model.BooleanParameterDefinition>
           <name>INCLUDE_TESTS</name>
           <description>Determines whether or not to including building and running the unit tests.</description>
