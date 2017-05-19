@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson.plugins.emailext.ExtendedEmailPublisherDescriptor plugin="email-ext@2.57.2">
   <smtpAuthUsername>issues@onefact.net</smtpAuthUsername>
-  <smtpAuthPassword>{AQAAABAAAAAgu0ujdWxLFH5AO5svBbB00j8NDmo3A/acW6VCbEKBAtzmdaIuD9oTGQHSae4qWmd/}</smtpAuthPassword>
+  <smtpAuthPassword>{AQAAABAAAAAgJAeee3PeWQsg1ys3044EFNKn9rcHSSzC/OLZo1tA2YGsoYJ/jJawZ91ItwTUkhYX}</smtpAuthPassword>
   <smtpHost>smtp.gmail.com</smtpHost>
   <useSsl>false</useSsl>
   <smtpPort>587</smtpPort>
@@ -18,7 +18,7 @@ Check console output at $BUILD_URL to view the results.</defaultBody>
     <string>hudson.plugins.emailext.plugins.trigger.FailureTrigger</string>
   </defaultTriggerIds>
   <maxAttachmentSize>-1</maxAttachmentSize>
-  <recipientList></recipientList>
+  <recipientList>issues@onefact.net</recipientList>
   <defaultReplyTo></defaultReplyTo>
   <excludedCommitters></excludedCommitters>
   <overrideGlobalSettings>true</overrideGlobalSettings>

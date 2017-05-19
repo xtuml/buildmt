@@ -228,6 +228,29 @@ BRANCH=master</properties>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+      <phaseName>Build MC executables</phaseName>
+      <phaseJobs>
+        <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <jobName>build-mc</jobName>
+          <currParams>true</currParams>
+          <exposedSCM>false</exposedSCM>
+          <disableJob>false</disableJob>
+          <parsingRulesPath></parsingRulesPath>
+          <maxRetries>0</maxRetries>
+          <enableRetryStrategy>false</enableRetryStrategy>
+          <enableCondition>false</enableCondition>
+          <abortAllJob>true</abortAllJob>
+          <condition></condition>
+          <configs class="empty-list"/>
+          <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
+          <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+          <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+        </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+      </phaseJobs>
+      <continuationCondition>SUCCESSFUL</continuationCondition>
+      <executionType>PARALLEL</executionType>
+    </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+    <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
       <phaseName>Build BridgePoint</phaseName>
       <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
@@ -260,7 +283,7 @@ BRANCH=master</properties>
         <phaseName>MASL roundtrip</phaseName>
         <phaseJobs>
           <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
-            <jobName>Run-MASL-Round-Trip</jobName>
+            <jobName>install-bp</jobName>
             <currParams>true</currParams>
             <exposedSCM>false</exposedSCM>
             <disableJob>false</disableJob>
@@ -284,9 +307,63 @@ BRANCH=master</properties>
             <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
             <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
           </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+            <jobName>git-refresh</jobName>
+            <currParams>true</currParams>
+            <exposedSCM>false</exposedSCM>
+            <disableJob>false</disableJob>
+            <parsingRulesPath></parsingRulesPath>
+            <maxRetries>0</maxRetries>
+            <enableRetryStrategy>false</enableRetryStrategy>
+            <enableCondition>false</enableCondition>
+            <abortAllJob>true</abortAllJob>
+            <condition></condition>
+            <configs>
+              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+                <properties>REPO=models
+FORK=xtuml
+BRANCH=master</properties>
+              </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+            </configs>
+            <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
+            <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+            <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+          </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+            <jobName>roundtrip</jobName>
+            <currParams>true</currParams>
+            <exposedSCM>false</exposedSCM>
+            <disableJob>false</disableJob>
+            <parsingRulesPath></parsingRulesPath>
+            <maxRetries>0</maxRetries>
+            <enableRetryStrategy>false</enableRetryStrategy>
+            <enableCondition>false</enableCondition>
+            <abortAllJob>true</abortAllJob>
+            <condition></condition>
+            <configs class="empty-list"/>
+            <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
+            <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+            <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+          </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+          <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+            <jobName>masl-check</jobName>
+            <currParams>true</currParams>
+            <exposedSCM>false</exposedSCM>
+            <disableJob>false</disableJob>
+            <parsingRulesPath></parsingRulesPath>
+            <maxRetries>0</maxRetries>
+            <enableRetryStrategy>false</enableRetryStrategy>
+            <enableCondition>false</enableCondition>
+            <abortAllJob>true</abortAllJob>
+            <condition></condition>
+            <configs class="empty-list"/>
+            <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
+            <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
+            <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
+          </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
         </phaseJobs>
         <continuationCondition>SUCCESSFUL</continuationCondition>
-        <executionType>PARALLEL</executionType>
+        <executionType>SEQUENTIALLY</executionType>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>

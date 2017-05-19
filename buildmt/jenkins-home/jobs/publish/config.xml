@@ -39,6 +39,26 @@
       <flatten>true</flatten>
       <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
     </hudson.plugins.copyartifact.CopyArtifact>
+    <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.38.1">
+      <project>masl-check</project>
+      <filter>masl-check.html</filter>
+      <target>data</target>
+      <excludes></excludes>
+      <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+      <flatten>true</flatten>
+      <optional>true</optional>
+      <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
+    </hudson.plugins.copyartifact.CopyArtifact>
+    <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.38.1">
+      <project>roundtrip</project>
+      <filter>masl-roundtrip.html</filter>
+      <target>data</target>
+      <excludes></excludes>
+      <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+      <flatten>true</flatten>
+      <optional>true</optional>
+      <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
+    </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
       <command>export DATADIR=data
 export BPLOG=${DATADIR}/buildfiles.html
@@ -65,27 +85,33 @@ md5sum $DATADIR/*.zip &gt;&gt; ${BPLOG}
 echo &quot; &quot; &gt;&gt; ${BPLOG}
 echo &quot;Links:&quot; &gt;&gt; ${BPLOG}
 echo &quot;===============&quot; &gt;&gt; ${BPLOG}
-echo &quot;&lt;a href=&quot;org.xtuml.bp.product-linux.gtk.x86_64.zip&quot;&gt;Linux 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-macosx.cocoa.x86_64.zip&quot;&gt;Mac 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86.zip&quot;&gt;Windows 32-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86_64.zip&quot;&gt;Windows 64-bit&lt;/a&gt;&lt;br&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot; &gt;&gt; ${BPLOG}
+echo &quot;&lt;a href=&quot;org.xtuml.bp.product-linux.gtk.x86_64.zip&quot;&gt;Linux 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-macosx.cocoa.x86_64.zip&quot;&gt;Mac 64-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86.zip&quot;&gt;Windows 32-bit&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-win32.win32.x86_64.zip&quot;&gt;Windows 64-bit&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
 export TEST_REPORT=$DATADIR/surefire-report.html
-if [ -f $TEST_REPORT ]; then
+export MASL_CHECK_REPORT=$DATADIR/masl-check.html
+export MASL_ROUNDTRIP_REPORT=$DATADIR/masl-roundtrip.html
+if [[ -f $TEST_REPORT || -f $MASL_CHECK_REPORT || -f $MASL_ROUNDTRIP_REPORT ]]; then
   echo &quot; &quot; &gt;&gt; ${BPLOG}
   echo &quot;Testing:&quot; &gt;&gt; ${BPLOG}
-  echo &quot;&lt;br&gt;===============&quot; &gt;&gt; ${BPLOG}
-  echo &quot;&lt;br&gt;&lt;a href=&quot;surefire-report.html&quot;&gt;Unit Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
+  echo &quot;===============&quot; &gt;&gt; ${BPLOG}
 fi
+if [ -f $TEST_REPORT ]; then
+  echo &quot;&lt;a href=&quot;surefire-report.html&quot;&gt;Unit Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
+fi
+if [ -f $MASL_CHECK_REPORT ]; then
+  echo &quot;&lt;a href=&quot;masl-check.html&quot;&gt;MASL Parser Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
+fi
+if [ -f $MASL_ROUNDTRIP_REPORT ]; then
+  echo &quot;&lt;a href=&quot;masl-roundtrip.html&quot;&gt;MASL Roundtrip Test Results&lt;/a&gt;&quot; &gt;&gt; ${BPLOG}
+fi
+echo &quot;&lt;br&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot; &gt;&gt; ${BPLOG}
 
 export AWS_CONFIG_FILE=$JENKINS_HOME/../awsconfig
 aws s3 sync ${DATADIR}/ s3://xtuml-releases/${FOLDER}/  --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>issues@onefact.net</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.57.2">
-      <recipientList>keith.brown@onefact.net,robert.mulvey@onefact.net,cortland.starrett@onefact.net,travis.london@onefact.net,levi.starrett@onefact.net</recipientList>
+      <recipientList>issues@onefact.net</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
@@ -145,7 +171,7 @@ aws s3 sync ${DATADIR}/ s3://xtuml-releases/${FOLDER}/  --grants read=uri=http:/
         </hudson.plugins.emailext.plugins.trigger.UnstableTrigger>
       </configuredTriggers>
       <contentType>text/html</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT #9467</defaultSubject>
+      <defaultSubject>$DEFAULT_SUBJECT [#9467]</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
