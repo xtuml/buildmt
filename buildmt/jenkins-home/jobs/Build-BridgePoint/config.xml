@@ -44,6 +44,11 @@
           <description>MC repository branch to build from</description>
           <defaultValue>master</defaultValue>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>bp_install_dir</name>
+          <description>BridgePoint installation directory</description>
+          <defaultValue>/build/buildmt/BridgePoint</defaultValue>
+        </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>INCLUDE_TESTS</name>
           <description>Determines whether or not to including building and running the unit tests.</description>
