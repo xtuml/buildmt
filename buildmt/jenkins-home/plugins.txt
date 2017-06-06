@@ -1,0 +1,5 @@
+jenkins-multijob-plugin
+ws-cleanup
+xvnc
+copyartifact
+email-ext
