@@ -73,7 +73,7 @@ $BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.core.test -prebuildOnly
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Maven>
-      <targets>install</targets>
+      <targets>-U install</targets>
       <pom>$GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pom>
       <properties>tycho.disableP2Mirrors=true
 skipTests=!${INCLUDE_TESTS}
