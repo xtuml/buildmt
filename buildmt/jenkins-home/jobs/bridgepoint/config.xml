@@ -90,7 +90,7 @@ eclipse.home=$BPHOME</properties>
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>export MAVEN_OPTS=&quot;-Xmx2g&quot;
-mvn -f $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent -Daggregate=true surefire-report:report-only</command>
+mvn -f $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent -Dtycho.disableP2Mirrors=true -Daggregate=true surefire-report:report-only</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
