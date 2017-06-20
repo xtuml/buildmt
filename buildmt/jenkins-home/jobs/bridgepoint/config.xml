@@ -14,6 +14,15 @@
     </jenkins.model.BuildDiscarderProperty>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>bp_install_dir</name>
+          <description>Location of the BridgePoint installation directory, variable is used on the server and in the IDE.</description>
+          <defaultValue>../../../BridgePoint</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
         <hudson.model.BooleanParameterDefinition>
           <name>INCLUDE_TESTS</name>
           <description>Determines whether or not to including building and running the unit tests.</description>
@@ -64,7 +73,7 @@ $BPHOME/tools/mc/bin/CLI.sh Build -project org.xtuml.bp.core.test -prebuildOnly
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Maven>
-      <targets>install</targets>
+      <targets>-U install</targets>
       <pom>$GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent/pom.xml</pom>
       <properties>tycho.disableP2Mirrors=true
 skipTests=!${INCLUDE_TESTS}
@@ -81,7 +90,7 @@ eclipse.home=$BPHOME</properties>
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>export MAVEN_OPTS=&quot;-Xmx2g&quot;
-mvn -f $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent -Daggregate=true surefire-report:report-only</command>
+mvn -f $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent -Dtycho.disableP2Mirrors=true -Daggregate=true surefire-report:report-only</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
