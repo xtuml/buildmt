@@ -97,6 +97,7 @@ mvn -f $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent -Dtycho.disableP2Mi
     <hudson.tasks.Shell>
       <command>mkdir artifacts
 cp $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent.product/target/products/*.zip artifacts || :
+cp $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent.product-dev/target/products/*.zip artifacts || :
 cp $GIT_WS/bridgepoint/releng/org.xtuml.bp.releng.parent/target/site/*.html artifacts || :
 cp $GIT_WS/bridgepoint/src/org.xtuml.bp.pkg/about.mappings artifacts || :</command>
     </hudson.tasks.Shell>
