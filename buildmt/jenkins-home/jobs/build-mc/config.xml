@@ -64,12 +64,12 @@ $BPHOME/tools/mc/bin/CLI.sh Launch -exit
 # archive the source
 echo &quot;Archiving the source...&quot;
 mkdir src
-cp -r $WORKSPACE2/docgen/src src/docgen-src
-#cp -r $WORKSPACE2/escher/src src/mcmc-src
-cp -r $WORKSPACE2/integrity/src src/integrity-src
-cp -r $WORKSPACE2/masl/src src/masl-src
-cp -r $WORKSPACE2/maslin/src src/maslin-src
-cp -r $WORKSPACE2/maslout/src src/maslout-src
+cp -r $WORKSPACE2/docgen src/docgen-src
+#cp -r $WORKSPACE2/escher src/mcmc-src
+cp -r $WORKSPACE2/integrity src/integrity-src
+cp -r $WORKSPACE2/masl src/masl-src
+cp -r $WORKSPACE2/maslin src/maslin-src
+cp -r $WORKSPACE2/maslout src/maslout-src
 zip -qr mcsrc.zip src/
 
 # build the MASL parser
