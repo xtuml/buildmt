@@ -51,7 +51,7 @@ if [[ -e $GIT_WS/$REPO ]]; then
   if [[ $REMOTES != *&quot;$FORK&quot;* ]]; then
     git remote add $FORK https://github.com/$FORK/$REPO.git
   fi
-  git fetch $FORK $BRANCH --depth=1
+  git fetch --depth=1 --force $FORK refs/heads/$BRANCH:refs/remotes/$FORK/$BRANCH
   git reset --hard
   git clean -dxf .
   git checkout $FORK/$BRANCH
