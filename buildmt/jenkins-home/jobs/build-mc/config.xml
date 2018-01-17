@@ -22,7 +22,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!/bin/bash
+      <command>#!/bin/bash -e 
 
 # prepare mcmc and docgen for build
 echo &quot;Preparing mcmc and docgen templates...&quot;
