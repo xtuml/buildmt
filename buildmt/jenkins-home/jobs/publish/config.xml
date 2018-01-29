@@ -76,7 +76,7 @@ export BPLOG=${DATADIR}/buildfiles.html
 mkdir -p ${DATADIR}
 cp build-mc-artifacts/mcsrc.zip ${DATADIR}/mcsrc.zip
 
-ver=$(grep -o &quot;[0-9]\.[0-9]\.[0-9]&quot; ${DATADIR}/about.mappings)
+ver=$(grep -o &quot;[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*&quot; ${DATADIR}/about.mappings)
 curdate=$(grep -o &quot;[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]&quot; ${DATADIR}/about.mappings)
 rm ${DATADIR}/about.mappings
 
