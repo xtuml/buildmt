@@ -29,7 +29,7 @@ sed &apos;s@^BPINSTALL=&quot;.*&quot;@BPINSTALL=&quot;&apos;$BP_CANDIDATE&apos;&
 cp regression_test $GIT_WS/models/masl/test/regression_test
 
 # run regression test
-bash $GIT_WS/models/masl/test/regression_test -o results &lt; $GIT_WS/models/masl/test/all_tests
+bash $GIT_WS/models/masl/test/regression_test -o results &lt; $GIT_WS/models/masl/test/all_tests | $GIT_WS/models/masl/test/collectstars.py
 
 # zip up results
 zip -rq results.zip results/
