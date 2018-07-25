@@ -7,10 +7,12 @@ usermod -G sudo -a jenkins
 echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # install jenkins and git
+export DEBIAN_FRONTEND=noninteractive
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
 sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 apt-get update
-apt-get install -y git jenkins
+apt-get install -y default-jre git
+apt-get install -y jenkins
 /etc/init.d/jenkins stop
 
 # clone buildmt repo

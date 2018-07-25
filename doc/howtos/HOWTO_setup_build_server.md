@@ -59,13 +59,45 @@ and installed automatically.
 
 ### How to setup a new build server
 
-1. Start an AWS EC2 instance (or use a local VM) running Ubuntu 16.04 LTS  
-   * Note: Root privileges are necessary for this setup
+_Note: A working knowledge of Linux system administration is assumed for this
+guide. The reader should be familiar with the following: manipulating file
+permissions and ownership, logging on to a remote server and transferring files,
+adding users, etc. For the sake of brevity, this guide will **not** always
+include explicit commands to copy and paste. A working understanding of AWS EC2
+is also required._
+
+1. Start an AWS EC2 instance running Ubuntu 16.04 LTS in the US East (N.
+   Virginia) region. 
+   * Select m5.large for the instance type
+   * Create and attach a new 100 GiB EBS storage device
+   * Select the "build server security group" security group
 2. Log on to the server  
+   * Select `build-server-keypair.pem` when launching the instance
+   * The key file can be found in this [Google Drive folder](https://drive.google.com/drive/u/1/folders/0B3XvTeswC_kOTXRFeHI0aU1JZGM)
+   * Assure that the permissions for the key are set to read/write for user
+     only (600)
+   * `ssh -i build-server-keypair.pem ubuntu@<server IP>`
 3. Create a directory `/build`  
     * `sudo mkdir /build; cd /build`  
-    * Note: if you are on a new AWS instance, you may want to mount the large
-      block storage device to this directory  
+    * Mount the 100 GiB EBS device to the `/build` directory. A full tutorial
+      can be found [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html)
+    * First, determine the name of the device:  
+      ```
+      lsblk
+      ```
+      The 100G device is the one you want
+    * Create a file system on the device:  
+      ```
+      sudo mkfs -t ext4 /dev/<device name>
+      ```
+    * Mount the new file system to the `/build` directory:
+      ```
+      sudo mount /dev/<device name> /build
+      ```
+    * Add the following line to `/etc/fstab`:
+      ```
+      /dev/<device name> /build ext4 defaults,nofail 0 2
+      ```
 4. Start the build server install script  
     * `curl https://raw.githubusercontent.com/xtuml/buildmt/master/install-build-server.sh | sudo bash`  
 5. When the script completes, copy the file `awsconfig` into the
@@ -73,23 +105,20 @@ and installed automatically.
 
     * Create the file `/build/buildmt/awsconfig`; change the file mode to `660`;
       set the owner to `jenkins` and the group to `build`  
-    ```
-    touch /build/buildmt/awsconfig
-    chmod 660 /build/buildmt/awsconfig
-    chown jenkins:build /build/buildmt/awsconfig
-    ```
+      ```
+      sudo touch /build/buildmt/awsconfig
+      sudo chmod 660 /build/buildmt/awsconfig
+      sudo chown jenkins:build /build/buildmt/awsconfig
+      ```
     * Copy the text from the gray box [here](https://docs.google.com/document/d/16iUguxC3uT20UgSO9YvkeP_wm-7pdiRNzZ6cdTt5iO8/edit) into this file  
 6. Copy the file `MacOSX10.11.sdk.tar.xz` into the `/build/buildmt` directory  
     * Assure that the file permissions are 660 and that the ownership is
       "jenkins:build"  
-    * This file can be found [here](https://drive.google.com/a/roxsoftware.com/file/d/0B698ZDpSSasPNHdMRnBzWGJFYWc/view?usp=sharing)  
-7. Add any other users to the machine (optional)  
-    * Note: assure that the primary group of any new user is `build`  
-    * `sudo useradd -g build levi`  
-    * Add public keys to each users home directory for future logins  
-
-_Note: the default umask for all users has been set to 002 meaning any new file
-a user creates will be readable and writable by the user's primary group. The
-git directory in which the build server lives is also configured to be shared by
-the group. In this way, any user with primary group of `build` can read, write,
-and commit files to this git repository_
+    * This file can be found [here](https://drive.google.com/drive/u/1/folders/0B698ZDpSSasPei1FQk9QU3NrenM)  
+7. Add other user accounts to the machine (optional)  
+    * A script `add-user.sh` is included in this repository to streamline this
+      process
+    * Install user data and ssh keys. The easiest way to do this is to zip up
+      the contents of `/home` from the old build server, unzip it on the new
+      server and modify the ownership recursively.
+8. Reboot the server.
