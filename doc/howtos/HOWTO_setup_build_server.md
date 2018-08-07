@@ -69,7 +69,8 @@ is also required._
 1. Start an AWS EC2 instance running Ubuntu 16.04 LTS in the US East (N.
    Virginia) region. 
    * Select m5.large for the instance type
-   * Create and attach a new 100 GiB EBS storage device
+   * Create and attach a new 100 GiB EBS storage device (assure that "delete on
+     termination" is **checked**)
    * Select the "build server security group" security group
 2. Log on to the server  
    * Select `build-server-keypair.pem` when launching the instance
@@ -98,7 +99,7 @@ is also required._
       ```
       /dev/<device name> /build ext4 defaults,nofail 0 2
       ```
-4. Start the build server install script  
+4. Start the build server install script (do this from the `/build` directory)  
     * `curl https://raw.githubusercontent.com/xtuml/buildmt/master/install-build-server.sh | sudo bash`  
 5. When the script completes, copy the file `awsconfig` into the
    `/build/buildmt` directory  
@@ -115,6 +116,11 @@ is also required._
     * Assure that the file permissions are 660 and that the ownership is
       "jenkins:build"  
     * This file can be found [here](https://drive.google.com/drive/u/1/folders/0B698ZDpSSasPei1FQk9QU3NrenM)  
+7. Download the Jenkins CLI Java application
+    * Download the jar file: `sudo -u jenkins wget http://localhost:8080/jnlpJars/jenkins-cli.jar`  
+      _Note: This download requires that the Jenkins service is running on the
+      local machine. If the command fails, try restarting Jenkins with
+      `/etc/init.d/jenkins restart`_.
 7. Add other user accounts to the machine (optional)  
     * A script `add-user.sh` is included in this repository to streamline this
       process
