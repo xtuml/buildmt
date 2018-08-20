@@ -79,7 +79,7 @@ is also required._
      only (600)
    * `ssh -i build-server-keypair.pem ubuntu@<server IP>`
 3. Create a directory `/build`  
-    * `sudo mkdir /build; cd /build`  
+    * `sudo mkdir /build`  
     * Mount the 100 GiB EBS device to the `/build` directory. A full tutorial
       can be found [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html)
     * First, determine the name of the device:  
@@ -100,6 +100,7 @@ is also required._
       /dev/<device name> /build ext4 defaults,nofail 0 2
       ```
 4. Start the build server install script (do this from the `/build` directory)  
+    * `cd /build`  
     * `curl https://raw.githubusercontent.com/xtuml/buildmt/master/install-build-server.sh | sudo bash`  
 5. When the script completes, copy the file `awsconfig` into the
    `/build/buildmt` directory  
