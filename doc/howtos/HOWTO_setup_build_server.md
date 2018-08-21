@@ -118,7 +118,8 @@ is also required._
       "jenkins:build"  
     * This file can be found [here](https://drive.google.com/drive/u/1/folders/0B698ZDpSSasPei1FQk9QU3NrenM)  
 7. Download the Jenkins CLI Java application
-    * Download the jar file: `sudo -u jenkins wget http://localhost:8080/jnlpJars/jenkins-cli.jar`  
+    * Download the jar file to the `/build/buildmt` directory:  
+      `sudo -u jenkins wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O /build/buildmt/jenkins-cli.jar`  
       _Note: This download requires that the Jenkins service is running on the
       local machine. If the command fails, try restarting Jenkins with
       `/etc/init.d/jenkins restart`_.
