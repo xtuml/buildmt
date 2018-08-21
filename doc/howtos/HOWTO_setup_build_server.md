@@ -130,3 +130,4 @@ is also required._
       the contents of `/home` from the old build server, unzip it on the new
       server and modify the ownership recursively.
 8. Reboot the server.
+9. Run a nightly build to assure the server is working before imaging.  
