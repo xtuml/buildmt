@@ -9,8 +9,8 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd $DIR
 sudo bash install-package-dependencies.sh
 
-# configure vncserver
-printf "newpass\nnewpass\n\n" | vncpasswd
+# configure vnc server
+printf "newpass\nnewpass\n\n" | vnc4passwd
 
 # install bridgepoint
 cd $DIR
