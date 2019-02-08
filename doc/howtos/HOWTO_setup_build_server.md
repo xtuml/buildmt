@@ -46,7 +46,7 @@ Spaces are avoided in names.
 #### Installing packages
 
 Any Linux packages that are installed that the build server depends on must be
-added to the `buildmt/get-package-dependencies.sh` script. This script runs when
+added to the `buildmt/install-package-dependencies.sh` script. This script runs when
 the server is installed and contains all of the software that the Jenkins build
 is dependant on.
 
@@ -117,13 +117,7 @@ is also required._
     * Assure that the file permissions are 660 and that the ownership is
       "jenkins:build"  
     * This file can be found [here](https://drive.google.com/drive/u/1/folders/0B698ZDpSSasPei1FQk9QU3NrenM)  
-7. Download the Jenkins CLI Java application
-    * Download the jar file to the `/build/buildmt` directory:  
-      `sudo -u jenkins wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O /build/buildmt/jenkins-cli.jar`  
-      _Note: This download requires that the Jenkins service is running on the
-      local machine. If the command fails, try restarting Jenkins with
-      `/etc/init.d/jenkins restart`_.
-8. Add other user accounts to the machine (optional)  
+7. Add other user accounts to the machine (optional)  
     * A script `add-user.sh` is included in this repository to streamline this
       process
     * Install user data and ssh keys. The easiest way to do this is to zip up
