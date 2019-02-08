@@ -44,10 +44,10 @@ if [[ ! -e osxcross && -e $MACOS_SDK ]]; then
     ./build.sh
 fi
 
-# download the cli
+# get the cli
 cd $DIR
 if [ ! -e jenkins-cli.jar ]; then
-    wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+    cp /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar .
 fi
 
 # install plugins
