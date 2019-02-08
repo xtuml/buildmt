@@ -1,5 +1,0 @@
-# To run the MASL round trip regression.
-# Install the latest BridgePoint (from S3).
-# Refresh repo and launch regression in the background without hang-up.
-
-./roundtrip.sh

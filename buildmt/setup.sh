@@ -5,7 +5,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # install package dependencies
 cd $DIR
-sudo ./get-package-dependencies.sh
+sudo bash get-package-dependencies.sh
 
 # setup /etc/default/jenkins for email
 TMPFILE=`mktemp`
@@ -17,15 +17,18 @@ printf "newpass\nnewpass\n\n" | vncpasswd
 
 # install bridgepoint
 cd $DIR
+if [ "" = "$BP_BUILD_LOCATION" ]; then
+  BP_BUILD_LOCATION="nightly-build"
+fi
 if [ ! -e BridgePoint/bridgepoint ]; then
-    wget http://s3.amazonaws.com/xtuml-releases/nightly-build/org.xtuml.bp.product-linux.gtk.x86_64.zip
+    wget http://s3.amazonaws.com/xtuml-releases/$BP_BUILD_LOCATION/org.xtuml.bp.product-linux.gtk.x86_64.zip
     unzip -q org.xtuml.bp.product-linux.gtk.x86_64.zip
     mv org.xtuml.bp.product-linux.gtk.x86_64.zip BridgePoint
     TMPFILE=`mktemp`
-    sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
+    sed '/WORKSPACE2/b; s/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
     cp $TMPFILE BridgePoint/tools/mc/bin/CLI.sh
     chmod +x BridgePoint/tools/mc/bin/CLI.sh
-    sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/launch-cli.py > $TMPFILE
+    sed '/WORKSPACE2/b; s/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/launch-cli.py > $TMPFILE
     cp $TMPFILE BridgePoint/tools/mc/bin/launch-cli.py
 fi
 
@@ -52,5 +55,5 @@ fi
 # install plugins
 cd $DIR/jenkins-home
 while read p; do
-  ./install-jenkins-plugin.sh $p
+  bash install-jenkins-plugin.sh $p
 done < plugins.txt

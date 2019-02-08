@@ -123,11 +123,12 @@ is also required._
       _Note: This download requires that the Jenkins service is running on the
       local machine. If the command fails, try restarting Jenkins with
       `/etc/init.d/jenkins restart`_.
-7. Add other user accounts to the machine (optional)  
+8. Add other user accounts to the machine (optional)  
     * A script `add-user.sh` is included in this repository to streamline this
       process
     * Install user data and ssh keys. The easiest way to do this is to zip up
       the contents of `/home` from the old build server, unzip it on the new
       server and modify the ownership recursively.
-8. Reboot the server.
-9. Run a nightly build to assure the server is working before imaging.  
+9. Reboot the server.
+10. Run a nightly build to assure the server is working before imaging.  
+
