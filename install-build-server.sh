@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# This script is intended to add the "jenkins" user and "build" group, to clone
+# the "buildmt" repository and set up the initial installation of Jenkins. It
+# is designed to only be executed one time for initial build server setup.
+
 # add build group and jenkins user
 groupadd build
 useradd -p `perl -e 'print crypt("password", "salt"),"\n"'` -g build jenkins -s /bin/bash

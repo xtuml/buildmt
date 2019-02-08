@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This script is intended for Jenkins user specific configuration. It is
+# designed to be executed by the "jenkins" user. It is executed automatically
+# when the Jenkins server starts on bootup. It can be safely re-run at any time
+# by the "jenkins" user.
+
 echo "Setting up build server at: $(date)"
 
 # go to the buildmt directory
@@ -11,6 +16,16 @@ sudo bash install-package-dependencies.sh
 
 # configure vnc server
 printf "newpass\nnewpass\n\n" | vnc4passwd
+
+# configure xrdp
+echo "xfce4-session" > /build/buildmt/jenkins-home/.xsession
+echo "xterm*faceName: DejaVu Snas Mono Book" > /build/buildmt/jenkins-home/.Xresources
+echo "xterm*faceSize: 11" >> /build/buildmt/jenkins-home/.Xresources
+xrdb -merge ~/.Xresources
+TMPFILE=`mktemp`
+awk -v found1=0 -v found2=0 '/\[Xvnc\]/{found1=1;}; /^$/{if (found1 && !found2) {found2=1;print "param=-SecurityTypes\nparam=None";}}; //{print $1;}' /etc/xrdp/sesman.ini > $TMPFILE
+sudo cp $TMPFILE /etc/xrdp/sesman.ini
+sudo /etc/init.d/xrdp restart
 
 # install bridgepoint
 cd $DIR
