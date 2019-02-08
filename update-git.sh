@@ -4,4 +4,4 @@ cd $DIR
 git reset --hard
 git clean -df .
 git pull
-bash buildmt/setup.sh >> /var/log/build_server_setup.log 2>&1
+bash buildmt/setup.sh >> /var/log/jenkins/build_server_setup.log 2>&1
