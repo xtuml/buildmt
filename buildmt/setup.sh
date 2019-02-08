@@ -1,16 +1,13 @@
 #!/bin/bash
 
+echo "Setting up build server at: $(date)"
+
 # go to the buildmt directory
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # install package dependencies
 cd $DIR
 sudo bash get-package-dependencies.sh
-
-# setup /etc/default/jenkins for email
-TMPFILE=`mktemp`
-sudo sed -r '/^JAVA_ARGS=.*-Dmail.*/b; s/^JAVA_ARGS="(.*)"/JAVA_ARGS="\1 -Xmx1024m -Dmail.smtp.starttls.enable=true"\nJENKINS_JAVA_OPTIONS="-Dmail.smtp.starttls.enable=true"/g' /etc/default/jenkins > $TMPFILE
-sudo cp $TMPFILE /etc/default/jenkins
 
 # configure vncserver
 printf "newpass\nnewpass\n\n" | vncpasswd
@@ -57,3 +54,5 @@ cd $DIR/jenkins-home
 while read p; do
   bash install-jenkins-plugin.sh $p
 done < plugins.txt
+
+echo "Build server setup complete at: $(date)"

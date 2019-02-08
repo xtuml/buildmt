@@ -33,6 +33,10 @@ cp $TMPFILE /etc/default/jenkins
 sed -r '/^DAEMON_ARGS=.*umask/b; s@^DAEMON_ARGS="(.*)"@DAEMON_ARGS="\1 --umask=002"@g' /etc/init.d/jenkins > $TMPFILE
 cp $TMPFILE /etc/init.d/jenkins
 
+# setup jenkins for email
+sed -r '/^JAVA_ARGS=.*-Dmail.*/b; s/^JAVA_ARGS="(.*)"/JAVA_ARGS="\1 -Xmx1024m -Dmail.smtp.starttls.enable=true"\nJENKINS_JAVA_OPTIONS="-Dmail.smtp.starttls.enable=true"/g' /etc/default/jenkins > $TMPFILE
+cp $TMPFILE /etc/default/jenkins
+
 # put in place git update script
 sed -r '/update-git.sh/b; s@(^.*)(\$SU -l \$JENKINS_USER.*i)@\1$SU -l $JENKINS_USER --shell=/bin/bash -c "bash '$PWD'/update-git.sh" || return 2\n\1\2@g' /etc/init.d/jenkins > $TMPFILE
 cp $TMPFILE /etc/init.d/jenkins
@@ -42,9 +46,6 @@ systemctl daemon-reload
 chmod -R g+rw .
 chown -R jenkins:build .
 echo "umask 002" >> /etc/profile
-
-# run setup
-su jenkins -c 'bash buildmt/setup.sh'
 
 # restart jenkins
 /etc/init.d/jenkins restart
