@@ -8,10 +8,10 @@ echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # install jenkins and git
 export DEBIAN_FRONTEND=noninteractive
-wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
 sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 apt update
-apt install -y default-jre git
+apt install -y openjdk-8-jdk git
 apt install -y jenkins
 /etc/init.d/jenkins stop
 
