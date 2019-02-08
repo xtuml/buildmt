@@ -28,13 +28,13 @@ usermod -d $PWD/buildmt/jenkins-home jenkins
 
 # modify jenkins home
 TMPFILE=`mktemp`
-sed '@^JENKINS_HOME=.*jenkins-home@b; s@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
+sed '/^JENKINS_HOME=.*jenkins-home/b; s@^JENKINS_HOME=.*$@JENKINS_HOME='$PWD'/buildmt/jenkins-home@g' /etc/default/jenkins > $TMPFILE
 cp $TMPFILE /etc/default/jenkins
-sed -r '@^DAEMON_ARGS=.*umask@b; s@^DAEMON_ARGS="(.*)"@DAEMON_ARGS="\1 --umask=002"@g' /etc/init.d/jenkins > $TMPFILE
+sed -r '/^DAEMON_ARGS=.*umask/b; s@^DAEMON_ARGS="(.*)"@DAEMON_ARGS="\1 --umask=002"@g' /etc/init.d/jenkins > $TMPFILE
 cp $TMPFILE /etc/init.d/jenkins
 
 # put in place git update script
-sed -r '@update-git.sh@b; s@(^.*)(\$SU -l \$JENKINS_USER.*i)@\1$SU -l $JENKINS_USER --shell=/bin/bash -c "bash '$PWD'/update-git.sh" || return 2\n\1\2@g' /etc/init.d/jenkins > $TMPFILE
+sed -r '/update-git.sh/b; s@(^.*)(\$SU -l \$JENKINS_USER.*i)@\1$SU -l $JENKINS_USER --shell=/bin/bash -c "bash '$PWD'/update-git.sh" || return 2\n\1\2@g' /etc/init.d/jenkins > $TMPFILE
 cp $TMPFILE /etc/init.d/jenkins
 systemctl daemon-reload
 
