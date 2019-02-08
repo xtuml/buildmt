@@ -7,7 +7,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # install package dependencies
 cd $DIR
-sudo bash get-package-dependencies.sh
+sudo bash install-package-dependencies.sh
 
 # configure vncserver
 printf "newpass\nnewpass\n\n" | vncpasswd
