@@ -23,7 +23,7 @@ echo "xterm*faceName: DejaVu Snas Mono Book" > /build/buildmt/jenkins-home/.Xres
 echo "xterm*faceSize: 11" >> /build/buildmt/jenkins-home/.Xresources
 xrdb -merge ~/.Xresources
 TMPFILE=`mktemp`
-awk -v found1=0 -v found2=0 '/\[Xvnc\]/{found1=1;}; /^$/{if (found1 && !found2) {found2=1;print "param=-SecurityTypes\nparam=None";}}; //{print $1;}' /etc/xrdp/sesman.ini > $TMPFILE
+awk -v found1=0 -v found2=0 '/\[Xvnc\]/{found1=1;}; /^$/{if (found1 && !found2) {found2=1;print "param=-SecurityTypes\nparam=None";}}; //{print $0;}' /etc/xrdp/sesman.ini > $TMPFILE
 sudo cp $TMPFILE /etc/xrdp/sesman.ini
 sudo /etc/init.d/xrdp restart
 
