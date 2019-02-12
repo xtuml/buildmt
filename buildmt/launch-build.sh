@@ -66,7 +66,7 @@ fi
 if [[ "" != "$BP_INSTALL" ]]; then
   sudo rm -rf /build/buildmt/BridgePoint
   export BP_BUILD_LOCATION=$BP_INSTALL
-  sudo -u jenkins bash /build/buildmt/setup.sh
+  sudo -E -u jenkins bash /build/buildmt/setup.sh
   sudo /etc/init.d/jenkins restart
 fi
 
