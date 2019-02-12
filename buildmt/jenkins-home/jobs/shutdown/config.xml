@@ -26,7 +26,7 @@
         <token>$SHUTDOWN</token>
       </condition>
       <buildStep class="hudson.tasks.Shell">
-        <command>sudo shutdown -h now</command>
+        <command>sudo shutdown -h +1</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.2"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
