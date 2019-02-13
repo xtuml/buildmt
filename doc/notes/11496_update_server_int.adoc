@@ -98,6 +98,9 @@ decided to stop copying AMIs across regions. We will use the US East (N.
 Virginia) region as our default. If something causes us to need to use another
 region, we can do the work of copying/maintaining the images at that time.
 
+5.2 A new issue has been raised <<dr-5>> to track items that will be included
+in the next build server update.
+
 == 6 Unit Test
 
 6.1 Run a nightly build and see it pass successfully. +
@@ -161,6 +164,7 @@ updated to reflect the new usage.
 . [[dr-2]] https://support.onefact.net/issues/11511[#11511 Fix string array initialization for docgen]
 . [[dr-3]] link:../notes/HOWTO_setup_build_server.adoc[HOWTO setup build server]
 . [[dr-4]] link:../notes/HOWTO_migrate_build_server.adoc[HOWTO migrate build server]
+. [[dr-5]] https://support.onefact.net/issues/11524[#11524 Update build server]
 
 ---
 
