@@ -1,0 +1,169 @@
+= Update build server
+
+xtUML Project Implementation Note
+
+== 1 Abstract
+
+Refresh the current build server image and install a new version of BridgePoint.
+
+== 2 Introduction and Background
+
+During Project Primus <<dr-1>> implementation, changes were made to the model
+compiler and the metamodel which were required in order to build working
+versions of the executable MASL tools. An unrelated change was made to the MC
+<<dr-2>> to support string array passing for docgen. Both of these require that
+the host version of BridgePoint used on the build server must be updated.
+
+Because an update is required, this is a good time to do general maintenance.
+Tasks include:
+* Assure that the setup scripts are still in good working order
+* Update software where possible
+* Add features and fix issues with current build server flow scripts
+
+== 3 Requirements
+
+3.1 A version of BridgePoint built after <<dr-2>> was resolved shall be
+installed on the new build server image +
+3.2 The build server shall be better and more convenient than before +
+
+== 4 Work Required
+
+4.1 General updates and cleanup
+
+* Updated base OS from Ubuntu Server 16.04 LTS to 18.04 LTS
+* Did general clean up and fixes of some small issues
+* Made sure that the setup scripts still worked
+* Automated some more steps
+* Updated logging so that all setup logs go to
+  `/var/log/jenkins/build_server_setup.log`
+* Updated Jenkins to dismiss warnings; updated plugin update site location
+
+4.2 Installed Xrdp
+
+* Installed Xfce4 and Xrdp for the `jenkins` user so that we will be able to log
+  in and debug with a UI.
+
+4.3 Installed `visualvm`
+
+* Installing `visualvm` allows us to capture thread dumps of the Java VM. This is
+  useful sometimes for debugging the unit tests.
+
+4.4 Updated "Build-BridgePoint" job
+
+* Added new parameters for specifying the fork and branch of the `models`
+  repository.
+* Added a "shutdown" parameter to control whether the build
+  server instnace shuts down after a build or not.
+
+4.5 Added a CLI build launch script
+
+* This script is added to enable a CLI build to be launched from a remote OS
+  either using the AWS "user data" feature (run a command on startup) or a remote
+  command over SSH.
+
+4.6 Updated HOWTO documentation
+
+* See <<7 User Documentation>>
+
+4.7 Updated `aws-server.sh` script
+
+Several usability improvements were made to the `aws-server.sh` script.
+
+* There is now a difference between `./aws-server.sh stop` and `./aws-server.sh
+  terminate`. The former simply shuts down the instance while the latter
+  terminates it (cannot be undone).
+* `./aws-server.sh update` can now take an instane ID as a parameter and write
+  out the instance info to the `running_instance.json` file. This is useful when
+  you want control an instance that was started through the AWS console webpage.
+* `./aws-server.sh build` now executes with default parameter values. With no
+  parameters specified, a nightly build with full unit testing is kicked.
+* `./aws-server.sh build` can now specify a host version of BP to install on the
+  server before the build.
+* `./aws-server.sh build` can now execute builds on instances that are already
+  running.
+* When a server is launched, a file `jenkins.rdp` is generated which can be
+* imported by an RDP client. This makes it convient to connect to the server
+  with remote desktop.
+* The usage information and comments have been updated to reflect these changes.
+
+== 5 Implementation Comments
+
+5.1 We have been using three main regions for building. US East (N. Virginia),
+EU (Ireland), and EU (Frankfurt). At one time, this had alleviated some trouble
+getting builds to complete due to an Eclipse maven mirroring issue. In recent
+months, we haven't noticed a marked difference between the regions in relation
+to this issue although we still experience intermittent failures. Since the
+correlation between our success rate and the region we use is weakening, we
+decided to stop copying AMIs across regions. We will use the US East (N.
+Virginia) region as our default. If something causes us to need to use another
+region, we can do the work of copying/maintaining the images at that time.
+
+== 6 Unit Test
+
+6.1 Run a nightly build and see it pass successfully. +
+6.1.1 MASL round trip passes with the new nightly build. +
+6.1.2 Brief smoke test raises no red flags.
+
+== 7 User Documentation
+
+7.1 The "HOWTO" document for setting up the build server has been updated and
+converted to AsciiDoc <<dr-3>>. +
+7.2 A new "HOWTO" document for migrating AWS images from one region to another
+has been added <<dr-4>>. +
+7.3 The usage and inline comments in the `aws-server.sh` script have been
+updated to reflect the new usage.
+
+== 8 Code Changes
+
+- fork/repository: leviathan747/buildmt
+- branch: 11496_update_build_server
+
+----
+ buildmt/get-package-dependencies.sh                                |   5 -----
+ buildmt/install-package-dependencies.sh                            |   4 ++++
+ buildmt/jenkins-home/config.xml                                    |   6 ++++--
+ buildmt/jenkins-home/install-jenkins-plugin.sh                     |   2 +-
+ buildmt/jenkins-home/jobs/Build-BridgePoint/config.xml             | 138 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----------------------------
+ buildmt/jenkins-home/jobs/shutdown/config.xml                      |  43 +++++++++++++++++++++++++++++++++++++++++++
+ buildmt/jenkins-home/users/testuser/config.xml                     |  35 -----------------------------------
+ buildmt/jenkins-home/users/testuser_5356584928723216984/config.xml |  54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ buildmt/jenkins-home/users/users.xml                               |  10 ++++++++++
+ buildmt/launch-build.sh                                            |  84 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ buildmt/roundtrip/.gitignore                                       |   3 ---
+ buildmt/roundtrip/README                                           |   5 -----
+ buildmt/roundtrip/install-bp.sh                                    |  39 ---------------------------------------
+ buildmt/roundtrip/parse-html.py                                    |  64 ----------------------------------------------------------------
+ buildmt/roundtrip/roundtrip.sh                                     |  33 ---------------------------------
+ buildmt/setup.sh                                                   |  53 ++++++++++++++++++++++++++++++++++++++++-------------
+ buildmt/start-xfce.sh                                              |   7 +++++++
+ doc/howtos/HOWTO_migrate_build_server.adoc                         |  65 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ doc/howtos/HOWTO_setup_build_server.adoc                           | 120 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ doc/howtos/HOWTO_setup_build_server.md                             | 133 -------------------------------------------------------------------------------------------------------------------------------------
+ doc/notes/11496_update_server_int.adoc                             | 146 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ install-build-server.sh                                            |  29 +++++++++++++++++------------
+ update-git.sh                                                      |   4 ++--
+ 23 files changed, 707 insertions(+), 375 deletions(-)
+----
+
+- fork/repository: leviathan747/1f
+- branch: 11496_update_build_server
+
+----
+ tools/.gitignore        |   3 +--
+ tools/aws-server.sh     | 246 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--------------------------------------------------------------
+ tools/run_build.sh.tmpl |  72 ------------------------------------------------------------------------
+ 3 files changed, 185 insertions(+), 136 deletions(-)
+----
+
+== 9 Document References
+
+. [[dr-1]] https://support.onefact.net/issues/10308[#10308 Project Primus]
+. [[dr-2]] https://support.onefact.net/issues/11511[#11511 Fix string array initialization for docgen]
+. [[dr-3]] link:../notes/HOWTO_setup_build_server.adoc[HOWTO setup build server]
+. [[dr-4]] link:../notes/HOWTO_migrate_build_server.adoc[HOWTO migrate build server]
+
+---
+
+This work is licensed under the Creative Commons CC0 License
+
+---

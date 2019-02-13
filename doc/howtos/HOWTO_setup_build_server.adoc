@@ -110,6 +110,8 @@ AWS EC2 is also required.
   * Install user data and ssh keys. The easiest way to do this is to zip up
     the contents of `/home` from the old build server, unzip it on the new
     server and modify the ownership recursively.
+. Change the password for the `jenkins` user. The password can be found in the
+  `aws-server.sh` script in the 1f repository.
 . Install updates.
 . Reboot the server.
 . Create an image of the server.
