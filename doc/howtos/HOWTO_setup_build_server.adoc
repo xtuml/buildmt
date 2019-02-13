@@ -62,12 +62,12 @@ and installed automatically.
 
 === How to setup a new build server
 
-_Note: A working knowledge of Linux system administration is assumed for this
+NOTE: A working knowledge of Linux system administration is assumed for this
 guide. The reader should be familiar with the following: manipulating file
 permissions and ownership, logging on to a remote server and transferring
 files, adding users, etc. For the sake of brevity, this guide will **not**
 always include explicit commands to copy and paste. A working understanding of
-AWS EC2 is also required._
+AWS EC2 is also required.
 
 . Start an AWS EC2 instance running Ubuntu 18.04 LTS in the US East (N.
    Virginia) region.
