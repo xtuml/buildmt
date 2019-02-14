@@ -87,7 +87,7 @@ AWS EC2 is also required.
     can be found https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html[here]
 . Start the build server install script (do this from the `/build` directory).
   * `cd /build`
-  * `+curl https://raw.githubusercontent.com/leviathan747/buildmt/11496_update_build_server/install-build-server.sh | sudo bash+`
+  * `+curl https://raw.githubusercontent.com/xtuml/buildmt/master/install-build-server.sh | sudo bash+`
 . When the script completes, copy the file `awsconfig` into the
    `/build/buildmt` directory.
   * Create the file `/build/buildmt/awsconfig`; change the file mode to `660`
