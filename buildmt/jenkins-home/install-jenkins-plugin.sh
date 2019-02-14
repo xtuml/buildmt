@@ -22,7 +22,7 @@ installPlugin() {
   else
     echo "Installing: $1"
     #curl -L --silent --output ${plugin_dir}/${1}.hpi  https://updates.jenkins-ci.org/latest/${1}.hpi
-    wget -q -O ${plugin_dir}/${1}.hpi  https://updates.jenkins-ci.org/latest/${1}.hpi
+    wget -q -O ${plugin_dir}/${1}.hpi  https://updates.jenkins.io/latest/${1}.hpi
     return 0
   fi
 }

@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<com.tikal.jenkins.plugins.multijob.MultiJobProject plugin="jenkins-multijob-plugin@1.24">
+<?xml version='1.1' encoding='UTF-8'?>
+<com.tikal.jenkins.plugins.multijob.MultiJobProject plugin="jenkins-multijob-plugin@1.32">
   <actions/>
   <description>Build BridgePoint and publish to S3</description>
   <keepDependencies>false</keepDependencies>
@@ -23,31 +23,37 @@
           <name>FOLDER</name>
           <description>S3 folder to publish to</description>
           <defaultValue>nightly-build</defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>BP_FORK</name>
           <description>BridgePoint repository fork to build from</description>
           <defaultValue>xtuml</defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>BP_BRANCH</name>
           <description>BridgePoint repository branch to build from</description>
           <defaultValue>master</defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>MC_FORK</name>
           <description>MC repository fork to build from</description>
           <defaultValue>xtuml</defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>MC_BRANCH</name>
           <description>MC repository branch to build from</description>
           <defaultValue>master</defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>bp_install_dir</name>
           <description>BridgePoint installation directory</description>
           <defaultValue>$JENKINS_HOME/../BridgePoint</defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>INCLUDE_TESTS</name>
@@ -58,15 +64,34 @@
           <name>TEST_FORK</name>
           <description>test repository fork to build from</description>
           <defaultValue>xtuml</defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>TEST_BRANCH</name>
           <description>test repository branch to build from</description>
           <defaultValue>master</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>MODELS_FORK</name>
+          <description>models repository fork to build from</description>
+          <defaultValue>xtuml</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>MODELS_BRANCH</name>
+          <description>models repository branch to build from</description>
+          <defaultValue>master</defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_MASL_ROUNDTRIP</name>
           <description>Run MASL round trip test on this build before publish?</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>SHUTDOWN</name>
+          <description>Shut down the build server after a successful build</description>
           <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
@@ -85,7 +110,9 @@
       <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>git-refresh</jobName>
+          <jobAlias></jobAlias>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -95,10 +122,11 @@
           <abortAllJob>true</abortAllJob>
           <condition></condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>REPO=bridgepoint
 FORK=$BP_FORK
 BRANCH=$BP_BRANCH</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
@@ -107,7 +135,9 @@ BRANCH=$BP_BRANCH</properties>
         </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>git-refresh</jobName>
+          <jobAlias></jobAlias>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -117,10 +147,11 @@ BRANCH=$BP_BRANCH</properties>
           <abortAllJob>true</abortAllJob>
           <condition></condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>REPO=mc
 FORK=$MC_FORK
 BRANCH=$MC_BRANCH</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
@@ -129,7 +160,9 @@ BRANCH=$MC_BRANCH</properties>
         </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>git-refresh</jobName>
+          <jobAlias></jobAlias>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -139,10 +172,11 @@ BRANCH=$MC_BRANCH</properties>
           <abortAllJob>true</abortAllJob>
           <condition></condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>REPO=packaging
 FORK=xtuml
 BRANCH=master</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
@@ -151,7 +185,9 @@ BRANCH=master</properties>
         </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>git-refresh</jobName>
+          <jobAlias></jobAlias>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -161,10 +197,11 @@ BRANCH=master</properties>
           <abortAllJob>true</abortAllJob>
           <condition></condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>REPO=pt_antlr
 FORK=xtuml
 BRANCH=master</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
@@ -175,16 +212,18 @@ BRANCH=master</properties>
       <continuationCondition>SUCCESSFUL</continuationCondition>
       <executionType>PARALLEL</executionType>
     </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.5">
-      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.0">
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.2">
         <token>$INCLUDE_TESTS</token>
       </condition>
-      <buildStep class="com.tikal.jenkins.plugins.multijob.MultiJobBuilder" plugin="jenkins-multijob-plugin@1.24">
+      <buildStep class="com.tikal.jenkins.plugins.multijob.MultiJobBuilder" plugin="jenkins-multijob-plugin@1.32">
         <phaseName>Clone test repositories</phaseName>
         <phaseJobs>
           <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
             <jobName>git-refresh</jobName>
+            <jobAlias></jobAlias>
             <currParams>true</currParams>
+            <aggregatedTestResults>false</aggregatedTestResults>
             <exposedSCM>false</exposedSCM>
             <disableJob>false</disableJob>
             <parsingRulesPath></parsingRulesPath>
@@ -194,10 +233,11 @@ BRANCH=master</properties>
             <abortAllJob>true</abortAllJob>
             <condition></condition>
             <configs>
-              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
                 <properties>REPO=bptest
 FORK=$TEST_FORK
 BRANCH=$TEST_BRANCH</properties>
+                <textParamValueOnNewLine>false</textParamValueOnNewLine>
               </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             </configs>
             <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
@@ -206,7 +246,9 @@ BRANCH=$TEST_BRANCH</properties>
           </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
             <jobName>git-refresh</jobName>
+            <jobAlias></jobAlias>
             <currParams>true</currParams>
+            <aggregatedTestResults>false</aggregatedTestResults>
             <exposedSCM>false</exposedSCM>
             <disableJob>false</disableJob>
             <parsingRulesPath></parsingRulesPath>
@@ -216,10 +258,11 @@ BRANCH=$TEST_BRANCH</properties>
             <abortAllJob>true</abortAllJob>
             <condition></condition>
             <configs>
-              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
                 <properties>REPO=models
-FORK=xtuml
-BRANCH=master</properties>
+FORK=$MODELS_FORK
+BRANCH=$MODELS_BRANCH</properties>
+                <textParamValueOnNewLine>false</textParamValueOnNewLine>
               </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             </configs>
             <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
@@ -230,14 +273,16 @@ BRANCH=master</properties>
         <continuationCondition>SUCCESSFUL</continuationCondition>
         <executionType>PARALLEL</executionType>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.2"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
       <phaseName>Build MC executables</phaseName>
       <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>build-mc</jobName>
+          <jobAlias></jobAlias>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -260,7 +305,9 @@ BRANCH=master</properties>
       <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>bridgepoint</jobName>
+          <jobAlias></jobAlias>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -270,7 +317,7 @@ BRANCH=master</properties>
           <abortAllJob>true</abortAllJob>
           <condition></condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.CurrentBuildParameters plugin="parameterized-trigger@2.33"/>
+            <hudson.plugins.parameterizedtrigger.CurrentBuildParameters plugin="parameterized-trigger@2.35.2"/>
           </configs>
           <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
           <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
@@ -280,16 +327,18 @@ BRANCH=master</properties>
       <continuationCondition>SUCCESSFUL</continuationCondition>
       <executionType>PARALLEL</executionType>
     </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.5">
-      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.0">
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.2">
         <token>$RUN_MASL_ROUNDTRIP</token>
       </condition>
-      <buildStep class="com.tikal.jenkins.plugins.multijob.MultiJobBuilder" plugin="jenkins-multijob-plugin@1.24">
+      <buildStep class="com.tikal.jenkins.plugins.multijob.MultiJobBuilder" plugin="jenkins-multijob-plugin@1.32">
         <phaseName>MASL roundtrip</phaseName>
         <phaseJobs>
           <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
             <jobName>install-bp</jobName>
+            <jobAlias></jobAlias>
             <currParams>true</currParams>
+            <aggregatedTestResults>false</aggregatedTestResults>
             <exposedSCM>false</exposedSCM>
             <disableJob>false</disableJob>
             <parsingRulesPath></parsingRulesPath>
@@ -299,7 +348,7 @@ BRANCH=master</properties>
             <abortAllJob>true</abortAllJob>
             <condition></condition>
             <configs>
-              <hudson.plugins.parameterizedtrigger.BooleanParameters plugin="parameterized-trigger@2.33">
+              <hudson.plugins.parameterizedtrigger.BooleanParameters plugin="parameterized-trigger@2.35.2">
                 <configs>
                   <hudson.plugins.parameterizedtrigger.BooleanParameterConfig>
                     <name>USE_S3</name>
@@ -314,7 +363,9 @@ BRANCH=master</properties>
           </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
             <jobName>git-refresh</jobName>
+            <jobAlias></jobAlias>
             <currParams>true</currParams>
+            <aggregatedTestResults>false</aggregatedTestResults>
             <exposedSCM>false</exposedSCM>
             <disableJob>false</disableJob>
             <parsingRulesPath></parsingRulesPath>
@@ -324,10 +375,11 @@ BRANCH=master</properties>
             <abortAllJob>true</abortAllJob>
             <condition></condition>
             <configs>
-              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.33">
+              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
                 <properties>REPO=models
 FORK=xtuml
 BRANCH=master</properties>
+                <textParamValueOnNewLine>false</textParamValueOnNewLine>
               </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             </configs>
             <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
@@ -336,7 +388,9 @@ BRANCH=master</properties>
           </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
             <jobName>roundtrip</jobName>
+            <jobAlias></jobAlias>
             <currParams>true</currParams>
+            <aggregatedTestResults>false</aggregatedTestResults>
             <exposedSCM>false</exposedSCM>
             <disableJob>false</disableJob>
             <parsingRulesPath></parsingRulesPath>
@@ -352,7 +406,9 @@ BRANCH=master</properties>
           </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
             <jobName>masl-check</jobName>
+            <jobAlias></jobAlias>
             <currParams>true</currParams>
+            <aggregatedTestResults>false</aggregatedTestResults>
             <exposedSCM>false</exposedSCM>
             <disableJob>false</disableJob>
             <parsingRulesPath></parsingRulesPath>
@@ -370,18 +426,20 @@ BRANCH=master</properties>
         <continuationCondition>SUCCESSFUL</continuationCondition>
         <executionType>SEQUENTIALLY</executionType>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.2"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.5">
-      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.0">
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.2">
         <token>$PUBLISH</token>
       </condition>
-      <buildStep class="com.tikal.jenkins.plugins.multijob.MultiJobBuilder" plugin="jenkins-multijob-plugin@1.24">
+      <buildStep class="com.tikal.jenkins.plugins.multijob.MultiJobBuilder" plugin="jenkins-multijob-plugin@1.32">
         <phaseName>Publish BridgePoint</phaseName>
         <phaseJobs>
           <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
             <jobName>publish</jobName>
+            <jobAlias></jobAlias>
             <currParams>true</currParams>
+            <aggregatedTestResults>false</aggregatedTestResults>
             <exposedSCM>false</exposedSCM>
             <disableJob>false</disableJob>
             <parsingRulesPath></parsingRulesPath>
@@ -391,7 +449,7 @@ BRANCH=master</properties>
             <abortAllJob>true</abortAllJob>
             <condition></condition>
             <configs>
-              <hudson.plugins.parameterizedtrigger.CurrentBuildParameters plugin="parameterized-trigger@2.33"/>
+              <hudson.plugins.parameterizedtrigger.CurrentBuildParameters plugin="parameterized-trigger@2.35.2"/>
             </configs>
             <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
             <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
@@ -401,15 +459,39 @@ BRANCH=master</properties>
         <continuationCondition>SUCCESSFUL</continuationCondition>
         <executionType>PARALLEL</executionType>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.2"/>
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition" plugin="run-condition@1.2">
+        <token>$SHUTDOWN</token>
+      </condition>
+      <buildStep class="hudson.tasks.Shell">
+        <command>sudo shutdown -h now</command>
+      </buildStep>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.2"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+          </configs>
+          <projects>shutdown, </projects>
+          <condition>ALWAYS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+  </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.33">
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.37">
       <deleteDirs>false</deleteDirs>
       <cleanupParameter></cleanupParameter>
       <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
   </buildWrappers>
   <pollSubjobs>false</pollSubjobs>
