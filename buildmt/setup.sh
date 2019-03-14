@@ -44,8 +44,8 @@ fi
 if [ ! -e BridgePoint/bridgepoint ]; then
     mkdir -p BridgePoint
     wget http://s3.amazonaws.com/xtuml-releases/$BP_BUILD_LOCATION/org.xtuml.bp-dev.product-linux.gtk.x86_64.zip
-    unzip -q org.xtuml.bp.product-linux.gtk.x86_64.zip
-    mv org.xtuml.bp.product-linux.gtk.x86_64.zip BridgePoint
+    unzip -q org.xtuml.bp-dev.product-linux.gtk.x86_64.zip
+    mv org.xtuml.bp-dev.product-linux.gtk.x86_64.zip BridgePoint
     TMPFILE=`mktemp`
     sed '/WORKSPACE2/b; s/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
     cp $TMPFILE BridgePoint/tools/mc/bin/CLI.sh
