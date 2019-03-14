@@ -25,8 +25,7 @@
       <command>echo &quot;...running the regression_test.&quot;
 
 # set up path to installation
-sed &apos;s@^BPINSTALL=&quot;.*&quot;@BPINSTALL=&quot;&apos;$BP_CANDIDATE&apos;&quot;@g&apos; $GIT_WS/models/masl/test/regression_test &gt; regression_test
-cp regression_test $GIT_WS/models/masl/test/regression_test
+export BPINSTALL=&quot;$BP_CANDIDATE&quot;
 
 # run regression test
 bash $GIT_WS/models/masl/test/regression_test -o results &lt; $GIT_WS/models/masl/test/all_tests | $GIT_WS/models/masl/test/collectstars.py
