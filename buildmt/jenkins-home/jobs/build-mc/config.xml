@@ -22,7 +22,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!/bin/bash
+      <command>#!/bin/bash -e 
 
 # prepare mcmc and docgen for build
 echo &quot;Preparing mcmc and docgen templates...&quot;
@@ -44,6 +44,7 @@ $BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/mcshared/
 $BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/document/
 $BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/docgen/
 $BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/escher/
+$BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/integrity/
 $BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/masl/
 $BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/maslin/
 $BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/maslout/
@@ -52,6 +53,7 @@ $BPHOME/tools/mc/bin/CLI.sh Import -project $GIT_WS/mc/model/maslout/
 echo &quot;Building projects...&quot;
 $BPHOME/tools/mc/bin/CLI.sh Build -project docgen
 #$BPHOME/tools/mc/bin/CLI.sh Build -project escher
+$BPHOME/tools/mc/bin/CLI.sh Build -project integrity
 $BPHOME/tools/mc/bin/CLI.sh Build -project masl
 $BPHOME/tools/mc/bin/CLI.sh Build -project maslin
 $BPHOME/tools/mc/bin/CLI.sh Build -project maslout
@@ -62,11 +64,12 @@ $BPHOME/tools/mc/bin/CLI.sh Launch -exit
 # archive the source
 echo &quot;Archiving the source...&quot;
 mkdir src
-cp -r $WORKSPACE2/docgen/src src/docgen-src
-#cp -r $WORKSPACE2/escher/src src/mcmc-src
-cp -r $WORKSPACE2/masl/src src/masl-src
-cp -r $WORKSPACE2/maslin/src src/maslin-src
-cp -r $WORKSPACE2/maslout/src src/maslout-src
+cp -r $WORKSPACE2/docgen src/docgen-src
+#cp -r $WORKSPACE2/escher src/mcmc-src
+cp -r $WORKSPACE2/integrity src/integrity-src
+cp -r $WORKSPACE2/masl src/masl-src
+cp -r $WORKSPACE2/maslin src/maslin-src
+cp -r $WORKSPACE2/maslout src/maslout-src
 zip -qr mcsrc.zip src/
 
 # build the MASL parser
@@ -91,32 +94,40 @@ export PATH=$PATH:$OSXCROSS_TARGET/bin
 cd $WORKSPACE2/docgen/src
 make -f makefile.docgen EXECUTABLE=docgen.linux; rm -f *.o
 make -f makefile.docgen EXECUTABLE=docgen.mac CC=o64-clang; rm -f *.o
-make -f makefile.docgen EXECUTABLE=docgen.win CC=i686-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static&quot;; rm -f *.o
+make -f makefile.docgen EXECUTABLE=docgen.win CC=x86_64-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static&quot;; rm -f *.o
 
 #cd $WORKSPACE/escher/src
 #make -f makefile.mcmc EXECUTABLE=mcmc.linux; rm -f *.o
 #make -f makefile.mcmc EXECUTABLE=mcmc.mac CC=o64-clang LFLAGS=-L$OSXCROSS_TARGET/SDK/*/usr/lib -ll
 
+cd $WORKSPACE2/integrity/src
+make -f makefile.integrity EXECUTABLE=integrity.linux; rm -f *.o
+make -f makefile.integrity EXECUTABLE=integrity.mac CC=o64-clang; rm -f *.o
+make -f makefile.integrity EXECUTABLE=integrity.win CC=x86_64-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static -DWIN&quot;; rm -f *.o
+
 cd $WORKSPACE2/masl/src
 make -f makefile.masl EXECUTABLE=masl.linux; rm -f *.o
 make -f makefile.masl EXECUTABLE=masl.mac CC=o64-clang; rm -f *.o
-make -f makefile.masl EXECUTABLE=masl.win CC=i686-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static -DWIN&quot;; rm -f *.o
+make -f makefile.masl EXECUTABLE=masl.win CC=x86_64-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static -DWIN&quot;; rm -f *.o
 
 cd $WORKSPACE2/maslin/src
 make -f makefile.maslin EXECUTABLE=m2x.linux; rm -f *.o
 make -f makefile.maslin EXECUTABLE=m2x.mac CC=o64-clang; rm -f *.o
-make -f makefile.maslin EXECUTABLE=m2x.win CC=i686-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static -DWIN&quot;; rm -f *.o
+make -f makefile.maslin EXECUTABLE=m2x.win CC=x86_64-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static -DWIN&quot;; rm -f *.o
 
 cd $WORKSPACE2/maslout/src
 make -f makefile.maslout EXECUTABLE=x2m.linux; rm -f *.o
 make -f makefile.maslout EXECUTABLE=x2m.mac CC=o64-clang; rm -f *.o
-make -f makefile.maslout EXECUTABLE=x2m.win CC=i686-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static -DWIN&quot;; rm -f *.o
+make -f makefile.maslout EXECUTABLE=x2m.win CC=x86_64-w64-mingw32-gcc CFLAGS=&quot;-Wno-pointer-to-int-cast -static -DWIN&quot;; rm -f *.o
 
 # copy the executables
 cp $WORKSPACE2/docgen/src/docgen.linux $OUT_DIR
 cp $WORKSPACE2/docgen/src/docgen.mac $OUT_DIR
 cp $WORKSPACE2/docgen/src/docgen.win $OUT_DIR
 #cp $WORKSPACE2/escher/src/mcmc.* $OUT_DIR
+cp $WORKSPACE2/integrity/src/integrity.linux $OUT_DIR
+cp $WORKSPACE2/integrity/src/integrity.mac $OUT_DIR
+cp $WORKSPACE2/integrity/src/integrity.win $OUT_DIR
 cp $WORKSPACE2/masl/src/masl.linux $OUT_DIR
 cp $WORKSPACE2/masl/src/masl.mac $OUT_DIR
 cp $WORKSPACE2/masl/src/masl.win $OUT_DIR
@@ -126,14 +137,17 @@ cp $WORKSPACE2/maslout/src/x2m.* $OUT_DIR
 # copy the executables into the mc repo
 cp $OUT_DIR/MASLParser.jar $GIT_WS/mc/bin
 cp $OUT_DIR/docgen.linux $GIT_WS/mc/bin/docgen
+cp $OUT_DIR/integrity.linux $GIT_WS/mc/bin/integrity
 cp $OUT_DIR/masl.linux $GIT_WS/mc/bin/masl
 cp $OUT_DIR/m2x.linux $GIT_WS/mc/bin/m2x
 cp $OUT_DIR/x2m.linux $GIT_WS/mc/bin/x2m
 cp $OUT_DIR/docgen.mac $GIT_WS/mc/bin/mac/docgen
+cp $OUT_DIR/integrity.mac $GIT_WS/mc/bin/mac/integrity
 cp $OUT_DIR/masl.mac $GIT_WS/mc/bin/mac/masl
 cp $OUT_DIR/m2x.mac $GIT_WS/mc/bin/mac/m2x
 cp $OUT_DIR/x2m.mac $GIT_WS/mc/bin/mac/x2m
 cp $OUT_DIR/docgen.win $GIT_WS/mc/bin/win/docgen.exe
+cp $OUT_DIR/integrity.win $GIT_WS/mc/bin/win/integrity.exe
 cp $OUT_DIR/masl.win $GIT_WS/mc/bin/win/masl.exe
 cp $OUT_DIR/m2x.win $GIT_WS/mc/bin/win/m2x.exe
 cp $OUT_DIR/x2m.win $GIT_WS/mc/bin/win/x2m.exe

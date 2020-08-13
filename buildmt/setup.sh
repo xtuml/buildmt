@@ -1,31 +1,56 @@
 #!/bin/bash
 
+# This script is intended for Jenkins user specific configuration. It is
+# designed to be executed by the "jenkins" user. It is executed automatically
+# when the Jenkins server starts on bootup. It can be safely re-run at any time
+# by the "jenkins" user.
+
+echo "Setting up build server at: $(date)"
+
 # go to the buildmt directory
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # install package dependencies
 cd $DIR
-sudo ./get-package-dependencies.sh
+sudo bash install-package-dependencies.sh
 
-# setup /etc/default/jenkins for email
-TMPFILE=`mktemp`
-sudo sed -r '/^JAVA_ARGS=.*-Dmail.*/b; s/^JAVA_ARGS="(.*)"/JAVA_ARGS="\1 -Xmx1024m -Dmail.smtp.starttls.enable=true"\nJENKINS_JAVA_OPTIONS="-Dmail.smtp.starttls.enable=true"/g' /etc/default/jenkins > $TMPFILE
-sudo cp $TMPFILE /etc/default/jenkins
+# configure vnc server
+printf "newpass\nnewpass\n\n" | vnc4passwd
 
-# configure vncserver
-printf "newpass\nnewpass\n\n" | vncpasswd
+# configure xrdp
+cd $DIR
+if [ ! -e ~/.xsession ]; then
+    sudo /etc/init.d/xrdp stop
+    echo "xfce4-session" > ~/.xsession
+    echo "xterm*faceName: DejaVu Snas Mono Book" > ~/.Xresources
+    echo "xterm*faceSize: 11" >> ~/.Xresources
+    xrdb -merge ~/.Xresources
+    TMPFILE=`mktemp`
+    awk -v found1=0 -v found2=0 '/\[Xvnc\]/{found1=1;}; /^$/{if (found1 && !found2) {found2=1;print "param=-SecurityTypes\nparam=None";}}; //{print $0;}' /etc/xrdp/sesman.ini > $TMPFILE
+    sudo cp $TMPFILE /etc/xrdp/sesman.ini
+    xvfb-run bash start-xfce.sh
+    TMPFILE=`mktemp`
+    sed '/switch_window_key/d' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml > $TMPFILE
+    cp $TMPFILE ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+    echo $TMPFILE
+    sudo /etc/init.d/xrdp restart
+fi
 
 # install bridgepoint
 cd $DIR
+if [ "" = "$BP_BUILD_LOCATION" ]; then
+  BP_BUILD_LOCATION="nightly-build"
+fi
 if [ ! -e BridgePoint/bridgepoint ]; then
-    wget http://s3.amazonaws.com/xtuml-releases/nightly-build/org.xtuml.bp.product-linux.gtk.x86_64.zip
-    unzip org.xtuml.bp.product-linux.gtk.x86_64.zip
-    mv org.xtuml.bp.product-linux.gtk.x86_64.zip BridgePoint
+    mkdir -p BridgePoint
+    wget http://s3.amazonaws.com/xtuml-releases/$BP_BUILD_LOCATION/org.xtuml.bp-dev.product-linux.gtk.x86_64.zip
+    unzip -q org.xtuml.bp-dev.product-linux.gtk.x86_64.zip
+    mv org.xtuml.bp-dev.product-linux.gtk.x86_64.zip BridgePoint
     TMPFILE=`mktemp`
-    sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
+    sed '/WORKSPACE2/b; s/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/CLI.sh > $TMPFILE
     cp $TMPFILE BridgePoint/tools/mc/bin/CLI.sh
     chmod +x BridgePoint/tools/mc/bin/CLI.sh
-    sed 's/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/launch-cli.py > $TMPFILE
+    sed '/WORKSPACE2/b; s/WORKSPACE/WORKSPACE2/g' BridgePoint/tools/mc/bin/launch-cli.py > $TMPFILE
     cp $TMPFILE BridgePoint/tools/mc/bin/launch-cli.py
 fi
 
@@ -43,14 +68,16 @@ if [[ ! -e osxcross && -e $MACOS_SDK ]]; then
     ./build.sh
 fi
 
-# download the cli
+# get the cli
 cd $DIR
 if [ ! -e jenkins-cli.jar ]; then
-    wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+    cp /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar .
 fi
 
 # install plugins
 cd $DIR/jenkins-home
 while read p; do
-  ./install-jenkins-plugin.sh $p
+  bash install-jenkins-plugin.sh $p
 done < plugins.txt
+
+echo "Build server setup complete at: $(date)"

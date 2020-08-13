@@ -3,5 +3,5 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd $DIR
 git reset --hard
 git clean -df .
-git pull
-buildmt/setup.sh
+git pull -f
+bash buildmt/setup.sh >> /var/log/jenkins/build_server_setup.log 2>&1

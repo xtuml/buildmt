@@ -1,0 +1,65 @@
+= How to migrate a build server image
+
+:sectnums:
+
+This Document provides the information required to create a new build server
+image and to migrate an existing image to a different AWS region.
+
+=== How to create a new build server image
+
+. Launch an AWS instance. Configure the instance the way you want it before
+  imaging. For more instructions on setting up new build server instances, see the
+  guide link:HOWTO_setup_build_server.adoc[here].
+. Select the instance in the AWS EC2 "Instances" view and select "Actions >
+  Image > Create Image".
+. Give the image a good name and description. Ensure that "Delete on
+  Termination" is checked for all attached instance volumes.
+. In the "AMIs" view, edit the "Name" tag. If this image is intended to be the
+  default image for build servers, change the value of the "Name" tag to
+  "current".
+. Update the AMI ID in the `aws-server.sh` script in the "1f" repository if
+  necessary.
+
+=== How to delete a build server image
+
+. In the AWS EC2 "AMIs" view, select the image(s) you wish to delete and select
+  "Actions > Deregister".
+. In the "Snapshots" view, delete the volume snapshots associated with the
+  image(s) that were deregistered. The easiest way to do this is to correlate the
+  date.
+
+NOTE: If a snapshot is associated with an image that has not been deregistered,
+AWS will not allow you to delete it.
+
+=== How to migrate a build server image to a different region
+
+. In the AWS EC2 "AMIs" view, select the image(s) you wish to delete and select
+  "Actions > Copy AMI".
+. Select a region in the "Destination region" dropdown menu.
+. Change the name and description if desired and click "Copy AMI". This will
+  take some time before the AMI is available in the new region.
+. If the new AMI is replacing a different build server image in the region,
+  update the "Name" tags to reflect that the new AMI is the "current" verison.
+
+==== Create a new security group and key pair for the region
+
+If the region has not been used for build servers before, it is necessary to
+create a new security group and key pair.
+
+. In the AWS EC2 "Security Groups" view, click "Create Security Group".
+. Give the group a name and description.
+. In the "Inbound" tab, add the following rules:
+  * Select "SSH" from the "Type" dropdown menu and "Anywhere" from the "Source"
+    dropdown menu.
+  * Select "RDP" from the "Type" dropdown menu and "Anywhere" from the "Source"
+    dropdown menu.
+  * Select "Custom TCP" from the "Type" dropdown menu and "Anywhere" from the "Source"
+    dropdown menu. Type "8080" in the "Port Range" textbox and "Jenkins" in the
+    description textbox.
+. Click "Create".
+. In the AWS EC2 "Key Pairs" section, click "Create Key Pair".
+. Give the key pair a name and click "Create". A file will be automatically
+  downloaded. Upload the file to this
+  https://drive.google.com/drive/u/1/folders/0B3XvTeswC_kOTXRFeHI0aU1JZGM[Google
+  Drive folder]
+

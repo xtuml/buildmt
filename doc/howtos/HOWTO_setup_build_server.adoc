@@ -1,0 +1,120 @@
+= How to work with the build server
+
+:sectnums:
+
+This document provides the information required to set up and contribute to the
+Jenkins based build server
+
+=== How to modify the build server
+
+==== Changing the Jenkins server settings
+
+To modify the build server, we can utilize our existing engineering process
+since everything is in a git repository.
+
+. Launch the current build server AMI (marked with "current") on AWS
+. SSH into the server and change to the `/build` directory. This is the root of
+  the git repository
+. Make any changes through the web UI or on the command line
+. Commit your changes
+  * The repository is shared between all users in the "build" group. This
+    allows multiple users to make commits to the same files
+  * You will have to configure git with your name and email before making
+    commits. See guide
+    https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup[here]
+  * Be careful when pushing changes to remotes. The "origin" remote is the
+    "xtuml" repository and not a fork! Add your own fork and push your changes
+    there
+
+The Jenkins server is set up to pull the latest changes from the `buildmt`
+repository on startup. Once your changes are committed to "master", they will
+be applied at the next build server startup
+
+The `.gitignore` files inside the `jenkins-home` directory are very broad. This
+is because Jenkins produces a lot of files that we do not want to commit, so it
+is easier to ignore everything and whitelist the files we want to keep. With
+this in mind, if a change is made that introduces a new configuration file, it
+must be added as an exception in the `.gitignore` file.
+
+==== Jenkins job strategy
+
+The "multijob" Jenkins plugin allows us to run jobs which consist of several
+other jobs sequentially. This gives us great freedom to create "building block"
+jobs which are used to compile top level jobs. For example, the job
+"bridgepoint" and "publish" can be put together sequentially to build
+BridgePoint and publish to AWS S3. By convention "building block" jobs are
+named with lower case, while top level jobs are named with capitalized first
+letters.  Spaces are avoided in names.
+
+==== Installing packages
+
+Any Linux packages that are installed that the build server depends on must be
+added to the `buildmt/install-package-dependencies.sh` script. This script runs
+when the server is started and contains all of the software that the Jenkins
+build is dependant on.
+
+==== Installing plugins
+
+It is not good to commit the installed Jenkins plugins. If a new plugin is
+installed, it should be added to the `buildmt/jenkins-home/plugins.txt` file.
+This file is read when the server is installed and the plugins are downloaded
+and installed automatically.
+
+=== How to setup a new build server
+
+NOTE: A working knowledge of Linux system administration is assumed for this
+guide. The reader should be familiar with the following: manipulating file
+permissions and ownership, logging on to a remote server and transferring
+files, adding users, etc. For the sake of brevity, this guide will **not**
+always include explicit commands to copy and paste. A working understanding of
+AWS EC2 is also required.
+
+. Start an AWS EC2 instance running Ubuntu 18.04 LTS in the US East (N.
+   Virginia) region.
+  * Select m5.large for the instance type
+  * Create and attach a new 100 GiB EBS storage device (assure that "delete on
+    termination" is **checked**)
+  * Select the "build server security group" security group
+. Log on to the server.
+  * Select `build-server-keypair.pem` when launching the instance
+  * The key file can be found in this https://drive.google.com/drive/u/1/folders/0B3XvTeswC_kOTXRFeHI0aU1JZGM[Google Drive folder]
+  * Assure that the permissions for the key are set to read/write for user
+    only (600)
+  * `ssh -i build-server-keypair.pem ubuntu@<server IP>`
+. Create a directory `/build`.
+  * `sudo mkdir /build`
+  * Mount the 100 GiB EBS device to the `/build` directory. A full tutorial
+    can be found https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html[here]
+. Start the build server install script (do this from the `/build` directory).
+  * `cd /build`
+  * `+curl https://raw.githubusercontent.com/xtuml/buildmt/master/install-build-server.sh | sudo bash+`
+. When the script completes, copy the file `awsconfig` into the
+   `/build/buildmt` directory.
+  * Create the file `/build/buildmt/awsconfig`; change the file mode to `660`
+    set the owner to `jenkins` and the group to `build`
+
+    sudo touch /build/buildmt/awsconfig
+    sudo chmod 660 /build/buildmt/awsconfig
+    sudo chown jenkins:build /build/buildmt/awsconfig
+
+  * Copy the text from the gray box
+    https://docs.google.com/document/d/16iUguxC3uT20UgSO9YvkeP_wm-7pdiRNzZ6cdTt5iO8/edit[here]
+    into this file
+. Copy the file `MacOSX10.11.sdk.tar.xz` into the `/build/buildmt` directory
+  * Assure that the file permissions are 660 and that the ownership is
+    "jenkins:build"
+  * This file can be found https://drive.google.com/drive/u/1/folders/0B698ZDpSSasPei1FQk9QU3NrenM[here]
+. Add other user accounts to the machine (optional)
+  * A script `add-user.sh` is included in this repository to streamline this
+    process
+  * Install user data and ssh keys. The easiest way to do this is to zip up
+    the contents of `/home` from the old build server, unzip it on the new
+    server and modify the ownership recursively.
+. Change the password for the `jenkins` user. The password can be found in the
+  `aws-server.sh` script in the 1f repository.
+. Install updates.
+. Reboot the server.
+. Create an image of the server.
+  * A tutorial for this is link:HOWTO_migrate_build_server.adoc[here]
+. Test the image by running a nightly build.
+
