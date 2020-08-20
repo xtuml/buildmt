@@ -15,10 +15,7 @@ export DEBIAN_FRONTEND=noninteractive
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
 sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 apt update
-apt install -y openjdk-8-jdk 
-# enforce java 8
-update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-8-openjdk-amd64/bin/java 1500
-update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/bin/java
+apt install -y openjdk-8-jdk
 apt install -y git
 apt install -y jenkins
 
