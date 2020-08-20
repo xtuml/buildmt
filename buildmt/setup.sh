@@ -17,6 +17,10 @@ sudo bash install-package-dependencies.sh
 # configure vnc server
 printf "newpass\nnewpass\n\n" | vnc4passwd
 
+# enforce java 8
+sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-8-openjdk-amd64/bin/java 1500
+sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/bin/java
+
 # configure xrdp
 cd $DIR
 if [ ! -e ~/.xsession ]; then
