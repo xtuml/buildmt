@@ -63,7 +63,7 @@ $BPHOME/tools/mc/bin/CLI.sh Launch -exit
 
 # archive the source
 echo &quot;Archiving the source...&quot;
-mkdir src
+mkdir -p src
 cp -r $WORKSPACE2/docgen src/docgen-src
 #cp -r $WORKSPACE2/escher src/mcmc-src
 cp -r $WORKSPACE2/integrity src/integrity-src
