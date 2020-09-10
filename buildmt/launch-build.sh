@@ -82,11 +82,7 @@ if [ "" != "$BUILD_FORK" ] || [ "" != "$BUILD_BRANCH" ]; then
   cd /build
   sudo git remote add $BUILD_FORK https://github.com/$BUILD_FORK/buildmt.git
   sudo git fetch --depth=1 --force $BUILD_FORK refs/heads/$BUILD_BRANCH:refs/remotes/$BUILD_FORK/$BUILD_BRANCH
-  sudo git reset --hard
-  sudo git clean -dxf .
   sudo git checkout $BUILD_FORK/$BUILD_BRANCH
-  sudo git reset --hard
-  sudo git clean -dxf .
   cd $PREV_DIR
 fi
 
