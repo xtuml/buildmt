@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
   <description>Build the MC executables</description>
@@ -167,20 +167,21 @@ echo &quot;Done.&quot;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.33">
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.37">
       <deleteDirs>false</deleteDirs>
       <cleanupParameter></cleanupParameter>
       <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
-    <EnvInjectBuildWrapper plugin="envinject@2.0">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>GIT_WS=$JENKINS_HOME/../git
 BPHOME=$JENKINS_HOME/../BridgePoint
-WORKSPACE2=$WORKSPACE/ws
+WORKSPACE2=$WORKSPACE
 OUT_DIR=$WORKSPACE/bin
 OSXCROSS_TARGET=$JENKINS_HOME/../osxcross/target
 PATH=$PATH:$OSXCROSS_TARGET/bin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.27">
+        <secureGroovyScript plugin="script-security@1.52">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
