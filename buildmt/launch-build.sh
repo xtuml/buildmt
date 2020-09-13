@@ -106,4 +106,4 @@ done
 # jenkins is started but not fully ready for a web triggered build Use the
 # jenkins cli to start the build which will wait until ready and not return
 # until the build is complete
-java -jar /build/buildmt/jenkins-cli.jar -s http://localhost:8080 build $JOB $PARAMS --username $JENKINS_USERNAME --password $JENKINS_PASSWORD
+java -jar /build/buildmt/jenkins-cli.jar -s http://localhost:8080 -auth $JENKINS_USERNAME:$JENKINS_PASSWORD build $JOB $PARAMS 
