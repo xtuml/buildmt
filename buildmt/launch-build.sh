@@ -80,6 +80,7 @@ if [ "" != "$BUILD_FORK" ] || [ "" != "$BUILD_BRANCH" ]; then
   fi
   export PREV_DIR=`pwd`
   cd /build
+  sudo git --restore buildmt/launch-build.sh # reset this script
   sudo git remote add $BUILD_FORK https://github.com/$BUILD_FORK/buildmt.git
   sudo git fetch --depth=1 --force $BUILD_FORK refs/heads/$BUILD_BRANCH:refs/remotes/$BUILD_FORK/$BUILD_BRANCH
   sudo git checkout $BUILD_FORK/$BUILD_BRANCH
