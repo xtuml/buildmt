@@ -80,6 +80,7 @@ if [ "" != "$BUILD_FORK" ] || [ "" != "$BUILD_BRANCH" ]; then
   fi
   export PREV_DIR=`pwd`
   cd /build
+  sudo git checkout -- . # reset any changes, including this script
   sudo git remote add $BUILD_FORK https://github.com/$BUILD_FORK/buildmt.git
   sudo git fetch --depth=1 --force $BUILD_FORK refs/heads/$BUILD_BRANCH:refs/remotes/$BUILD_FORK/$BUILD_BRANCH
   sudo git checkout $BUILD_FORK/$BUILD_BRANCH
@@ -105,4 +106,4 @@ done
 # jenkins is started but not fully ready for a web triggered build Use the
 # jenkins cli to start the build which will wait until ready and not return
 # until the build is complete
-java -jar /build/buildmt/jenkins-cli.jar -s http://localhost:8080 build $JOB $PARAMS --username $JENKINS_USERNAME --password $JENKINS_PASSWORD
+java -jar /build/buildmt/jenkins-cli.jar -s http://localhost:8080 -auth $JENKINS_USERNAME:$JENKINS_PASSWORD build $JOB $PARAMS 
