@@ -14,14 +14,14 @@ BP_INSTALL=
 
 function printUsage {
   echo "Usage:"
-  echo "  ./launch-build.sh --username <jenkins_username> --password <jenkins_password> [--installation <bp-installation-folder>] [--params ...]"
+  echo "  ./launch-build.sh --username <jenkins_username> --password <jenkins_password> [--installation <bp-installation-folder>]  [--buildfork <buildmt_fork>] [--buildbranch <buildmt_branch>] [--params ...]"
   exit 1
 }
 
 DIRECTIVE=
 for i in $@; do
   case $i in
-    "--username"|"--password"|"--installation"|"--params")
+    "--username"|"--password"|"--installation"|"--buildfork"|"--buildbranch"|"--params")
       DIRECTIVE=$i
       ;;
     *)
@@ -47,19 +47,44 @@ for i in $@; do
             printUsage
           fi
           ;;
-        
         "--params")
           PARAMS="$PARAMS -p $i"
           ;;
+        "--buildfork")
+          BUILD_FORK=$i
+          ;;
+        "--buildbranch")
+          BUILD_BRANCH=$i
+          ;;
         *)
+          echo "Printing usage: $i"
           printUsage
           ;;
       esac
       ;;
   esac
 done
+
 if [[ "" == "$JENKINS_USERNAME" || "" == "$JENKINS_PASSWORD" ]]; then
   printUsage
+fi
+
+# if a build fork/branch are specified
+# update buildmt accordingly
+if [ "" != "$BUILD_FORK" ] || [ "" != "$BUILD_BRANCH" ]; then
+  if [ "" = "$BUILD_FORK" ]; then
+    BUILD_FORK="xtuml"
+  fi
+  if [ "" = "$BUILD_BRANCH" ]; then
+    BUILD_BRANCH="master"
+  fi
+  export PREV_DIR=`pwd`
+  cd /build
+  sudo git checkout -- . # reset any changes, including this script
+  sudo git remote add $BUILD_FORK https://github.com/$BUILD_FORK/buildmt.git
+  sudo git fetch --depth=1 --force $BUILD_FORK refs/heads/$BUILD_BRANCH:refs/remotes/$BUILD_FORK/$BUILD_BRANCH
+  sudo git checkout $BUILD_FORK/$BUILD_BRANCH
+  cd $PREV_DIR
 fi
 
 # install BridgePoint if necessary

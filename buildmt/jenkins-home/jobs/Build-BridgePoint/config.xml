@@ -84,6 +84,18 @@
           <defaultValue>master</defaultValue>
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PACKAGING_FORK</name>
+          <description>Packaging fork to build from</description>
+          <defaultValue>xtuml</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PACKAGING_BRANCH</name>
+          <description>Packaging branch to build from</description>
+          <defaultValue>master</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_MASL_ROUNDTRIP</name>
           <description>Run MASL round trip test on this build before publish?</description>
