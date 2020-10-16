@@ -186,8 +186,8 @@ BRANCH=$MC_BRANCH</properties>
           <configs>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>REPO=packaging
-FORK=xtuml
-BRANCH=master</properties>
+FORK=$PACKAGING_FORK
+BRANCH=$PACKAGING_BRANCH</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
