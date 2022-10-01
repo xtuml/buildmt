@@ -124,6 +124,7 @@ WORKSPACE=${WORKSPACE}/wse
 WORKSPACE2=${WORKSPACE}/wse
 SWT_GTK3=0
 BPHOME=$JENKINS_HOME/../BridgePoint
+ANT_HOME=$BPHOME/plugins/org.apache.ant_1.10.8.v20200515-1239
 </propertiesContent>
         <secureGroovyScript plugin="script-security@1.73">
           <script></script>
