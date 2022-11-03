@@ -102,7 +102,7 @@ echo &quot;&lt;a href=&quot;org.xtuml.bp.product-linux.gtk.x86_64.zip&quot;&gt;L
 echo &quot; &quot; &gt;&gt; ${BPLOG}
 echo &quot;BridgePoint Development Version Links:&quot; &gt;&gt; ${BPLOG}
 echo &quot;===============&quot; &gt;&gt; ${BPLOG}
-echo &quot;&lt;a href=&quot;org.xtuml.bp.product-linux.gtk.x86_64.zip&quot;&gt;Linux 64-bit (x86_64)&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-macosx.cocoa.x86_64.zip&quot;&gt;Mac 64-bit (x86_64)&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp.product-macosx.cocoa.aarch64.zip&quot;&gt;Mac 64-bit (arm64)&lt;/a&gt;&lt;br&gt;&quot; &gt;&gt; ${BPLOG}
+echo &quot;&lt;a href=&quot;org.xtuml.bp-dev.product-linux.gtk.x86_64.zip&quot;&gt;Linux 64-bit (x86_64)&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp-dev.product-macosx.cocoa.x86_64.zip&quot;&gt;Mac 64-bit (x86_64)&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;org.xtuml.bp-dev.product-macosx.cocoa.aarch64.zip&quot;&gt;Mac 64-bit (arm64)&lt;/a&gt;&lt;br&gt;&quot; &gt;&gt; ${BPLOG}
 export TEST_REPORT=$DATADIR/surefire-report.html
 export MASL_CHECK_REPORT=$DATADIR/masl-check.html
 export MASL_ROUNDTRIP_REPORT=$DATADIR/masl-roundtrip.html
