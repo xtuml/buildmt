@@ -2,11 +2,11 @@
 <hudson>
   <disabledAdministrativeMonitors>
     <string>jenkins.CLI</string>
+    <string>jenkins.diagnostics.ControllerExecutorsNoAgents</string>
     <string>OldData</string>
     <string>jenkins.diagnostics.RootUrlNotSetMonitor</string>
   </disabledAdministrativeMonitors>
-  <version>2.256</version>
-  <installStateName>RESTART</installStateName>
+  <version>2.396</version>
   <numExecutors>4</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -76,4 +76,5 @@
   </crumbIssuer>
   <nodeProperties/>
   <globalNodeProperties/>
+  <nodeRenameMigrationNeeded>false</nodeRenameMigrationNeeded>
 </hudson>
