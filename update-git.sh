@@ -7,6 +7,6 @@ BRANCH=`git symbolic-ref --short -q HEAD`
 if [[ "$BRANCH" == "master" ]]; then 
   git reset --hard
   git clean -df .
-  git pull -f
+  git pull -f origin $BRANCH
 fi
 bash buildmt/setup.sh >> /var/log/jenkins/build_server_setup.log 2>&1
